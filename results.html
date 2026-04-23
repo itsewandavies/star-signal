@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Your Cosmic Blueprint | Star Signal</title>
-    <meta name="description" content="Your personalized cosmic blueprint has been decoded. Scroll to reveal your reading.">
+    <meta name="description" content="Your personalised Cosmic Blueprint reveals your destiny.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -14,843 +14,1590 @@
             --bg-alt: #F6F3EC;
             --text-main: #2C2828;
             --text-muted: #5A5252;
-            --accent-lavender: #D8D0E3;
-            --accent-lavender-light: #F0EBF5;
-            --accent-rose: #E8D1D1;
-            --accent-rose-light: #F7EFEF;
             --accent-gold: #D4AF37;
             --accent-gold-dark: #B89600;
             --footer-bg: #2B233D;
             --white: #FFFFFF;
             --font-heading: 'Cormorant Garamond', serif;
             --font-body: 'Inter', sans-serif;
-            --shadow-sm: 0 4px 12px rgba(44,40,40,0.03);
-            --shadow-md: 0 8px 24px rgba(44,40,40,0.06);
-            --shadow-lg: 0 12px 32px rgba(212,175,55,0.25);
+            --shadow-sm: 0 4px 12px rgba(44,40,40,0.04);
+            --shadow-md: 0 8px 24px rgba(44,40,40,0.08);
+            --shadow-gold: 0 0 0 3px rgba(212,175,55,0.25), 0 8px 24px rgba(212,175,55,0.15);
+            --radius-md: 16px;
             --radius-lg: 24px;
             --radius-full: 9999px;
-            --transition-smooth: all 0.4s cubic-bezier(0.16,1,0.3,1);
+            --transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
         }
-        * { margin:0; padding:0; box-sizing:border-box; }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: var(--font-body);
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-            background-attachment: fixed;
+            background-color: var(--bg-cream);
             color: var(--text-main);
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
-
-        .starfield {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: radial-gradient(2px 2px at 20px 30px, var(--accent-gold), rgba(212,175,55,0)),
-                              radial-gradient(2px 2px at 60px 70px, var(--accent-gold), rgba(212,175,55,0)),
-                              radial-gradient(1px 1px at 50px 50px, var(--accent-gold), rgba(212,175,55,0)),
-                              radial-gradient(1px 1px at 130px 80px, var(--accent-gold), rgba(212,175,55,0)),
-                              radial-gradient(2px 2px at 90px 10px, var(--accent-gold), rgba(212,175,55,0));
-            background-repeat: repeat;
-            background-size: 200px 200px;
-            animation: twinkle 4s infinite;
-            pointer-events: none; z-index: 1;
-            opacity: 0.4;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.6; }
-        }
-
-        .content-wrapper {
-            position: relative; z-index: 2;
-            min-height: 100vh;
-        }
-
-        /* ── HEADER ── */
-        .results-header {
-            padding: 2rem 1.25rem;
-            text-align: center;
-            background: rgba(0,0,0,0.3);
-            border-bottom: 1px solid rgba(212,175,55,0.2);
-            backdrop-filter: blur(8px);
-        }
-
-        .brand-logo {
-            font-family: var(--font-heading);
-            font-size: 1.4rem; font-style: italic;
-            display: flex; align-items: center; justify-content: center;
-            gap: 0.5rem; color: var(--accent-gold); margin-bottom: 1rem;
-        }
-        .brand-logo svg { width: 22px; height: 22px; }
-
-        .results-header h1 {
-            font-family: var(--font-heading); font-size: clamp(2.2rem, 6vw, 3.5rem);
-            font-weight: 600; color: var(--white); margin-bottom: 0.5rem; line-height: 1.15;
-        }
-
-        .results-header .subtext {
-            font-size: 0.95rem; color: rgba(255,255,255,0.7);
-            max-width: 600px; margin: 0 auto; line-height: 1.6;
-        }
-
-        /* ── SECTION CONTAINERS ── */
-        .section-box {
-            max-width: 720px; margin: 0 auto;
-            padding: 3rem 1.25rem;
-            background: rgba(255,255,255,0.97);
-            margin-bottom: 1px;
-        }
-
-        .section-box h2 {
-            font-family: var(--font-heading);
-            font-size: clamp(1.8rem, 5vw, 2.4rem);
-            font-weight: 600; color: var(--text-main);
-            margin-bottom: 2rem; text-align: center; line-height: 1.15;
-        }
-
-        /* ── WELCOME SECTION (Q1) ── */
-        .birth-info {
-            text-align: center; margin-bottom: 1.5rem;
-            padding-bottom: 1.5rem; border-bottom: 1px solid var(--accent-lavender);
-        }
-
-        .birth-date-display {
-            font-family: var(--font-heading);
-            font-size: 1.8rem; font-weight: 700;
-            color: var(--accent-gold); margin-bottom: 0.5rem;
-        }
-
-        .birth-subtext {
-            font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.25rem;
-        }
-
-        .life-path-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, rgba(212,175,55,0.1), rgba(212,175,55,0.05));
-            border: 2px solid var(--accent-gold);
-            border-radius: 50%;
-            width: 120px; height: 120px;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            margin: 0 auto 1.5rem auto;
-        }
-
-        .lp-number {
-            font-size: 3.5rem; font-weight: 700;
-            color: var(--accent-gold); line-height: 1;
-        }
-
-        .lp-label {
-            font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
-            color: var(--accent-gold-dark); letter-spacing: 0.1em; margin-top: 0.3rem;
-        }
-
-        .welcome-text {
-            font-size: 1rem; color: var(--text-main); line-height: 1.8;
-            max-width: 560px; margin: 0 auto;
-        }
-
-        .welcome-text strong {
-            color: var(--text-main); font-weight: 600;
-        }
-
-        /* ── REVELATIONS GRID (Q2) ── */
-        .revelations {
-            display: grid; grid-template-columns: 1fr;
-            gap: 2rem; margin-bottom: 1.5rem;
-        }
-
-        @media (min-width: 768px) {
-            .revelations { grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; }
-        }
-
-        .revelation-card {
-            background: linear-gradient(135deg, #FFFBEE 0%, #FFF8E7 100%);
-            border: 1px solid var(--accent-lavender);
-            border-radius: var(--radius-lg);
-            padding: 2rem 1.5rem;
-            text-align: center;
-        }
-
-        .rev-icon {
-            font-size: 2.2rem; margin-bottom: 1rem; display: block;
-        }
-
-        .revelation-card h3 {
-            font-family: var(--font-heading);
-            font-size: 1.25rem; font-weight: 600;
-            color: var(--text-main); margin-bottom: 0.75rem;
-        }
-
-        .revelation-card p {
-            font-size: 0.9375rem; color: var(--text-muted); line-height: 1.7;
-        }
-
-        /* ── SEGMENTED INSIGHT (Q3) ── */
-        .segmented-insight {
-            background: linear-gradient(135deg, rgba(212,175,55,0.06), rgba(212,175,55,0.03));
-            border: 2px solid var(--accent-lavender);
-            border-radius: var(--radius-lg);
-            padding: 2.5rem 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .segmented-insight h3 {
-            font-family: var(--font-heading);
-            font-size: 1.4rem; font-weight: 600;
-            color: var(--text-main); margin-bottom: 1.25rem;
-        }
-
-        .segmented-insight p {
-            font-size: 0.95rem; color: var(--text-main); line-height: 1.8;
-            margin-bottom: 1rem;
-        }
-
-        .reveals-list {
-            list-style: none; margin: 1.25rem 0;
-        }
-
-        .reveals-list li {
-            font-size: 0.9375rem; color: var(--text-muted);
-            padding: 0.5rem 0 0.5rem 1.75rem;
-            position: relative;
-        }
-
-        .reveals-list li::before {
-            content: '✨';
-            position: absolute; left: 0; top: 0.25rem;
-        }
-
-        /* ── TRANSITION TO PITCH (Q4) ── */
-        .transition-box {
-            text-align: center; margin-bottom: 2rem;
-        }
-
-        .transition-box h3 {
-            font-family: var(--font-heading);
-            font-size: 1.8rem; font-weight: 600;
-            color: var(--text-main); margin-bottom: 1rem;
-        }
-
-        .transition-box p {
-            font-size: 0.95rem; color: var(--text-muted);
-            line-height: 1.7; max-width: 560px; margin: 0 auto 1.5rem auto;
-        }
-
-        .pdf-preview {
-            max-width: 500px; margin: 0 auto 1.5rem auto;
-            background: var(--white);
-            border: 8px solid var(--accent-gold);
-            border-radius: 12px;
+        
+        /* ── BACKGROUND STARS ── */
+        .bg-stars {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-            position: relative;
         }
-
-        .pdf-preview::before {
-            content: '50% OFF';
-            position: absolute; top: 15px; right: -15px;
+        
+        .bg-star {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            opacity: 0.12;
+            animation: twinkle var(--dur, 4s) ease-in-out infinite;
+            animation-delay: var(--delay, 0s);
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.08; transform: scale(1); }
+            50% { opacity: 0.2; transform: scale(1.3); }
+        }
+        
+        /* ── SOCIAL PROOF BAR ── */
+        .social-proof-bar {
+            position: sticky;
+            top: 0;
+            z-index: 150;
             background: var(--accent-gold);
             color: var(--white);
-            padding: 0.75rem 1.5rem;
-            font-weight: 700; font-size: 0.85rem;
-            transform: rotate(25deg);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            z-index: 2;
+            padding: 0.6rem 1rem;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+            box-shadow: var(--shadow-md);
         }
-
-        .pdf-inner {
+        
+        .social-proof-bar span {
+            margin-right: 0.5rem;
+        }
+        
+        /* ── PROGRESS BAR ── */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-gold-dark));
+            z-index: 160;
+            width: 0%;
+            transition: width 0.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        
+        /* ── HEADER ── */
+        .page-header {
+            position: relative;
+            z-index: 10;
             padding: 2rem 1.5rem;
             text-align: center;
+            border-bottom: 1px solid rgba(212,175,55,0.15);
         }
-
-        .pdf-title {
+        
+        .brand-logo {
             font-family: var(--font-heading);
-            font-size: 1.5rem; font-weight: 600;
-            color: var(--text-main); margin-bottom: 1rem;
+            font-size: 1.4rem;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            color: var(--text-main);
+            text-decoration: none;
         }
-
-        .pdf-features {
-            list-style: none; text-align: left;
-            font-size: 0.875rem; color: var(--text-muted);
-            line-height: 1.8;
+        
+        .brand-logo svg {
+            width: 24px;
+            height: 24px;
+            color: var(--accent-gold);
+            flex-shrink: 0;
         }
-
-        .pdf-features li {
-            padding: 0.3rem 0 0.3rem 1.75rem;
+        
+        /* ── CONTAINER ── */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
             position: relative;
+            z-index: 1;
         }
-
-        .pdf-features li::before {
-            content: '✓';
-            position: absolute; left: 0; color: var(--accent-gold); font-weight: 700;
-        }
-
-        /* ── CTA & PRICING (Q5) ── */
-        .pricing-section {
-            text-align: center; margin-top: 2.5rem;
-            padding-top: 2rem; border-top: 1px solid var(--accent-lavender);
-        }
-
-        .pricing-headline {
-            font-size: 1.1rem; color: var(--text-main); font-weight: 600;
-            margin-bottom: 0.75rem;
-        }
-
-        .price-display {
-            font-family: var(--font-heading);
-            font-size: 2.8rem; font-weight: 700;
-            color: var(--accent-gold);
-            margin-bottom: 0.5rem;
-            display: flex; align-items: center; justify-content: center;
-            gap: 1rem;
-        }
-
-        .price-old {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            text-decoration: line-through;
-            opacity: 0.6;
-        }
-
-        .price-new {
-            font-family: var(--font-heading);
-            font-size: 2.8rem;
-            color: var(--accent-gold);
-        }
-
-        .price-savings {
-            font-size: 0.85rem; color: var(--accent-gold-dark);
-            font-weight: 600; margin-bottom: 1.5rem;
-        }
-
-        .cta-button {
-            display: inline-flex; align-items: center; justify-content: center;
-            width: 100%; max-width: 480px;
-            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-dark) 100%);
-            color: var(--white); text-shadow: 0 1px 2px rgba(0,0,0,0.15);
-            font-weight: 600; font-size: 1.1rem;
-            padding: 1.3rem 2.5rem; border-radius: var(--radius-full);
-            box-shadow: var(--shadow-lg); border: none; cursor: pointer;
-            transition: var(--transition-smooth);
-            font-family: var(--font-body);
-            margin: 0 auto 1.5rem auto;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 16px 40px rgba(212,175,55,0.3);
-        }
-
-        .cta-trust {
-            font-size: 0.8rem; color: var(--text-muted); opacity: 0.8;
-            display: flex; align-items: center; justify-content: center;
-            gap: 0.4rem; margin-top: 0.75rem;
-        }
-
-        .cta-trust svg { width: 12px; height: 12px; }
-
-        .cta-scarcity {
-            font-size: 0.8rem; color: var(--accent-gold-dark); font-weight: 600;
-            margin-top: 0.5rem;
-        }
-
-        /* ── GUARANTEE SECTION (Q6) ── */
-        .guarantee-section {
-            text-align: center; margin-top: 2.5rem;
-            padding-top: 2rem; border-top: 1px solid var(--accent-lavender);
-        }
-
-        .guarantee-badge {
-            width: 100px; height: 100px;
-            margin: 0 auto 1.25rem auto;
-            display: flex; align-items: center; justify-content: center;
-            border: 3px solid var(--accent-gold);
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(212,175,55,0.1), rgba(212,175,55,0.05));
-            font-size: 2.5rem;
-        }
-
-        .guarantee-headline {
-            font-family: var(--font-heading);
-            font-size: 1.4rem; font-weight: 600;
-            color: var(--text-main); margin-bottom: 0.75rem;
-        }
-
-        .guarantee-text {
-            font-size: 0.9375rem; color: var(--text-muted);
-            line-height: 1.8; max-width: 540px; margin: 0 auto;
-        }
-
-        .guarantee-text strong {
-            color: var(--text-main); font-weight: 600;
-        }
-
-        /* ── TESTIMONIALS (Q7) ── */
-        .testimonials-section {
-            margin-top: 2.5rem; padding-top: 2rem;
-            border-top: 1px solid var(--accent-lavender);
-        }
-
-        .testimonials-section h3 {
-            font-family: var(--font-heading);
-            font-size: 1.6rem; font-weight: 600;
-            color: var(--text-main); text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .testimonials-grid {
-            display: grid; grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-
-        @media (min-width: 768px) {
-            .testimonials-grid { grid-template-columns: 1fr 1fr; }
-        }
-
-        .testimonial {
-            background: #FFFBEE;
-            border: 1px solid var(--accent-lavender);
-            border-radius: var(--radius-lg);
-            padding: 1.5rem;
-        }
-
-        .testi-stars {
-            font-size: 0.85rem; color: var(--accent-gold);
-            margin-bottom: 0.75rem; letter-spacing: 0.1em;
-        }
-
-        .testi-quote {
-            font-style: italic; font-size: 0.95rem; color: var(--text-main);
-            line-height: 1.7; margin-bottom: 1rem;
-        }
-
-        .testi-author {
-            font-weight: 600; font-size: 0.85rem; color: var(--text-muted);
-        }
-
-        /* ── FAQ (Q8) ── */
-        .faq-section {
-            margin-top: 2.5rem; padding-top: 2rem;
-            border-top: 1px solid var(--accent-lavender);
-        }
-
-        .faq-section h3 {
-            font-family: var(--font-heading);
-            font-size: 1.6rem; font-weight: 600;
-            color: var(--text-main); text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .faq-item {
-            margin-bottom: 1.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--accent-lavender);
-        }
-
-        .faq-item:last-child {
-            border-bottom: none; margin-bottom: 0; padding-bottom: 0;
-        }
-
-        .faq-q {
-            font-weight: 600; color: var(--text-main);
-            font-size: 0.95rem; margin-bottom: 0.5rem;
-        }
-
-        .faq-a {
-            font-size: 0.875rem; color: var(--text-muted); line-height: 1.7;
-        }
-
-        /* ── FINAL CTA (Q9) ── */
-        .final-cta-section {
-            background: linear-gradient(135deg, var(--bg-cream), var(--accent-lavender-light));
-            text-align: center; padding: 3.5rem 1.25rem;
-        }
-
-        .final-cta-section h2 {
-            font-family: var(--font-heading);
-            font-size: clamp(1.8rem, 5vw, 2.4rem);
-            font-weight: 600; color: var(--text-main);
-            margin-bottom: 1.25rem; line-height: 1.15;
-        }
-
-        .final-cta-section p {
-            font-size: 0.95rem; color: var(--text-muted);
-            line-height: 1.7; max-width: 560px; margin: 0 auto 2rem auto;
-        }
-
-        .ps-section {
-            margin-top: 3rem; padding-top: 2rem;
-            border-top: 2px solid var(--accent-lavender);
-            text-align: center; font-size: 0.9rem;
-            color: var(--text-muted); line-height: 1.7;
-            max-width: 540px; margin-left: auto; margin-right: auto;
-        }
-
-        .ps-strong {
-            color: var(--text-main); font-weight: 600;
-        }
-
-        /* ── FOOTER ── */
-        .section-box.footer-box {
-            background: var(--footer-bg);
-            color: var(--white);
-            padding: 2rem 1.25rem;
-            margin-top: 0;
+        
+        /* ── HERO REVEAL SECTION ── */
+        .hero-reveal {
+            padding: 4rem 1.5rem;
             text-align: center;
         }
-
-        .footer-box .footer-links {
-            display: flex; flex-wrap: wrap;
-            justify-content: center; gap: 1.5rem;
-            margin: 1.5rem 0; font-size: 0.8rem;
+        
+        .pre-headline {
+            font-size: 0.95rem;
+            color: var(--accent-gold);
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
         }
-
-        .footer-box a { color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.3s; }
-        .footer-box a:hover { color: var(--white); }
-
-        .footer-disclaimer {
-            font-size: 0.75rem; color: rgba(255,255,255,0.4);
-            max-width: 600px; margin: 1.5rem auto 0 auto; line-height: 1.6;
+        
+        .hero-reveal h1 {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s ease-out;
         }
-
-        @media (max-width: 600px) {
-            .section-box { padding: 2rem 1rem; }
-            .segmented-insight { padding: 1.5rem 1rem; }
+        
+        #birthDisplay {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+        }
+        
+        .life-path-hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+        
+        .life-path-circle {
+            width: 220px;
+            height: 220px;
+            border: 4px solid var(--accent-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-gold);
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+        
+        .life-path-number {
+            font-family: var(--font-heading);
+            font-size: 5rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+        
+        .life-path-label {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin: 0;
+        }
+        
+        .life-path-archetype {
+            font-size: 1.25rem;
+            color: var(--accent-gold);
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .life-path-intro {
+            font-size: 1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0.5rem 0 0 0;
+            line-height: 1.6;
+        }
+        
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: var(--shadow-gold); }
+            50% { box-shadow: 0 0 0 6px rgba(212,175,55,0.15), 0 8px 24px rgba(212,175,55,0.2); }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* ── REVELATIONS SECTION ── */
+        .revelations {
+            padding: 4rem 1.5rem;
+            background: linear-gradient(135deg, var(--bg-cream) 0%, var(--bg-alt) 100%);
+        }
+        
+        .revelations h2 {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+        
+        .section-subhead {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 2.5rem;
+        }
+        
+        .revelation-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .revelation-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            border-left: 4px solid var(--accent-gold);
+            min-height: 320px;
+            display: flex;
+            flex-direction: column;
+            animation: fadeInUp 0.8s ease-out;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+        
+        .revelation-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-gold);
+        }
+        
+        .revelation-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .revelation-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        
+        .revelation-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            flex: 1;
+        }
+        
+        /* ── SEGMENTED INSIGHT ── */
+        .segmented-insight {
+            padding: 3rem 1.5rem;
+        }
+        
+        .insight-callout {
+            background: var(--white);
+            border: 3px solid var(--accent-gold);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-gold);
+        }
+        
+        .insight-callout h3 {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+        }
+        
+        .insight-callout p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* ── VALUE INTRO ── */
+        .value-intro {
+            padding: 4rem 1.5rem;
+        }
+        
+        .value-intro h2 {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+        
+        .value-intro > p {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .feature-list {
+            list-style: none;
+            max-width: 700px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .feature-list li {
+            color: var(--text-main);
+            font-size: 1rem;
+            line-height: 1.6;
+            padding-left: 0;
+        }
+        
+        /* ── AUTHORITY STORY ── */
+        .authority-story {
+            padding: 4rem 1.5rem;
+            background: linear-gradient(135deg, var(--bg-alt) 0%, var(--bg-cream) 100%);
+        }
+        
+        .authority-story h2 {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--text-main);
+        }
+        
+        .story-text {
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            text-align: center;
+        }
+        
+        /* ── VALUE STACK ── */
+        .value-stack {
+            padding: 4rem 1.5rem;
+        }
+        
+        .value-stack h2 {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            color: var(--text-main);
+        }
+        
+        .value-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .value-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            border-top: 4px solid var(--accent-gold);
+            text-align: center;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+        
+        .value-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-gold);
+        }
+        
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .value-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-range {
+            color: var(--accent-gold);
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+        
+        .value-card > p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        /* ── HERO TESTIMONIAL ── */
+        .hero-testimonial {
+            padding: 3rem 1.5rem;
+            background: linear-gradient(135deg, var(--bg-cream) 0%, var(--bg-alt) 100%);
+        }
+        
+        .hero-test-card {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 2rem;
+            box-shadow: var(--shadow-gold);
+            border: 2px solid var(--accent-gold);
+            align-items: start;
+        }
+        
+        .hero-test-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .test-stars {
+            color: var(--accent-gold);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .test-quote {
+            color: var(--text-main);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        
+        .test-author {
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .test-meta {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .verified-badge {
+            color: var(--accent-gold);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        /* ── URGENCY BAR ── */
+        .urgency-bar {
+            padding: 3rem 1.5rem;
+        }
+        
+        .urgency-card {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--white);
+            border: 2px solid var(--accent-gold);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .urgency-card p {
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .clock-emoji {
+            font-size: 1.3rem;
+            margin-right: 0.5rem;
+        }
+        
+        .progress-bar-urgency {
+            width: 100%;
+            height: 12px;
+            background: rgba(212,175,55,0.15);
+            border-radius: var(--radius-full);
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-gold-dark));
+            border-radius: var(--radius-full);
+        }
+        
+        .urgency-text {
+            color: var(--text-main);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .urgency-note {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        /* ── PRICE REVEAL ── */
+        .price-reveal {
+            padding: 4rem 1.5rem;
+            background: linear-gradient(135deg, var(--bg-alt) 0%, var(--bg-cream) 100%);
+        }
+        
+        .price-card {
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            background: var(--white);
+            border: 3px solid var(--accent-gold);
+            border-radius: var(--radius-lg);
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-gold);
+        }
+        
+        .price-original {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            text-decoration: line-through;
+            margin-bottom: 0.5rem;
+        }
+        
+        .price-separator {
+            height: 2px;
+            background: var(--accent-gold);
+            margin: 1.5rem 0;
+        }
+        
+        .price-main {
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: var(--font-heading);
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+        
+        .price-subtext {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .price-badge {
+            display: inline-block;
+            background: var(--accent-gold);
+            color: var(--white);
+            padding: 0.4rem 1.2rem;
+            border-radius: var(--radius-full);
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+        }
+        
+        /* ── CTA BUTTONS ── */
+        .cta-primary {
+            width: 100%;
+            max-width: 600px;
+            display: block;
+            margin: 2rem auto;
+            padding: 1.2rem 2rem;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark));
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: var(--shadow-gold);
+            transition: all var(--transition);
+            font-family: var(--font-body);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 0 6px rgba(212,175,55,0.2), 0 12px 30px rgba(212,175,55,0.25);
+        }
+        
+        .cta-primary:active {
+            transform: translateY(-1px);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { box-shadow: var(--shadow-gold); }
+            50% { box-shadow: 0 0 0 8px rgba(212,175,55,0.15), 0 12px 30px rgba(212,175,55,0.2); }
+        }
+        
+        .cta-large {
+            padding: 1.5rem 2rem;
+            font-size: 1.2rem;
+        }
+        
+        .cta-trust {
+            max-width: 600px;
+            margin: 2rem auto;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .cta-trust p {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* ── GUARANTEE ── */
+        .guarantee {
+            padding: 4rem 1.5rem;
+        }
+        
+        .guarantee-card {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--white);
+            border: 2px solid var(--accent-gold);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .guarantee-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .guarantee-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+        }
+        
+        .guarantee-card p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        
+        /* ── TESTIMONIAL GRID ── */
+        .testimonial-grid {
+            padding: 4rem 1.5rem;
+            background: linear-gradient(135deg, var(--bg-cream) 0%, var(--bg-alt) 100%);
+        }
+        
+        .testimonial-grid h2 {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            color: var(--text-main);
+        }
+        
+        .testimonial-grid .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .test-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            border-top: 3px solid var(--accent-gold);
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+        
+        .test-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-gold);
+        }
+        
+        .test-card .test-stars {
+            margin-bottom: 0.75rem;
+        }
+        
+        .test-card .test-quote {
+            color: var(--text-main);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .test-card .test-name {
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .test-card .verified-badge {
+            font-size: 0.8rem;
+        }
+        
+        /* ── FAQ ACCORDION ── */
+        .faq {
+            padding: 4rem 1.5rem;
+        }
+        
+        .faq h2 {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            color: var(--text-main);
+        }
+        
+        .accordion {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .accordion-item {
+            margin-bottom: 1rem;
+            background: var(--white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+        
+        .accordion-header {
+            width: 100%;
+            padding: 1.5rem;
+            background: var(--white);
+            border: none;
+            text-align: left;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all var(--transition);
+            border-bottom: 1px solid rgba(212,175,55,0.1);
+        }
+        
+        .accordion-header:hover {
+            background: var(--bg-alt);
+            color: var(--accent-gold);
+        }
+        
+        .accordion-header.active {
+            background: var(--bg-alt);
+            color: var(--accent-gold);
+            border-bottom-color: var(--accent-gold);
+        }
+        
+        .accordion-header::after {
+            content: '▼';
+            font-size: 0.75rem;
+            color: var(--accent-gold);
+            transition: transform var(--transition);
+            margin-left: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .accordion-header.active::after {
+            transform: rotate(180deg);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height var(--transition);
+            padding: 0 1.5rem;
+        }
+        
+        .accordion-content.active {
+            max-height: 500px;
+            padding: 1.5rem;
+        }
+        
+        .accordion-content p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin: 0;
+        }
+        
+        /* ── FINAL CTA ── */
+        .final-cta {
+            padding: 4rem 1.5rem;
+            background: linear-gradient(135deg, var(--bg-alt) 0%, var(--bg-cream) 100%);
+        }
+        
+        .final-card {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-gold);
+            border: 2px solid var(--accent-gold);
+        }
+        
+        .final-card h2 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+        }
+        
+        #finalCopy {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+        
+        .final-trust {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .final-trust p {
+            margin-bottom: 0.5rem;
+        }
+        
+        .ps-note {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(212,175,55,0.2);
+            line-height: 1.6;
+        }
+        
+        /* ── FOOTER ── */
+        footer {
+            background: var(--footer-bg);
+            color: var(--white);
+            padding: 3rem 1.5rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .footer-logo {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-style: italic;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-tagline {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-gold);
+        }
+        
+        .disclaimer {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.8rem;
+            line-height: 1.6;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* ── STICKY MOBILE CTA ── */
+        .sticky-cta-mobile {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            background: var(--accent-gold);
+            box-shadow: 0 -4px 12px rgba(212,175,55,0.25);
+            z-index: 140;
+            display: none;
+        }
+        
+        .cta-button {
+            width: 100%;
+            padding: 0.9rem 1.5rem;
+            background: var(--white);
+            color: var(--accent-gold);
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+        
+        .cta-button:active {
+            transform: scale(0.98);
+        }
+        
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .hero-reveal h1 {
+                font-size: 2rem;
+            }
+            
+            .price-main {
+                font-size: 3.5rem;
+            }
+            
+            .value-cards,
+            .revelation-cards,
+            .testimonial-grid .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-test-card {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                text-align: center;
+            }
+            
+            .hero-test-card img {
+                margin: 0 auto;
+            }
+            
+            .sticky-cta-mobile {
+                display: block;
+            }
+            
+            .cta-primary {
+                margin-bottom: 70px;
+            }
+            
+            .revelations h2,
+            .value-intro h2,
+            .authority-story h2,
+            .value-stack h2,
+            .testimonial-grid h2,
+            .faq h2 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-reveal h1 {
+                font-size: 1.6rem;
+            }
+            
+            .social-proof-bar {
+                font-size: 0.75rem;
+                padding: 0.5rem;
+            }
+            
+            .life-path-circle {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .life-path-number {
+                font-size: 4rem;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .price-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .price-main {
+                font-size: 2.8rem;
+            }
         }
     </style>
 </head>
 <body>
-
-<div class="starfield"></div>
-
-<div class="content-wrapper">
-
-<!-- ══════ HEADER ══════ -->
-<div class="results-header">
-    <div class="brand-logo">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" fill="currentColor"/></svg>
-        Star Signal
+    <!-- Background stars -->
+    <div class="bg-stars" id="bgStars"></div>
+    
+    <!-- Progress bar -->
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <!-- Social proof bar -->
+    <div class="social-proof-bar">
+        <span>★★★★★</span> 2,847,391 readings completed
     </div>
-    <h1 id="results-title">Your Blueprint Is Ready</h1>
-    <p class="subtext">Scroll down to reveal your personalized cosmic reading and unlock your full 40+ page blueprint.</p>
-</div>
-
-<!-- ══════ SECTION 1: WELCOME + LIFE PATH ══════ -->
-<div class="section-box">
-    <div class="birth-info">
-        <div class="birth-date-display" id="birth-date-display">March 14, 1987</div>
-        <div class="birth-subtext" id="birth-location-display">Born in Chicago, USA</div>
-        <div class="life-path-badge">
-            <div class="lp-number" id="life-path-number">6</div>
-            <div class="lp-label">Life Path</div>
+    
+    <!-- Header -->
+    <header class="page-header">
+        <div class="brand-logo">
+            <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" fill="currentColor"/>
+            </svg>
+            Star Signal
         </div>
-    </div>
-
-    <p class="welcome-text" id="welcome-text">
-        What we're about to reveal has shocked some of our readers to tears. Based on your exact birth coordinates, your Life Path Number is <strong>6</strong> — which makes you part of the 8.3% of souls born under what ancient astrologers called "The Awakened Path."
-    </p>
-</div>
-
-<!-- ══════ SECTION 2: THREE REVELATIONS ══════ -->
-<div class="section-box">
-    <h2>Here Are 3 Things Your Blueprint Just Revealed About You</h2>
-
-    <div class="revelations">
-        <div class="revelation-card">
-            <span class="rev-icon">☀️</span>
-            <h3>You've Always Felt "Different"</h3>
-            <p>Your blueprint shows that you carry what astrologers call a "double-activated intuitive channel." This means you often sense things before they happen — and other people rarely understand you at the deepest level. You've likely felt misunderstood most of your life. This is not a flaw — it's a gift that most people don't have.</p>
-        </div>
-
-        <div class="revelation-card">
-            <span class="rev-icon">🌙</span>
-            <h3>Something Shifted In The Last 18 Months</h3>
-            <p>Your natal chart shows that between now and 18 months ago, you entered what's called a "Saturn Activation Window." Something happened — a loss, a revelation, a quiet breakdown — that changed how you see yourself. You may not have told anyone. But your blueprint sees it. And what's coming next in 2026 is directly connected to what you went through.</p>
-        </div>
-
-        <div class="revelation-card">
-            <span class="rev-icon">⭐</span>
-            <h3>A Major Life Shift Is Coming Soon</h3>
-            <p>Based on your planetary transits, between now and the next 3 months, you will experience what's called a "Threshold Event" — a window where a critical opportunity, person, or realization enters your life. Most people miss their Threshold Event because they weren't paying attention. Those who catch it describe it as "the turning point of my entire life."</p>
-        </div>
-    </div>
-</div>
-
-<!-- ══════ SECTION 3: SEGMENTED INSIGHT (dynamic based on Q6) ══════ -->
-<div class="section-box">
-    <div class="segmented-insight" id="segmented-insight">
-        <h3 id="segment-heading">And Because You Told Us Love & Relationships Is Your Priority Right Now...</h3>
-        <p id="segment-body">Your Venus placement in Aquarius combined with your Life Path 6 reveals something critical: your soulmate's energy is already active in your life — but you might be overlooking them, or caught up in someone who isn't your true match.</p>
-        <p><strong>Your blueprint reveals:</strong></p>
-        <ul class="reveals-list" id="segment-reveals">
-            <li>The first letter of your soulmate's name</li>
-            <li>The month you're most likely to meet them (or recognize them if already in your life)</li>
-            <li>The "cosmic block" preventing the relationship from activating</li>
-            <li>Your ideal partner's Life Path Number (compatibility is 94% predictive)</li>
-        </ul>
-    </div>
-</div>
-
-<!-- ══════ SECTION 4: TRANSITION TO PITCH ══════ -->
-<div class="section-box">
-    <div class="transition-box">
-        <h3>This Is Just The Surface. Your Full Blueprint Contains...</h3>
-        <p>What you've just read is the top 2% of your complete Cosmic Blueprint. The full reading — over 40 pages, custom-generated for your exact birth data — contains:</p>
-
-        <div class="pdf-preview">
-            <div class="pdf-inner">
-                <div class="pdf-title">Your Cosmic Blueprint</div>
-                <ul class="pdf-features">
-                    <li>Complete Numerology profile (Life Path, Destiny, Soul Urge, Personality)</li>
-                    <li>Full 2026 Month-by-Month Forecast</li>
-                    <li>Love &amp; Soulmate Profile (with first letter of their name)</li>
-                    <li>Wealth Timeline (exact abundance windows)</li>
-                    <li>3 Hidden Life Challenges &amp; how to transmute them</li>
-                    <li>Past-Life Signature and karmic lessons</li>
-                    <li>Your ideal Morning Ritual based on your cosmic design</li>
-                    <li>The specific dates in 2026 when your Threshold Event opens</li>
-                </ul>
+    </header>
+    
+    <!-- HERO REVEAL SECTION -->
+    <section class="hero-reveal">
+        <div class="container">
+            <div class="pre-headline">✨ Your Blueprint Is Ready</div>
+            <h1 id="heroGreeting">The cosmos has been waiting</h1>
+            <p id="birthDisplay">Born December 12, 1990 in New York</p>
+            
+            <div class="life-path-hero">
+                <div class="life-path-circle">
+                    <div class="life-path-number" id="lifePathNumber">9</div>
+                </div>
+                <p class="life-path-label" id="lifePathLabel">Life Path 9</p>
+                <p class="life-path-archetype" id="lifePathArchetype">The Humanitarian</p>
+                <p class="life-path-intro" id="lifePathIntro">You are called to serve the world and bring healing wherever you go.</p>
             </div>
         </div>
-    </div>
-
-    <!-- ══════ PRICING & CTA ══════ -->
-    <div class="pricing-section">
-        <div class="pricing-headline">Normally $39 — Today, For New Readers, Just $19</div>
-        <div class="price-display">
-            <span class="price-old">$39</span>
-            <span>→</span>
-            <span class="price-new">$19</span>
-        </div>
-        <div class="price-savings">✨ 50% OFF — Today Only</div>
-
-        <button class="cta-button" onclick="scrollToCheckout()">
-            🔮 YES — Send Me My Full Blueprint For $19
-        </button>
-        <div class="cta-trust">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-            Secure checkout · Instant delivery · 60-day guarantee
-        </div>
-        <div class="cta-scarcity">
-            ⏳ 247 readings unlocked in the last hour · 2,847,391 total readings delivered
-        </div>
-    </div>
-
-    <!-- ══════ GUARANTEE ══════ -->
-    <div class="guarantee-section">
-        <div class="guarantee-badge">🛡️</div>
-        <h3 class="guarantee-headline">The "If It Doesn't Speak To You, Don't Pay" Promise</h3>
-        <p class="guarantee-text">
-            If your Cosmic Blueprint doesn't feel like it was written specifically for you — if it doesn't reveal at least 3 things that feel eerily accurate — <strong>email us within 60 days and we'll refund every cent. You keep the reading.</strong> But we're confident that within the first 10 pages, you'll feel seen in a way you never have before.
-        </p>
-    </div>
-
-    <!-- ══════ TESTIMONIALS ══════ -->
-    <div class="testimonials-section">
-        <h3>What Other Cosmic Travelers Have Said</h3>
-        <div class="testimonials-grid">
-            <div class="testimonial">
-                <div class="testi-stars">⭐⭐⭐⭐⭐</div>
-                <div class="testi-quote">"I cried reading page 14. It described my exact relationship with my father — something I never told anyone. I don't know how this is possible."</div>
-                <div class="testi-author">— Sarah M., 34 · Ohio, USA</div>
-            </div>
-
-            <div class="testimonial">
-                <div class="testi-stars">⭐⭐⭐⭐⭐</div>
-                <div class="testi-quote">"My Threshold Event window was 'late March.' I met my now-fiancé on March 24th. I'm not even kidding."</div>
-                <div class="testi-author">— Jennifer T., 29 · Melbourne, AUS</div>
-            </div>
-
-            <div class="testimonial">
-                <div class="testi-stars">⭐⭐⭐⭐⭐</div>
-                <div class="testi-quote">"I've been to real astrologers in person who charged hundreds. This was more accurate than any of them. And it was $19."</div>
-                <div class="testi-author">— Maria R., 41 · Madrid, ESP</div>
-            </div>
-
-            <div class="testimonial">
-                <div class="testi-stars">⭐⭐⭐⭐⭐</div>
-                <div class="testi-quote">"The first letter of my soulmate's name was J. Three weeks later I met James at my cousin's wedding. We're moving in together."</div>
-                <div class="testi-author">— Chen L., 37 · Toronto, CAN</div>
+    </section>
+    
+    <!-- REVELATIONS SECTION -->
+    <section class="revelations">
+        <div class="container">
+            <h2>Here Are 3 Things Your Blueprint Just Revealed About You</h2>
+            <p class="section-subhead">Based on your birth coordinates — these patterns are encoded into your chart.</p>
+            
+            <div class="revelation-cards">
+                <div class="revelation-card">
+                    <div class="icon">☀️</div>
+                    <h3>You've Always Felt 'Different' — And Here's Why</h3>
+                    <p>Your blueprint shows you carry what astrologers call a "double-activated intuitive channel." This means you often sense things before they happen — and other people rarely understand you at the deepest level. You've likely felt misunderstood most of your life. You may have been called "too sensitive" or "too much" by people who couldn't see what you see. This is not a flaw — it's a gift that most people don't have.</p>
+                </div>
+                
+                <div class="revelation-card">
+                    <div class="icon">🌙</div>
+                    <h3>Something In The Last 18 Months Has Shifted You Forever</h3>
+                    <p>Your natal chart shows that you've recently entered what's called a "Saturn Activation Window" — a period where something significant happened that changed how you see yourself. A loss, a revelation, a quiet breakdown, or a relationship that changed you. You may not have told anyone how deeply this affected you. But your blueprint sees it. And what's coming next in 2026 is directly connected to what you went through.</p>
+                </div>
+                
+                <div class="revelation-card">
+                    <div class="icon">⭐</div>
+                    <h3 id="thresholdHeading">A Major Life Shift Is Coming In June — You Need To Be Ready</h3>
+                    <p>Based on your planetary transits, a window is opening when what astrologers call a 'Threshold Event' enters your life. A critical opportunity, person, or realisation. What this event is depends entirely on whether you've decoded the rest of your blueprint. Most people miss their Threshold Event because they weren't paying attention. Those who catch it describe it as 'the turning point of my entire life.'</p>
+                </div>
             </div>
         </div>
+    </section>
+    
+    <!-- SEGMENTED INSIGHT SECTION -->
+    <section class="segmented-insight">
+        <div class="container">
+            <div class="insight-callout" id="insightCallout">
+                <h3>Your Heart Knows What Your Mind Hasn't Admitted Yet</h3>
+                <p>The patterns in your blueprint suggest you've been seeking connection — real, deep, undeniable connection — for longer than you'd like to admit. You've watched others find it. You've wondered what's wrong with you. Here's what your blueprint reveals: Nothing is wrong. You're simply wired for a love that most people don't understand. The person you're meant to find is looking for exactly what you have to offer. The question is: will you be ready when they arrive?</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- VALUE INTRO SECTION -->
+    <section class="value-intro">
+        <div class="container">
+            <h2>This Is Just The Surface. Your Full Blueprint Contains...</h2>
+            <p>What you've just read is the top 2% of your complete Cosmic Blueprint.</p>
+            <ul class="feature-list">
+                <li>✨ Your complete Numerology profile (Life Path, Destiny, Soul Urge, Personality)</li>
+                <li>✨ Your full 2026 Month-by-Month Forecast (one page per month)</li>
+                <li>✨ Your Love & Soulmate Profile (including the letter of their name)</li>
+                <li>✨ Your Wealth Timeline (exact windows when abundance is accessible)</li>
+                <li>✨ Your 3 Hidden Life Challenges (and how to transmute them)</li>
+                <li>✨ Your Past-Life Signature and karmic lessons</li>
+                <li>✨ Your ideal Morning Ritual based on your cosmic design</li>
+                <li>✨ The specific dates in 2026 when your 'Threshold Event' opens</li>
+            </ul>
+        </div>
+    </section>
+    
+    <!-- AUTHORITY STORY SECTION -->
+    <section class="authority-story">
+        <div class="container">
+            <h2>Why 2,847,391 Women Have Already Decoded Their Blueprint</h2>
+            <p class="story-text">Eleven years ago, a retired NASA astrophysicist named Dr. Alan Keshavarz made a discovery that changed astrology forever. While studying planetary alignment data, he noticed birth dates and locations correlating with measurable life events in ways chance couldn't explain. He spent six years building the 'Cosmic Coordinate System.' Before he passed in 2019, he shared it with one instruction: 'Make this available to women who need guidance. For the price of a cup of coffee.' That's why your full Cosmic Blueprint — the same system that costs $400 with a personal astrologer — is available today for $19.</p>
+        </div>
+    </section>
+    
+    <!-- VALUE STACK SECTION -->
+    <section class="value-stack">
+        <div class="container">
+            <h2>Here's Everything That's In Your Cosmic Blueprint</h2>
+            <div class="value-cards">
+                <div class="value-card">
+                    <div class="card-icon">📊</div>
+                    <h3>Your Core Numerology Profile</h3>
+                    <p class="page-range">Pages 1–8</p>
+                    <p>Your complete numerological identity — Life Path, Destiny Number, Soul Urge, and Personality Number. Most astrologers only cover Life Path. The full picture requires all four.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="card-icon">📅</div>
+                    <h3>Your 2026 Month-by-Month Forecast</h3>
+                    <p class="page-range">Pages 9–20</p>
+                    <p>Every month of 2026 mapped out. Which months bring opportunity? Which require caution? When should you make major decisions? When should you rest and reflect?</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="card-icon">💘</div>
+                    <h3>Your Love & Soulmate Profile</h3>
+                    <p class="page-range">Pages 21–28</p>
+                    <p>Who you're meant to find. What they're looking for. The specific letter their name begins with. When they'll enter your life. How to recognise them.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="card-icon">💎</div>
+                    <h3>Your Wealth Timeline</h3>
+                    <p class="page-range">Pages 29–34</p>
+                    <p>The exact windows in 2026 when your financial abundance is accessible. Which opportunities to pursue. Which ventures to avoid. Your personal wealth activation dates.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="card-icon">⚡</div>
+                    <h3>Your Threshold Event Blueprint</h3>
+                    <p class="page-range">Pages 35–40</p>
+                    <p>What the 'Threshold Event' means specifically for you. The exact dates it opens. How to prepare. The three signs you're about to experience it. How to step through.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="card-icon">🌅</div>
+                    <h3>Your Personal Morning Ritual</h3>
+                    <p class="page-range">Pages 41–44</p>
+                    <p>A 7-minute morning practice designed specifically for your cosmic design. What to say. What to visualise. When to do it. How it aligns you with your destiny.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- HERO TESTIMONIAL SECTION -->
+    <section class="hero-testimonial">
+        <div class="container">
+            <div class="hero-test-card">
+                <img src="https://assets.cdn.filesafe.space/fveUHPreYRqiA1APSbJt/media/69e9ce1f717d5dd4e143a717.png" alt="Hannah M.">
+                <div class="hero-test-content">
+                    <div class="test-stars">★★★★★</div>
+                    <p class="test-quote">"I'd been scrolling Facebook at 11pm when I saw the ad for Star Signal. Honestly, I almost didn't click. But something made me. I answered the nine questions and within minutes I had my Blueprint. And I just… sat there. I cried. Not the sad kind of cry. The kind where you feel seen for the first time in your life. Page 14 — the one about 'what shifted you in the last 18 months' — it was so accurate about the breakup I'd never told anyone about. I felt like someone finally understood. I've read it three times and each time I find something new. Worth every penny."</p>
+                    <p class="test-author">— Hannah M., 36</p>
+                    <p class="test-meta">Boston, MA · Corporate Lawyer</p>
+                    <p class="verified-badge">✓ Verified Buyer · Reading purchased June 2025</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- URGENCY BAR SECTION -->
+    <section class="urgency-bar">
+        <div class="container">
+            <div class="urgency-card">
+                <p><span class="clock-emoji">⏳</span> Today's $19 Readings Remaining:</p>
+                <div class="progress-bar-urgency">
+                    <div class="progress-fill" style="width: 60%;"></div>
+                </div>
+                <p class="urgency-text">247 of 500 unlocked today</p>
+                <p class="urgency-note">The discounted price is available while today's allocation lasts.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- PRICE REVEAL SECTION -->
+    <section class="price-reveal">
+        <div class="container">
+            <div class="price-card">
+                <p class="price-original">Normally $39</p>
+                <div class="price-separator"></div>
+                <p class="price-main">$19</p>
+                <p class="price-subtext">One-time payment. Yours forever.</p>
+                <span class="price-badge">✨ 50% OFF — Today Only</span>
+            </div>
+            
+            <button class="cta-primary">🔮 YES — Send Me My Full Blueprint For $19</button>
+            
+            <div class="cta-trust">
+                <p>🔒 Secure checkout · SSL encrypted · Instant PDF delivery</p>
+                <p>⭐⭐⭐⭐⭐ 4.9/5 rating · 2,847,391 readings delivered</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- GUARANTEE SECTION -->
+    <section class="guarantee">
+        <div class="container">
+            <div class="guarantee-card">
+                <div class="guarantee-icon">🛡️</div>
+                <h3>The 'If It Doesn't Speak To You, Don't Pay' Promise</h3>
+                <p>Your Cosmic Blueprint comes with a 60-day, no-questions-asked guarantee. Read it. Sit with it. See how accurate it is. If — within 60 days — you feel like it wasn't worth every penny, email our team and we'll refund every cent. You keep the Blueprint. We can offer this because 97.3% of women who receive their Blueprint say it was more accurate than any reading they'd ever had.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- TESTIMONIAL GRID SECTION -->
+    <section class="testimonial-grid">
+        <div class="container">
+            <h2>What Women Around The World Are Saying</h2>
+            <div class="grid">
+                <div class="test-card">
+                    <div class="test-stars">★★★★★</div>
+                    <p class="test-quote">"Page 14 made me cry. I don't know how this works but it's like they know me."</p>
+                    <p class="test-name">Sarah M., 34 — Ohio, USA</p>
+                    <p class="verified-badge">✓ Verified Buyer</p>
+                </div>
+                
+                <div class="test-card">
+                    <div class="test-stars">★★★★★</div>
+                    <p class="test-quote">"I've had $400 astrology readings that weren't half as detailed as this. Incredible value."</p>
+                    <p class="test-name">Jessica K., 42 — London, UK</p>
+                    <p class="verified-badge">✓ Verified Buyer</p>
+                </div>
+                
+                <div class="test-card">
+                    <div class="test-stars">★★★★★</div>
+                    <p class="test-quote">"The 2026 forecast section alone is worth the $19. But everything in here is gold."</p>
+                    <p class="test-name">Emma L., 28 — Toronto, Canada</p>
+                    <p class="verified-badge">✓ Verified Buyer</p>
+                </div>
+                
+                <div class="test-card">
+                    <div class="test-stars">★★★★★</div>
+                    <p class="test-quote">"I showed this to my therapist and she asked where I got it. That says everything."</p>
+                    <p class="test-name">Rachel T., 39 — Sydney, Australia</p>
+                    <p class="verified-badge">✓ Verified Buyer</p>
+                </div>
+                
+                <div class="test-card">
+                    <div class="test-stars">★★★★★</div>
+                    <p class="test-quote">"My whole year just made sense. The forecast was eerily accurate. Grateful."</p>
+                    <p class="test-name">Maya P., 31 — Berlin, Germany</p>
+                    <p class="verified-badge">✓ Verified Buyer</p>
+                </div>
+                
+                <div class="test-card">
+                    <div class="test-stars">★★★★★</div>
+                    <p class="test-quote">"I've been waiting for something like this. Finally, a blueprint that actually sees me."</p>
+                    <p class="test-name">Lisa W., 45 — Miami, USA</p>
+                    <p class="verified-badge">✓ Verified Buyer</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ SECTION -->
+    <section class="faq">
+        <div class="container">
+            <h2>Questions Before You Unlock Your Blueprint?</h2>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header">Is this really personalised, or is it generic?</button>
+                    <div class="accordion-content">
+                        <p>Every Blueprint is custom-generated using your exact birth date, time, and location. No two Blueprints are the same. The Numerology calculations, Forecast dates, Soulmate Profile, and everything else is specific to you. Generic readings don't reference your birth city, calculate your Life Path from your actual birthdate, or map your 2026 month-by-month. Yours does.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <button class="accordion-header">How long is the Blueprint? Is it worth reading?</button>
+                    <div class="accordion-content">
+                        <p>Your complete Cosmic Blueprint is 44 pages of in-depth, personalised content. It's designed to be read in sections — don't try to finish it in one sitting. Most women report they read it multiple times, with new insights appearing each time. It includes detailed pages on your Life Path, monthly forecasts, soulmate profile, wealth timeline, life challenges, past-life signature, morning ritual, and threshold event blueprint.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <button class="accordion-header">Is this astrology or numerology or something else?</button>
+                    <div class="accordion-content">
+                        <p>Star Signal uses the 'Cosmic Coordinate System' — a blend of numerology, astrology, and birth chart analysis developed by retired NASA astrophysicist Dr. Alan Keshavarz. It takes your birth date, time, and location and runs it through calculations that reveal patterns he discovered correlate with life events and personality traits. It's scientific in methodology but spiritual in application.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <button class="accordion-header">What if I don't know my exact birth time?</button>
+                    <div class="accordion-content">
+                        <p>Birth time helps, but it's not mandatory. If you don't have it (or it's approximate), we use a standard noon time for that date. The Blueprint will still be highly personalised based on your date and birth city — you just won't have the precise chart placements that require exact birth time. Most women still find it incredibly accurate without it.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <button class="accordion-header">When will I get my Blueprint? Is it instant?</button>
+                    <div class="accordion-content">
+                        <p>Yes, it's instant. After you complete payment, you'll receive your personalised 44-page PDF immediately via email. You can download it, save it, and read it whenever you want. You own it forever. No subscriptions, no recurring charges — just one payment of $19 and it's yours.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <button class="accordion-header">What if the forecast is wrong?</button>
+                    <div class="accordion-content">
+                        <p>The 2026 Month-by-Month Forecast is based on established astrological and numerological principles, but the future is never guaranteed — your free will always shapes outcomes. The forecast identifies windows of opportunity and timing, not certainties. That said, 97.3% of women report the Blueprint was more accurate than expected. If it doesn't resonate, you have 60 days to request a full refund, no questions asked.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FINAL CTA SECTION -->
+    <section class="final-cta">
+        <div class="container">
+            <div class="final-card">
+                <h2>Your Blueprint Is Waiting</h2>
+                <p id="finalCopy">You came to this page because something inside you said yes. A quiet knowing. A pull toward understanding yourself at a deeper level. That instinct is correct. Your Blueprint is real. It's personalised. And it's ready for you right now.</p>
+                <button class="cta-primary cta-large">🔮 YES — Unlock My Cosmic Blueprint For $19</button>
+                <p class="final-trust">🔒 One-time payment · 60-day guarantee · Instant delivery</p>
+                <p class="ps-note"><strong>P.S.</strong> — The $19 price is only held while you're on this page. If you close this tab and return later, the price reverts to $39. Once today's allocation is reached, the price goes back up. If you're meant to have this Blueprint — now is the moment.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">Star Signal</div>
+            <div class="footer-tagline">Illuminate your cosmic path.</div>
+            <div class="footer-links">
+                <a href="#about">About</a>
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="disclaimer">
+                © 2026 Star Signal. All rights reserved.<br><br>
+                Star Signal readings are intended for personal reflection and entertainment purposes only. They are not a substitute for professional advice, medical, psychological, or financial. Past results do not guarantee future outcomes. Your individual results may vary.
+            </div>
+        </div>
+    </footer>
+    
+    <!-- STICKY MOBILE CTA -->
+    <div class="sticky-cta-mobile" id="stickyCTA">
+        <button class="cta-button">✨ Get My Blueprint For $19 →</button>
     </div>
-
-    <!-- ══════ FAQ ══════ -->
-    <div class="faq-section">
-        <h3>Questions Before You Unlock Your Blueprint?</h3>
-
-        <div class="faq-item">
-            <div class="faq-q">Is this really personalized, or is it generic?</div>
-            <div class="faq-a">Every Blueprint is custom-generated using your exact birth date, time, and location. No two Blueprints are the same. You'll see your specific numbers, specific forecast months, and specific Threshold Event windows.</div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-q">How quickly will I get it?</div>
-            <div class="faq-a">Instantly. The moment you complete checkout, your Blueprint is emailed to you as a downloadable PDF. Most women are reading it within 60 seconds.</div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-q">I don't know my exact birth time — is my Blueprint still accurate?</div>
-            <div class="faq-a">Yes. We use advanced numerological calculations to compensate when birth time isn't known. Your Blueprint will still be deeply accurate.</div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-q">Is $19 all I pay? Any subscriptions?</div>
-            <div class="faq-a">$19 is a one-time payment. No subscription. No hidden fees. Your Blueprint is yours forever.</div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-q">What if it doesn't feel accurate to me?</div>
-            <div class="faq-a">You have 60 days to request a full refund. You keep the Blueprint. No questions, no hassle.</div>
-        </div>
-    </div>
-
-    <!-- ══════ FINAL CTA ══════ -->
-    <div class="final-cta-section">
-        <h2>Your Blueprint Is Waiting</h2>
-        <p id="final-message">You came to this page because something inside you said yes. Maybe it was the repeating numbers you've been seeing. Maybe it was the feeling that a big shift is coming. Maybe it was simply curiosity about what your birth date really means. Whatever brought you here — your Blueprint already exists. It was encoded into you at the moment you were born.</p>
-
-        <button class="cta-button" onclick="scrollToCheckout()">
-            🔮 YES — Unlock My Cosmic Blueprint For $19
-        </button>
-        <div class="cta-trust">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-            One-time payment · 60-day guarantee · Instant delivery
-        </div>
-
-        <div class="ps-section">
-            <p><span class="ps-strong">P.S.</span> — The $19 price is only held while you're on this page. If you close this tab and come back later, the price returns to $39. This isn't a marketing tactic — it's because we're capped on how many $19 Blueprints we deliver each day. <span class="ps-strong">If you're meant to have this Blueprint, now is the moment.</span></p>
-        </div>
-    </div>
-</div>
-
-<!-- ══════ FOOTER ══════ -->
-<div class="section-box footer-box">
-    <div style="margin-bottom: 1.5rem;">
-        <svg viewBox="0 0 24 24" fill="none" style="width: 20px; height: 20px; color: var(--accent-gold); margin: 0 auto 0.5rem auto; display: block;"><path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" fill="currentColor"/></svg>
-        <strong>Star Signal</strong><br>
-        <em style="font-size: 0.8rem; opacity: 0.6;">Illuminate your cosmic path</em>
-    </div>
-
-    <div class="footer-links">
-        <a href="#about">About</a>
-        <a href="#privacy">Privacy Policy</a>
-        <a href="#terms">Terms of Service</a>
-        <a href="#contact">Contact</a>
-    </div>
-
-    <div class="footer-disclaimer">
-        © 2026 Star Signal. All rights reserved.<br><br>
-        Star Signal readings are intended for personal reflection and entertainment. They are not a substitute for professional medical, financial, or psychological guidance. Results vary.
-    </div>
-</div>
-
-</div><!-- end content-wrapper -->
-
-<script>
-    // Fetch quiz data from sessionStorage
-    const quizData = JSON.parse(sessionStorage.getItem('starSignalQuiz') || '{}');
-
-    // Format birth date for display
-    if (quizData.birthDate) {
-        const [year, month, day] = quizData.birthDate.split('-');
-        const months = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        const formatted = `${months[parseInt(month)]} ${parseInt(day)}, ${year}`;
-        document.getElementById('birth-date-display').textContent = formatted;
-    }
-
-    // Display birth location
-    if (quizData.birthCity) {
-        document.getElementById('birth-location-display').textContent = `Born in ${quizData.birthCity}`;
-    }
-
-    // Display life path
-    const lp = quizData.lifePathNumber || 6;
-    document.getElementById('life-path-number').textContent = lp;
-    document.getElementById('results-title').textContent = (quizData.firstName || 'Cosmic Traveler') + ', Your Blueprint Is Ready';
-
-    // Personalize welcome text
-    const lpDescriptions = {
-        1: '1% of souls born under "The Visionary Path"',
-        2: '5% of souls born under "The Bridge Path"',
-        3: '8% of souls born under "The Creator\'s Path"',
-        4: '12% of souls born under "The Foundation Path"',
-        5: '15% of souls born under "The Freedom Path"',
-        6: '8.3% of souls born under "The Awakened Path"',
-        7: '7% of souls born under "The Seeker\'s Path"',
-        8: '6% of souls born under "The Manifestor\'s Path"',
-        9: '9% of souls born under "The Humanitarian Path"'
-    };
-
-    const desc = lpDescriptions[lp] || '8.3% of souls born under "The Awakened Path"';
-    document.getElementById('welcome-text').innerHTML = `What we're about to reveal has shocked some of our readers to tears. Based on your exact birth coordinates, your Life Path Number is <strong>${lp}</strong> — which makes you part of the ${desc}.`;
-
-    // Dynamically populate segmented insight based on life area (Q6)
-    const lifeArea = quizData.lifeArea || 'love';
-    const segmentContent = {
-        love: {
-            heading: 'And Because You Told Us Love & Relationships Is Your Priority Right Now...',
-            body: 'Your Venus placement combined with your Life Path ' + lp + ' reveals something critical: your soulmate\'s energy is already active in your life — but you might be overlooking them, or caught up in someone who isn\'t your true match.',
-            reveals: [
-                'The first letter of your soulmate\'s name',
-                'The month you\'re most likely to meet them (or recognize them if already in your life)',
-                'The "cosmic block" preventing the relationship from activating',
-                'Your ideal partner\'s Life Path Number (compatibility is 94% predictive)'
-            ]
-        },
-        money: {
-            heading: 'And Because You Told Us Money & Abundance Is Your Priority Right Now...',
-            body: 'Your blueprint reveals that you\'re currently in a "Wealth Dormancy" phase — meaning money has felt harder than it should be. This isn\'t because you\'re doing anything wrong. It\'s because you\'re operating against your financial archetype.',
-            reveals: [
-                'Your Wealth Archetype (1 of 9 — most people never discover theirs)',
-                'Your 3-month window in 2026 when your abundance portal opens',
-                'The hidden money block inherited from your family line',
-                'Your ideal income path based on your numerological design'
-            ]
-        },
-        purpose: {
-            heading: 'And Because You Told Us Life Purpose & Career Is Your Priority Right Now...',
-            body: 'Your blueprint reveals something most people never discover: you were born with a specific Life Mission encoded into your numbers — but most people never align with theirs and spend decades in the wrong career or path.',
-            reveals: [
-                'Your true Life Purpose (in one sentence)',
-                'The 3 signs that you\'re currently misaligned',
-                'The year your Purpose Portal activates (it may already be open)',
-                'The specific steps to realign with your cosmic design'
-            ]
-        },
-        spiritual: {
-            heading: 'And Because You Told Us Spiritual Growth & Awakening Is Your Priority Right Now...',
-            body: 'Your blueprint shows that you\'re in the middle of what\'s called a "Quantum Awakening" — a period where your psychic sensitivity, intuition, and spiritual gifts are rapidly expanding. Most people ignore this and suppress their abilities. You\'re being shown them for a reason.',
-            reveals: [
-                'Your 3 dominant spiritual gifts (most people only know 1)',
-                'The practices that will accelerate your awakening in 2026',
-                'Your past-life signature and how it\'s affecting you now',
-                'The specific chakra imbalance slowing your progress'
-            ]
+    
+    <script>
+        // ── LIFE PATH CALCULATION ──
+        function calculateLifePath(dateStr) {
+            const digits = dateStr.replace(/-/g, '').split('').map(Number);
+            let sum = digits.reduce((a, b) => a + b, 0);
+            while (sum > 9 && sum !== 11 && sum !== 22 && sum !== 33) {
+                sum = String(sum).split('').map(Number).reduce((a, b) => a + b, 0);
+            }
+            return sum;
         }
-    };
-
-    const content = segmentContent[lifeArea] || segmentContent.love;
-    document.getElementById('segment-heading').textContent = content.heading;
-    document.getElementById('segment-body').textContent = content.body;
-
-    const revealsList = document.getElementById('segment-reveals');
-    revealsList.innerHTML = '';
-    content.reveals.forEach(reveal => {
-        const li = document.createElement('li');
-        li.textContent = reveal;
-        revealsList.appendChild(li);
-    });
-
-    // Personalize final message based on first name
-    const name = quizData.firstName || 'Cosmic Traveler';
-    document.getElementById('final-message').textContent = name + ', you came to this page because something inside you said yes. Maybe it was the repeating numbers you\'ve been seeing. Maybe it was the feeling that a big shift is coming. Maybe it was simply curiosity about what your birth date really means. Whatever brought you here — your Blueprint already exists. It was encoded into you at the moment you were born on ' + document.getElementById('birth-date-display').textContent + '.';
-
-    // Scroll to checkout placeholder
-    function scrollToCheckout() {
-        alert('Whop checkout embed will be placed here. For now, this links to the actual checkout.');
-        // In production, this would scroll to a Whop embed or redirect to checkout URL
-    }
-</script>
+        
+        // ── ARCHETYPE NAMES ──
+        const archetypeNames = {
+            1: "The Pioneer",
+            2: "The Peacemaker",
+            3: "The Creative",
+            4: "The Builder",
+            5: "The Freedom Seeker",
+            6: "The Nurturer",
+            7: "The Seeker",
+            8: "The Achiever",
+            9: "The Humanitarian",
+            11: "The Intuitive",
+            22: "The Master Builder",
+            33: "The Master Teacher"
+        };
+        
+        const archetypeIntros = {
+            1: "You are a natural leader, blazing your own trail and inspiring others to follow.",
+            2: "You are a bridge between worlds, balancing opposing forces with grace and wisdom.",
+            3: "You are an expressive soul, translating emotion and vision into art and connection.",
+            4: "You are the architect of stability, creating lasting structures and foundations.",
+            5: "You are the explorer of possibility, always seeking the next adventure and truth.",
+            6: "You are the healer of hearts, drawn to nurture and support those you love.",
+            7: "You are the seeker of meaning, exploring the hidden depths of existence.",
+            8: "You are a powerful manifester, turning vision into tangible abundance and success.",
+            9: "You are called to serve the world and bring healing wherever you go.",
+            11: "You are an intuitive messenger, channeling insight that transcends ordinary understanding.",
+            22: "You are a master builder of destiny, creating transformation on a grand scale.",
+            33: "You are a master teacher, illuminating the path for all those around you."
+        };
+        
+        // ── THRESHOLD MONTH ──
+        function getThresholdMonth() {
+            const months = ["January", "February", "March", "April", "May", "June",
+                          "July", "August", "September", "October", "November", "December"];
+            const now = new Date();
+            const thresholdMonthIndex = (now.getMonth() + 2) % 12;
+            return months[thresholdMonthIndex];
+        }
+        
+        // ── FORMAT DATE DISPLAY ──
+        function formatDateForDisplay(dateStr) {
+            const [year, month, day] = dateStr.split('-');
+            const months = ["January", "February", "March", "April", "May", "June",
+                          "July", "August", "September", "October", "November", "December"];
+            return `${months[parseInt(month) - 1]} ${parseInt(day)}, ${year}`;
+        }
+        
+        // ── GENERATE BACKGROUND STARS ──
+        function generateBackgroundStars() {
+            const bgStars = document.getElementById('bgStars');
+            const starCount = 30;
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'bg-star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = (Math.random() * 3 + 1) + 'px';
+                star.style.height = star.style.width;
+                star.style.setProperty('--dur', (Math.random() * 4 + 3) + 's');
+                star.style.setProperty('--delay', Math.random() * 2 + 's');
+                bgStars.appendChild(star);
+            }
+        }
+        
+        // ── SEGMENTED INSIGHTS ──
+        const insights = {
+            love: {
+                title: "Your Heart Knows What Your Mind Hasn't Admitted Yet",
+                text: "The patterns in your blueprint suggest you've been seeking connection — real, deep, undeniable connection — for longer than you'd like to admit. You've watched others find it. You've wondered what's wrong with you. Here's what your blueprint reveals: Nothing is wrong. You're simply wired for a love that most people don't understand. The person you're meant to find is looking for exactly what you have to offer. The question is: will you be ready when they arrive?"
+            },
+            money: {
+                title: "Your Money Story Is About To Change",
+                text: "Your blueprint shows you have a 'dormant wealth pattern' — untapped financial potential that's been waiting for the right moment to activate. For years, you may have felt stuck or unsure about your relationship with abundance. That's not laziness or bad luck. That's a timing issue. Your chart reveals specific 2026 windows when your wealth potential awakens. But only if you understand them. Only if you're positioned to recognise and act on them."
+            },
+            purpose: {
+                title: "You're Being Called To Something Greater",
+                text: "The cosmos has placed a unique mission in your heart — something only you can do. For years you may have ignored it, doubted it, or told yourself it's impossible. But your blueprint doesn't lie. The gifts you carry, the experiences you've survived, the way you see the world — these aren't accidents. They're coordinates pointing toward your true work. 2026 is when the universe starts calling louder. Are you ready to answer?"
+            },
+            spiritual: {
+                title: "Your Spiritual Awakening Is Accelerating",
+                text: "Your blueprint reveals you're in a 'spiritual acceleration window' — a period where your intuition, awareness, and connection to something greater are heightening rapidly. The synchronicities you've been noticing aren't coincidence. The dreams that feel prophetic aren't random. The knowing you can't explain is real. Your blueprint maps the specific practices, timing, and milestones of your spiritual journey throughout 2026. You're not meant to navigate this alone."
+            }
+        };
+        
+        // ── PAGE LOAD HANDLER ──
+        document.addEventListener('DOMContentLoaded', function() {
+            // Generate stars
+            generateBackgroundStars();
+            
+            // Parse URL parameters
+            const params = new URLSearchParams(window.location.search);
+            const firstName = params.get('firstName') || 'Seeker';
+            const birthDate = params.get('birthDate') || '1990-12-12';
+            const birthCity = params.get('birthCity') || 'New York';
+            const cityValid = params.get('cityValid') === 'true';
+            const lifeArea = params.get('lifeArea') || 'love';
+            const email = params.get('email') || '';
+            
+            // Calculate Life Path
+            const lifePath = calculateLifePath(birthDate);
+            const archetype = archetypeNames[lifePath] || 'The Seeker';
+            const archetypeIntro = archetypeIntros[lifePath] || 'You carry a unique cosmic signature.';
+            const thresholdMonth = getThresholdMonth();
+            const formattedBirth = formatDateForDisplay(birthDate);
+            
+            // Inject dynamic content
+            document.getElementById('heroGreeting').textContent = `Welcome, ${firstName}`;
+            document.getElementById('birthDisplay').textContent = `Born ${formattedBirth}${cityValid ? ' in ' + birthCity : ''}`;
+            document.getElementById('lifePathNumber').textContent = lifePath;
+            document.getElementById('lifePathLabel').textContent = `Life Path ${lifePath}`;
+            document.getElementById('lifePathArchetype').textContent = archetype;
+            document.getElementById('lifePathIntro').textContent = archetypeIntro;
+            document.getElementById('thresholdHeading').textContent = `A Major Life Shift Is Coming In ${thresholdMonth} — You Need To Be Ready`;
+            
+            // Update insight callout
+            const insight = insights[lifeArea] || insights.love;
+            const insightCallout = document.getElementById('insightCallout');
+            insightCallout.innerHTML = `<h3>${insight.title}</h3><p>${insight.text}</p>`;
+            
+            // Update final copy
+            document.getElementById('finalCopy').textContent = `${firstName}, you came to this page because something inside you said yes. A quiet knowing. A pull toward understanding yourself at a deeper level. That instinct is correct. Your Blueprint is real. It's personalised. And it's ready for you right now.`;
+            
+            // Setup FAQ accordion
+            setupAccordion();
+            
+            // Setup scroll listeners
+            setupScrollListeners();
+            
+            // Setup button listeners
+            setupButtonListeners();
+        });
+        
+        // ── ACCORDION ──
+        function setupAccordion() {
+            const headers = document.querySelectorAll('.accordion-header');
+            headers.forEach(header => {
+                header.addEventListener('click', function() {
+                    // Close other accordions
+                    headers.forEach(h => {
+                        if (h !== header) {
+                            h.classList.remove('active');
+                            h.nextElementSibling.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current
+                    this.classList.toggle('active');
+                    this.nextElementSibling.classList.toggle('active');
+                });
+            });
+        }
+        
+        // ── SCROLL LISTENERS ──
+        function setupScrollListeners() {
+            window.addEventListener('scroll', function() {
+                // Update progress bar
+                const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrolled = (window.scrollY / scrollHeight) * 100;
+                document.getElementById('progressBar').style.width = scrolled + '%';
+                
+                // Show/hide sticky mobile CTA
+                const stickyBtn = document.getElementById('stickyCTA');
+                if (window.scrollY > window.innerHeight * 1.5) {
+                    stickyBtn.style.display = 'block';
+                } else {
+                    stickyBtn.style.display = 'none';
+                }
+            });
+        }
+        
+        // ── BUTTON LISTENERS ──
+        function setupButtonListeners() {
+            const buttons = document.querySelectorAll('.cta-primary, .cta-button');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // In production, this would redirect to checkout
+                    console.log('CTA clicked - would redirect to checkout');
+                    // Placeholder for payment integration
+                });
+            });
+        }
+    </script>
 </body>
 </html>
