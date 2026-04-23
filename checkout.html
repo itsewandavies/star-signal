@@ -668,18 +668,18 @@
         <span class="bump-arrow">➡</span>
         <label class="bump-checkbox-label">
             <input type="checkbox" id="bumpCheckbox" onchange="updateTotal()">
-            <span class="bump-cta-text">YES! Add My Partner Blueprint Comparison</span>
+            <span class="bump-cta-text">YES! Add The Love Prophecy Report (+$27)</span>
         </label>
     </div>
     <div class="bump-body">
-        <h4>The Partner Blueprint Comparison</h4>
-        <p>Your Cosmic Blueprint shows your path. But you're not walking it alone. Enter the birth details of one important person in your life — your partner, your mother, your best friend, your sister — and we'll generate a complete compatibility overlay.</p>
+        <h4>The Love Prophecy Report — $27</h4>
+        <p>Your Blueprint identifies the letter of your soulmate's name. The Love Prophecy Report reveals everything else — the timeline, the cosmic block keeping the connection from activating, and the exact ritual to clear it.</p>
         <ul class="bump-features">
-            <li>Whether your Life Paths are aligned, parallel, or crossing</li>
-            <li>Where your energies amplify each other — and where they create friction</li>
-            <li>Your shared Threshold moments in 2026</li>
-            <li>The single most important truth this relationship's Blueprint can reveal</li>
-            <li>Compare to a private couple's astrology reading: $400+ at any practitioner</li>
+            <li>The exact month your soulmate enters (or re-enters) your life in 2026</li>
+            <li>The "false match" pattern your chart shows you've been repeating</li>
+            <li>The cosmic block currently preventing the real connection</li>
+            <li>A 7-minute ritual to energetically clear the block</li>
+            <li>Normal price: $47 · Today only: $27 added to your order</li>
         </ul>
     </div>
 </div>
@@ -704,13 +704,23 @@
             </div>
         </div>
 
-        <!-- RIGHT: WHOP CHECKOUT EMBED (sticky on desktop) -->
+        <!-- RIGHT: WHOP CHECKOUT EMBEDS (dual — switched by bump checkbox) -->
         <div class="checkout-right">
             <p style="font-size: 0.875rem; color: #5A5252; text-align: center; margin-bottom: 1rem; font-style: italic;">
                 Enter your payment details below to receive your Blueprint instantly.
             </p>
-            <div id="whop-checkout-embed" style="min-height: 480px; border: 1px solid rgba(212,175,55,0.3); border-radius: 16px; overflow: hidden; background: white;">
-                <div id="whop-loading" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 480px; gap: 1rem;">
+
+            <!-- FE-ONLY embed (shown when bump unchecked) -->
+            <div id="checkout-fe-only" style="border: 1px solid rgba(212,175,55,0.3); border-radius: 16px; overflow: hidden; background: white; min-height: 480px;">
+                <div id="loading-fe-only" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 480px; gap: 1rem;">
+                    <div class="checkout-spinner"></div>
+                    <p style="font-size: 0.9375rem; color: #9CA3AF; font-style: italic;">Loading secure checkout...</p>
+                </div>
+            </div>
+
+            <!-- FE+BUMP bundle embed (hidden until bump checked) -->
+            <div id="checkout-fe-bump" style="display: none; border: 1px solid rgba(212,175,55,0.3); border-radius: 16px; overflow: hidden; background: white; min-height: 480px;">
+                <div id="loading-fe-bump" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 480px; gap: 1rem;">
                     <div class="checkout-spinner"></div>
                     <p style="font-size: 0.9375rem; color: #9CA3AF; font-style: italic;">Loading secure checkout...</p>
                 </div>
@@ -766,32 +776,146 @@
     </footer>
 
     <script>
-        function updateTotal() {
-            const bump = document.getElementById('bumpCheckbox').checked;
-            document.getElementById('grandTotal').textContent = bump ? '$46' : '$19';
-            document.getElementById('bumpTotalRow').style.display = bump ? 'flex' : 'none';
+        // ============================================================
+        // PLAN IDs — confirmed live Whop products
+        // ============================================================
+        const PLAN_FE_ONLY = 'plan_WrudbHcLudmhj';     // $19 — Cosmic Blueprint only
+        const PLAN_FE_BUMP = 'STAR_SIGNAL_BUNDLE_PLAN_ID'; // $46 — Blueprint + Love Prophecy bundle
+        //                   ↑ REPLACE THIS with the plan_id of the
+        //                     "Star Signal — Blueprint + Love Prophecy Bundle" product ($46)
+        //                     that still needs to be created in Whop.
+
+        // ============================================================
+        // SESSIONS — pre-load both on page load so switching is instant
+        // ============================================================
+        let sessionFeOnly = null;
+        let sessionFeBump = null;
+
+        async function createCheckoutSession(planId, containerId, loadingId) {
+            try {
+                // Get tracking/affiliate data from localStorage
+                const affiliateCode = localStorage.getItem('ss_ref') || '';
+                const trackingId    = localStorage.getItem('ss_tid') || '';
+                const fbc           = localStorage.getItem('ss_fbc') || getCookie('_fbc') || '';
+                const fbp           = localStorage.getItem('ss_fbp') || getCookie('_fbp') || '';
+
+                // Also pass quiz answers as metadata for the webhook to use
+                const quizAnswers = JSON.parse(localStorage.getItem('ss_quiz_answers') || '{}');
+                const urlParams   = new URLSearchParams(window.location.search);
+
+                const response = await fetch('/api/create-checkout-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        plan_id:        planId,
+                        affiliate_code: affiliateCode,
+                        tid:            trackingId,
+                        fbc:            fbc,
+                        fbp:            fbp,
+                        ref:            affiliateCode,
+                        metadata: {
+                            firstName:          urlParams.get('firstName') || '',
+                            birthDate:          quizAnswers[2] || '',
+                            birthTime:          quizAnswers[3] || '',
+                            birthCity:          quizAnswers[4] || '',
+                            gender:             quizAnswers[1] || '',
+                            lifeArea:           quizAnswers[5] || 'love',
+                            relationshipStatus: quizAnswers[6] || '',
+                            cosmicSigns:        quizAnswers[7] || []
+                        }
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!data.session_id) throw new Error('No session ID returned');
+
+                // Load Whop embed into container
+                const container = document.getElementById(containerId);
+                const loading   = document.getElementById(loadingId);
+
+                const iframe = document.createElement('iframe');
+                iframe.src    = `https://whop.com/checkout/${data.session_id}/`;
+                iframe.style  = 'width: 100%; min-height: 480px; border: none; display: block;';
+                iframe.title  = 'Secure Checkout';
+                iframe.allow  = 'payment';
+
+                iframe.onload = () => {
+                    if (loading) loading.style.display = 'none';
+                };
+
+                // Replace loading spinner with iframe
+                container.innerHTML = '';
+                container.appendChild(iframe);
+
+                return data.session_id;
+
+            } catch (err) {
+                console.error(`Checkout session error for ${planId}:`, err);
+                const loading = document.getElementById(loadingId);
+                if (loading) {
+                    loading.innerHTML = `<p style="color: #c0392b; font-size: 0.875rem; padding: 1rem;">
+                        Failed to load checkout. Please refresh the page.
+                    </p>`;
+                }
+                return null;
+            }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const params = new URLSearchParams(window.location.search);
+        function getCookie(name) {
+            const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+            return match ? match[2] : '';
+        }
+
+        // ============================================================
+        // TOGGLE BUMP — switches visible checkout
+        // ============================================================
+        function updateTotal() {
+            const bump = document.getElementById('bumpCheckbox').checked;
+
+            // Update order summary
+            document.getElementById('grandTotal').textContent = bump ? '$46' : '$19';
+            document.getElementById('bumpTotalRow').style.display = bump ? 'flex' : 'none';
+
+            // Switch visible checkout embed
+            document.getElementById('checkout-fe-only').style.display = bump ? 'none' : 'block';
+            document.getElementById('checkout-fe-bump').style.display = bump ? 'block' : 'none';
+        }
+
+        // ============================================================
+        // PAGE LOAD
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', async () => {
+            const params    = new URLSearchParams(window.location.search);
             const firstName = params.get('firstName') || '';
+
             if (firstName) {
-                document.getElementById('checkoutName').textContent = ', ' + firstName;
+                const el = document.getElementById('checkoutName');
+                if (el) el.textContent = ', ' + firstName;
             }
 
             const lifePath = params.get('lifePath') || '';
-            const email = params.get('email') || '';
-            const subhead = document.getElementById('checkoutSubhead');
+            const email    = params.get('email') || '';
+            const subhead  = document.getElementById('checkoutSubhead');
             if (subhead) {
-                let subheadText = 'Your Cosmic Blueprint is ready to be sent';
-                if (email) subheadText += ` to ${email}`;
-                subheadText += ' — instantly after payment.';
-                if (lifePath) subheadText = `Your Life Path ${lifePath} Cosmic Blueprint is ready to be sent${email ? ' to ' + email : ''} — instantly after payment.`;
-                subhead.textContent = subheadText;
+                if (lifePath) {
+                    subhead.textContent = `Your Life Path ${lifePath} Cosmic Blueprint is ready${email ? ' for ' + email : ''} — delivered instantly after payment.`;
+                } else {
+                    subhead.textContent = `Your Cosmic Blueprint is ready to be sent${email ? ' to ' + email : ''} — instantly after payment.`;
+                }
             }
 
-            // Store params in sessionStorage for OTO page
+            // Store tracking/quiz data in localStorage for OTO + webhook
             sessionStorage.setItem('starSignalData', params.toString());
+
+            // Pre-load BOTH checkout sessions simultaneously (instant switch on bump toggle)
+            const [feOnlySession, feBumpSession] = await Promise.all([
+                createCheckoutSession(PLAN_FE_ONLY, 'checkout-fe-only', 'loading-fe-only'),
+                createCheckoutSession(PLAN_FE_BUMP, 'checkout-fe-bump', 'loading-fe-bump')
+            ]);
+
+            sessionFeOnly = feOnlySession;
+            sessionFeBump = feBumpSession;
         });
     </script>
 </body>

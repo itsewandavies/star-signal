@@ -15,11 +15,12 @@ const supabase = createClient(
 function extractPayload(body) {
   const { event, data } = body;
 
-  if (event === "payment.succeeded") {
-    const { email, metadata, order_id } = data;
+  // Handle both underscore (current Whop V2) and dot notation (legacy)
+  if (event === "payment_succeeded" || event === "payment.succeeded") {
+    const { email, metadata, order_id, id } = data;
     return {
       email,
-      whopOrderId: order_id,
+      whopOrderId: order_id || id,
       firstName: metadata?.firstName || "Cosmic Traveler",
       birthDate: metadata?.birthDate,
       birthTime: metadata?.birthTime,
@@ -27,9 +28,11 @@ function extractPayload(body) {
       gender: metadata?.gender,
       lifeArea: metadata?.lifeArea || "love",
       relationshipStatus: metadata?.relationshipStatus,
-      cosmicSigns: metadata?.cosmicSigns || [],
+      cosmicSigns: Array.isArray(metadata?.cosmicSigns)
+        ? metadata.cosmicSigns
+        : (metadata?.cosmicSigns ? JSON.parse(metadata.cosmicSigns) : []),
     };
-  } else if (event === "membership.went_active") {
+  } else if (event === "membership.went_active" || event === "membership_went_active") {
     const { user, id, product } = data;
     return {
       email: user?.email,
@@ -216,7 +219,7 @@ export default async function handler(req, res) {
     }
 
     // Send email with reading link
-    const readingUrl = `https://star-signal.co/reading?uuid=${readingId}`;
+    const readingUrl = `https://starsignal.co/r/${readingId}`;
     await sendLoopsEmail(email, quizData.firstName, readingUrl, lifePathNumber);
 
     console.log(`[WHOP] ✅ Reading complete for ${email}`);
