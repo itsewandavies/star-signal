@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Complete Your Order | Star Signal</title>
+    <meta name="description" content="Secure checkout — complete your Cosmic Blueprint order.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-cream: #FDFBF7;
+            --bg-alt: #F6F3EC;
+            --text-main: #2C2828;
+            --text-muted: #5A5252;
+            --accent-gold: #D4AF37;
+            --accent-gold-dark: #B89600;
+            --footer-bg: #2B233D;
+            --white: #FFFFFF;
+            --font-heading: 'Cormorant Garamond', serif;
+            --font-body: 'Inter', sans-serif;
+            --shadow-sm: 0 4px 12px rgba(44,40,40,0.04);
+            --shadow-md: 0 8px 24px rgba(44,40,40,0.08);
+            --shadow-gold: 0 0 0 3px rgba(212,175,55,0.25), 0 8px 24px rgba(212,175,55,0.15);
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-full: 9999px;
+            --transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-cream);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            line-height: 1.15;
+            color: var(--text-main);
+        }
+
+        p {
+            color: var(--text-muted);
+        }
+
+        /* ── CHECKOUT HEADER ── */
+        .checkout-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-cream);
+            border-bottom: 1px solid rgba(212,175,55,0.3);
+            padding: 0.75rem 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-logo {
+            font-family: var(--font-heading);
+            font-size: 1.35rem;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        .brand-logo svg {
+            width: 22px;
+            height: 22px;
+            color: var(--accent-gold);
+            flex-shrink: 0;
+        }
+
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .secure-badge svg {
+            width: 14px;
+            height: 14px;
+            color: #22c55e;
+            flex-shrink: 0;
+        }
+
+        /* ── PAGE TITLE ── */
+        .page-title {
+            padding: 2rem 1.25rem 1rem;
+            text-align: center;
+        }
+
+        .pre-headline {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-gold);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .page-title h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .page-title p {
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+
+        /* ── CONTAINER ── */
+        .container {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 0 1.25rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── CHECKOUT LAYOUT ── */
+        .checkout-layout {
+            display: grid;
+            grid-template-columns: 60% 40%;
+            gap: 1.5rem;
+            padding: 1rem 1.25rem 3rem;
+            max-width: 1040px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 767px) {
+            .checkout-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ── ORDER SUMMARY CARD ── */
+        .order-summary-card {
+            background: var(--white);
+            border: 1px solid rgba(212,175,55,0.4);
+            border-radius: 16px;
+            padding: 1.75rem;
+        }
+
+        .order-summary-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            color: var(--text-main);
+        }
+
+        /* ── ORDER ITEM ── */
+        .order-item {
+            display: grid;
+            grid-template-columns: auto auto 1fr auto;
+            gap: 0.75rem;
+            align-items: center;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid rgba(212,175,55,0.2);
+            margin-bottom: 1.25rem;
+        }
+
+        .item-check {
+            width: 24px;
+            height: 24px;
+            background: var(--accent-gold);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .item-icon {
+            width: 40px;
+            height: 40px;
+            color: var(--accent-gold);
+            flex-shrink: 0;
+        }
+
+        .item-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .item-details h4 {
+            font-family: var(--font-heading);
+            font-size: 1.0625rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.25rem;
+        }
+
+        .item-details p {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .item-price {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.125rem;
+            flex-shrink: 0;
+        }
+
+        .price-original {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
+
+        .price-current {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* ── ORDER BUMP ── */
+        .order-bump {
+            background: linear-gradient(135deg, #FFFBEA 0%, #FFF8D6 100%);
+            border: 2px dashed var(--accent-gold);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.25rem;
+        }
+
+        .bump-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .bump-arrow {
+            font-size: 1.5rem;
+            color: #DC2626;
+            margin-right: 0.25rem;
+            flex-shrink: 0;
+            line-height: 1.4;
+        }
+
+        .bump-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .bump-label input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent-gold);
+            cursor: pointer;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .bump-cta-text {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #1a1a1a;
+            cursor: pointer;
+            line-height: 1.4;
+        }
+
+        .bump-body {
+            padding-left: 2rem;
+        }
+
+        .bump-body h4 {
+            font-family: var(--font-heading);
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        .bump-body p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        .bump-body ul {
+            list-style: none;
+            margin: 0.5rem 0 0.75rem;
+            padding: 0;
+        }
+
+        .bump-body ul li {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            padding: 0.15rem 0;
+            padding-left: 1.25rem;
+            position: relative;
+        }
+
+        .bump-body ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+        .bump-price-line {
+            font-size: 0.9rem;
+            margin-top: 0.75rem;
+        }
+
+        .bump-price-line .original {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+
+        /* ── ORDER TOTAL ── */
+        .order-total {
+            background: var(--bg-alt);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            margin-top: 1.25rem;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.4rem 0;
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+        }
+
+        .total-row.total-final {
+            border-top: 1px solid rgba(212,175,55,0.3);
+            margin-top: 0.5rem;
+            padding-top: 0.75rem;
+            font-size: 1.0625rem;
+            color: var(--text-main);
+        }
+
+        /* ── RIGHT COLUMN — EMBED ── */
+        .checkout-embed-col {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        /* ── TRUST SIGNALS ── */
+        .trust-signals {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+
+        .trust-item {
+            background: var(--white);
+            border: 1px solid rgba(212,175,55,0.25);
+            border-radius: 8px;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-align: center;
+        }
+
+        /* ── GUARANTEE BOX ── */
+        .guarantee-box {
+            background: var(--white);
+            border: 1px solid rgba(212,175,55,0.4);
+            border-radius: 14px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .guarantee-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .guarantee-box h4 {
+            font-family: var(--font-heading);
+            font-size: 1.0625rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        .guarantee-box p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ── CHECKOUT TESTIMONIAL ── */
+        .checkout-testimonial {
+            background: var(--white);
+            border: 1px solid rgba(212,175,55,0.3);
+            border-radius: 14px;
+            padding: 1.25rem 1.5rem;
+        }
+
+        .checkout-testimonial .stars {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .checkout-testimonial .quote {
+            font-size: 0.9rem;
+            color: var(--text-main);
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        .checkout-testimonial .author {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* ── CTA BUTTON ── */
+        @keyframes ctaGlow {
+            0%, 100% { box-shadow: 0 8px 30px rgba(212, 175, 55, 0.4); }
+            50% { box-shadow: 0 8px 50px rgba(212, 175, 55, 0.7), 0 0 20px rgba(212, 175, 55, 0.3); }
+        }
+
+        .cta-primary {
+            display: block;
+            width: 100%;
+            max-width: 700px;
+            height: 72px;
+            background: linear-gradient(135deg, #D4AF37 0%, #B89600 100%);
+            color: white;
+            font-family: var(--font-body);
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            border: none;
+            border-radius: 9999px;
+            cursor: pointer;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.4);
+            transition: all 0.3s ease;
+            animation: ctaGlow 3s ease-in-out infinite;
+            margin: 1.5rem auto;
+            text-align: center;
+            line-height: 72px;
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(212, 175, 55, 0.6);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--footer-bg);
+            color: var(--white);
+            padding: 3rem 1.5rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .footer-logo {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-style: italic;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-tagline {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        .disclaimer {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.8125rem;
+            line-height: 1.6;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- STICKY HEADER -->
+    <header class="checkout-header">
+        <div class="brand-logo">
+            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            Star Signal
+        </div>
+        <div class="secure-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            Secure Checkout · SSL Encrypted
+        </div>
+    </header>
+
+    <!-- PAGE TITLE -->
+    <section class="page-title">
+        <span class="pre-headline">✨ ALMOST THERE</span>
+        <h1>Complete Your Order<span id="checkoutName"></span></h1>
+        <p>Your Cosmic Blueprint will be emailed instantly after payment.</p>
+    </section>
+
+    <!-- MAIN CHECKOUT LAYOUT -->
+    <div class="checkout-layout">
+
+        <!-- LEFT: ORDER SUMMARY -->
+        <div class="order-summary-col">
+            <div class="order-summary-card">
+                <h3>Your Order</h3>
+
+                <!-- Main product row -->
+                <div class="order-item">
+                    <div class="item-check">✓</div>
+                    <div class="item-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </div>
+                    <div class="item-details">
+                        <h4>Your Cosmic Blueprint</h4>
+                        <p>Personalised 44-page reading — Life Path, 2026 Forecast, Soulmate Profile, Wealth Timeline &amp; Threshold Event</p>
+                    </div>
+                    <div class="item-price">
+                        <span class="price-original">$39</span>
+                        <span class="price-current">$19</span>
+                    </div>
+                </div>
+
+                <!-- ORDER BUMP -->
+                <div class="order-bump">
+                    <div class="bump-header">
+                        <span class="bump-arrow">➡</span>
+                        <label class="bump-label">
+                            <input type="checkbox" id="bumpCheckbox" onchange="updateTotal()">
+                            <span class="bump-cta-text">✅ YES! Add My 2026 Cosmic Forecast Calendar — Only $17</span>
+                        </label>
+                    </div>
+                    <div class="bump-body">
+                        <h4>The 2026 Cosmic Forecast Calendar</h4>
+                        <p>The visual companion to your Blueprint. A beautifully designed 12-month wall calendar where every single month of 2026 is mapped to YOUR personal cosmic energy.</p>
+                        <ul>
+                            <li>Your 3 Power Days each month (when to take massive action)</li>
+                            <li>Your 2 Caution Days (when to pause and rest)</li>
+                            <li>The dominant energy theme for each month</li>
+                            <li>Your monthly affirmation aligned with your Life Path</li>
+                        </ul>
+                        <p>Print it. Hang it. Reference it daily. Most women say this becomes the single most-used part of their Cosmic Blueprint experience.</p>
+                        <p class="bump-price-line"><span class="original">Normally $39.</span> Today only <strong>$17</strong> when added to your order.</p>
+                    </div>
+                </div>
+
+                <!-- ORDER TOTAL -->
+                <div class="order-total">
+                    <div class="total-row">
+                        <span>Cosmic Blueprint</span>
+                        <span>$19</span>
+                    </div>
+                    <div class="total-row bump-total-row" id="bumpTotalRow" style="display:none;">
+                        <span>2026 Forecast Calendar</span>
+                        <span>+$17</span>
+                    </div>
+                    <div class="total-row total-final">
+                        <span><strong>Total Today</strong></span>
+                        <span id="grandTotal"><strong>$19</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: WHOP EMBED + TRUST -->
+        <div class="checkout-embed-col">
+            <div id="whop-checkout-embed" style="background: white; border: 1px solid rgba(212,175,55,0.3); border-radius: 16px; padding: 2rem; min-height: 300px;">
+                <!-- Whop checkout embed will be inserted here -->
+                <div style="text-align:center; padding: 3rem 1rem; color: #5A5252; font-style: italic;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🔮</div>
+                    <p>Whop checkout will load here.</p>
+                    <p style="font-size: 0.875rem; margin-top: 0.5rem;">Replace this div with Whop's embed code.</p>
+                </div>
+            </div>
+
+            <!-- Trust signals -->
+            <div class="trust-signals">
+                <div class="trust-item">🔒 SSL Secure Checkout</div>
+                <div class="trust-item">✓ 60-Day Money-Back Guarantee</div>
+                <div class="trust-item">✓ Instant PDF Delivery</div>
+                <div class="trust-item">✓ One-Time Payment · No Subscription</div>
+            </div>
+
+            <!-- Guarantee box -->
+            <div class="guarantee-box">
+                <div class="guarantee-icon">🛡️</div>
+                <h4>The 'If It Doesn't Speak To You, Don't Pay' Promise</h4>
+                <p>Read your Blueprint for 60 days. If it doesn't feel like it was written specifically for you, email us for a full refund. You keep the Blueprint.</p>
+            </div>
+
+            <!-- Single testimonial -->
+            <div class="checkout-testimonial">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p class="quote">"I almost closed the tab at checkout. So glad I didn't. The Blueprint was waiting for me 30 seconds after I paid and I haven't stopped reading it."</p>
+                <p class="author">— Rachel D., 34 · Verified Buyer</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">Star Signal</div>
+            <div class="footer-tagline">Illuminate your cosmic path.</div>
+            <div class="footer-links">
+                <a href="#about">About</a>
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="disclaimer">
+                © 2026 Star Signal. All rights reserved.<br><br>
+                Star Signal readings are intended for personal reflection and entertainment purposes only. They are not a substitute for professional advice, medical, psychological, or financial. Past results do not guarantee future outcomes. Your individual results may vary.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function updateTotal() {
+            const bump = document.getElementById('bumpCheckbox').checked;
+            document.getElementById('grandTotal').innerHTML = bump ? '<strong>$36</strong>' : '<strong>$19</strong>';
+            document.getElementById('bumpTotalRow').style.display = bump ? 'flex' : 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const firstName = params.get('firstName') || '';
+            if (firstName) {
+                document.getElementById('checkoutName').textContent = ', ' + firstName;
+            }
+            // Store params in sessionStorage for OTO page
+            sessionStorage.setItem('starSignalData', params.toString());
+        });
+    </script>
+</body>
+</html>

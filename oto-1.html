@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Exclusive One-Time Offer | Star Signal</title>
+    <meta name="description" content="Exclusive offer for Blueprint buyers — reveal everything about your soulmate.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-cream: #FDFBF7;
+            --bg-alt: #F6F3EC;
+            --text-main: #2C2828;
+            --text-muted: #5A5252;
+            --accent-gold: #D4AF37;
+            --accent-gold-dark: #B89600;
+            --footer-bg: #2B233D;
+            --white: #FFFFFF;
+            --font-heading: 'Cormorant Garamond', serif;
+            --font-body: 'Inter', sans-serif;
+            --shadow-sm: 0 4px 12px rgba(44,40,40,0.04);
+            --shadow-md: 0 8px 24px rgba(44,40,40,0.08);
+            --shadow-gold: 0 0 0 3px rgba(212,175,55,0.25), 0 8px 24px rgba(212,175,55,0.15);
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-full: 9999px;
+            --transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-cream);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            line-height: 1.15;
+            color: var(--text-main);
+        }
+
+        p { color: var(--text-muted); }
+
+        /* ── ALERT STRIP ── */
+        .oto-alert-strip {
+            background: var(--accent-gold);
+            color: white;
+            text-align: center;
+            padding: 0.75rem 1rem;
+            font-weight: 600;
+            font-size: 0.9375rem;
+        }
+
+        /* ── HEADER ── */
+        .checkout-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-cream);
+            border-bottom: 1px solid rgba(212,175,55,0.3);
+            padding: 0.75rem 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-logo {
+            font-family: var(--font-heading);
+            font-size: 1.35rem;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        .brand-logo svg {
+            width: 22px;
+            height: 22px;
+            color: var(--accent-gold);
+            flex-shrink: 0;
+        }
+
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .secure-badge svg {
+            width: 14px;
+            height: 14px;
+            color: #22c55e;
+        }
+
+        /* ── CONTAINER ── */
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 0 1.25rem;
+        }
+
+        /* ── PRE-HEADLINE ── */
+        .pre-headline {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-gold);
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        /* ── HERO ── */
+        .oto-hero {
+            padding: 4rem 1.25rem;
+            background: var(--bg-cream);
+            text-align: center;
+        }
+
+        .oto-hero h1 {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+
+        .oto-hero .subhead {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ── BODY COPY ── */
+        .oto-copy {
+            padding: 3rem 1.25rem;
+            background: var(--bg-cream);
+        }
+
+        .oto-lead {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-main) !important;
+            margin-bottom: 1rem;
+        }
+
+        .oto-copy p {
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.75;
+            margin-bottom: 1rem;
+        }
+
+        .oto-reveals {
+            list-style: none;
+            margin: 1.25rem 0 1.5rem;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .oto-reveals li {
+            font-size: 1rem;
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-left: 0;
+        }
+
+        .oto-bridge {
+            font-size: 1.125rem !important;
+            font-weight: 600;
+            color: var(--text-main) !important;
+        }
+
+        /* ── CONTENTS SECTION ── */
+        .oto-contents {
+            background: var(--bg-alt);
+            padding: 4rem 1.25rem;
+        }
+
+        .oto-contents h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            color: var(--text-main);
+        }
+
+        .oto-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+        }
+
+        @media (max-width: 640px) {
+            .oto-cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .oto-card {
+            background: var(--white);
+            border-radius: 14px;
+            padding: 1.75rem;
+            border: 1px solid rgba(212,175,55,0.25);
+            border-top: 4px solid var(--accent-gold);
+            box-shadow: var(--shadow-sm);
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+
+        .oto-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .oto-card-icon {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .oto-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.25rem;
+        }
+
+        .page-ref {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--accent-gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .oto-card > p:last-child {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ── TESTIMONIAL ── */
+        .oto-testimonial {
+            background: var(--bg-cream);
+            padding: 3rem 1.25rem;
+            text-align: center;
+        }
+
+        .oto-testimonial .stars {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .oto-testimonial .quote {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-style: italic;
+            color: var(--text-main);
+            max-width: 680px;
+            margin: 0 auto 1rem;
+            line-height: 1.6;
+        }
+
+        .oto-testimonial .author {
+            font-weight: 700;
+            color: var(--text-main);
+            font-size: 0.9375rem;
+        }
+
+        .oto-testimonial .verified {
+            font-size: 0.8125rem;
+            color: var(--accent-gold);
+            font-weight: 600;
+            margin-top: 0.25rem;
+        }
+
+        /* ── PRICE CARD ── */
+        .oto-price-section {
+            background: var(--bg-alt);
+            padding: 3rem 1.25rem;
+            text-align: center;
+        }
+
+        .oto-price-card {
+            background: var(--white);
+            border: 2px solid var(--accent-gold);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: var(--shadow-gold);
+        }
+
+        .price-normally {
+            font-size: 1rem;
+            color: var(--text-muted);
+            text-decoration: line-through;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-huge {
+            font-family: var(--font-heading);
+            font-size: 4.5rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            line-height: 1;
+            margin-bottom: 0.75rem;
+            animation: pricePulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pricePulse {
+            0%, 100% { text-shadow: 0 0 20px rgba(212,175,55,0.3); }
+            50% { text-shadow: 0 0 40px rgba(212,175,55,0.7), 0 0 60px rgba(212,175,55,0.3); }
+        }
+
+        .price-badge {
+            display: inline-block;
+            background: var(--accent-gold);
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 700;
+            padding: 0.375rem 1rem;
+            border-radius: 9999px;
+            margin-bottom: 1rem;
+        }
+
+        .price-warning {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        /* ── CTA ── */
+        .oto-cta-section {
+            background: var(--bg-cream);
+            padding: 2rem 1.25rem 1rem;
+            text-align: center;
+        }
+
+        @keyframes ctaGlow {
+            0%, 100% { box-shadow: 0 8px 30px rgba(212,175,55,0.4); }
+            50% { box-shadow: 0 8px 50px rgba(212,175,55,0.7), 0 0 20px rgba(212,175,55,0.3); }
+        }
+
+        .cta-primary {
+            display: block;
+            width: 100%;
+            max-width: 700px;
+            height: 72px;
+            background: linear-gradient(135deg, #D4AF37 0%, #B89600 100%);
+            color: white;
+            font-family: var(--font-body);
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            border: none;
+            border-radius: 9999px;
+            cursor: pointer;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 30px rgba(212,175,55,0.4);
+            transition: all 0.3s ease;
+            animation: ctaGlow 3s ease-in-out infinite;
+            margin: 1.5rem auto;
+            text-align: center;
+            line-height: 72px;
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(212,175,55,0.6);
+        }
+
+        .oto-charge-note {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: -0.5rem;
+        }
+
+        .oto-guarantee {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        /* ── DECLINE ── */
+        .decline-section {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-bottom: 3rem;
+        }
+
+        .decline-link {
+            font-size: 0.8125rem;
+            color: #9CA3AF;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .decline-link:hover {
+            color: var(--text-muted);
+        }
+
+        /* ── MODAL ── */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            max-width: 460px;
+            width: calc(100% - 2.5rem);
+            text-align: center;
+        }
+
+        .modal-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+        }
+
+        .modal-card p {
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-decline-link {
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.8125rem;
+            color: #9CA3AF;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--footer-bg);
+            color: var(--white);
+            padding: 3rem 1.5rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .footer-logo {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-style: italic;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-tagline {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        .disclaimer {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.8125rem;
+            line-height: 1.6;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- GOLD ALERT STRIP -->
+    <div class="oto-alert-strip">
+        ⚠️ WAIT — Your order is not yet complete. Exclusive one-time offer below — only available right now.
+    </div>
+
+    <!-- STICKY HEADER -->
+    <header class="checkout-header">
+        <div class="brand-logo">
+            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            Star Signal
+        </div>
+        <div class="secure-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            Secure Checkout · SSL Encrypted
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="oto-hero">
+        <div class="container" style="text-align: center;">
+            <span class="pre-headline">✨ EXCLUSIVE TO BLUEPRINT BUYERS — NEVER OFFERED AGAIN</span>
+            <h1><span id="otoName"></span>Before You Go — Your Soulmate Is Asking To Be Found</h1>
+            <p class="subhead">Your Blueprint revealed the first letter of their name. This reveals everything else.</p>
+        </div>
+    </section>
+
+    <!-- BODY COPY -->
+    <section class="oto-copy">
+        <div class="container">
+            <p class="oto-lead">Your Cosmic Blueprint just gave you a glimpse:</p>
+            <p>The first letter of your soulmate's name. Their general archetype. The month they're most likely to enter your life.</p>
+            <p>But here's what your Blueprint couldn't tell you in 44 pages...</p>
+            <ul class="oto-reveals">
+                <li>→ What they actually look like (height, build, eye colour, hair colour)</li>
+                <li>→ Their full name pattern, not just the first letter</li>
+                <li>→ Their career field and what they do for a living</li>
+                <li>→ Where they currently live (city or country)</li>
+                <li>→ Whether you've already met them — and missed it</li>
+                <li>→ Why your past relationships failed (the karmic pattern repeating)</li>
+                <li>→ The 12-month timeline of when they appear, when intensity peaks, when challenges arise</li>
+                <li>→ The exact ritual to accelerate their arrival into your life</li>
+            </ul>
+            <p class="oto-bridge">This is the <strong>Soulmate Blueprint Bundle.</strong></p>
+            <p>A 60-page deep-dive reading, custom-generated using the same birth data you already provided — but trained on relationship astrology, twin flame patterns, and soul contract mapping.</p>
+            <p>It's normally a separate $97 reading. But because you just unlocked your Cosmic Blueprint today, we're offering it right now for <strong>$67</strong>. One time. This page only.</p>
+        </div>
+    </section>
+
+    <!-- WHAT'S INSIDE -->
+    <section class="oto-contents">
+        <div class="container">
+            <h2>Inside Your Soulmate Blueprint Bundle</h2>
+            <div class="oto-cards-grid">
+                <div class="oto-card">
+                    <div class="oto-card-icon">💘</div>
+                    <h3>Your Soulmate's Full Profile</h3>
+                    <p class="page-ref">Pages 1–12</p>
+                    <p>Physical appearance, personality archetype, career field, where they currently live, age range. The complete picture.</p>
+                </div>
+                <div class="oto-card">
+                    <div class="oto-card-icon">🔤</div>
+                    <h3>The First Letter of Their Last Name</h3>
+                    <p class="page-ref">Pages 13–16</p>
+                    <p>Your Blueprint gave you their first initial. This reveals the surname pattern AND the syllabic structure of their full name.</p>
+                </div>
+                <div class="oto-card">
+                    <div class="oto-card-icon">📅</div>
+                    <h3>The 12-Month Love Forecast</h3>
+                    <p class="page-ref">Pages 17–32</p>
+                    <p>Month by month: when they appear, when intensity peaks, when challenges arrive, when commitment crystallises.</p>
+                </div>
+                <div class="oto-card">
+                    <div class="oto-card-icon">♾️</div>
+                    <h3>Your Karmic Relationship Pattern</h3>
+                    <p class="page-ref">Pages 33–42</p>
+                    <p>Why past relationships failed. The recurring pattern your soul is here to break. How to recognise when it's happening again.</p>
+                </div>
+                <div class="oto-card">
+                    <div class="oto-card-icon">🌙</div>
+                    <h3>The 21-Day Soulmate Manifestation Ritual</h3>
+                    <p class="page-ref">Pages 43–52</p>
+                    <p>A daily ritual designed for your Life Path Number to clear blocks and accelerate your soulmate's arrival. Three minutes a day for 21 days.</p>
+                </div>
+                <div class="oto-card">
+                    <div class="oto-card-icon">🔮</div>
+                    <h3>The Sacred Yes/No Oracle</h3>
+                    <p class="page-ref">Pages 53–60</p>
+                    <p>50 yes/no questions about your love life — 'Will I marry them?', 'Are they thinking about me?' — answered using your personal birth coordinates.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIAL -->
+    <div class="oto-testimonial">
+        <div class="container">
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <p class="quote">"I added the Soulmate Bundle on impulse at checkout. Worth every penny. The first letter of his last name was K. Three months later I met Kowalski. We're engaged. I'm not making this up."</p>
+            <p class="author">— Sienna R., 31 · Phoenix, AZ</p>
+            <p class="verified">✓ Verified Buyer · Reading purchased March 2025</p>
+        </div>
+    </div>
+
+    <!-- PRICE REVEAL -->
+    <section class="oto-price-section">
+        <div class="container">
+            <div class="oto-price-card">
+                <p class="price-normally">Normally $97</p>
+                <div class="price-huge">$67</div>
+                <div class="price-badge">✨ Save $30 — One-Time Offer Only</div>
+                <p class="price-warning">💔 This offer disappears the moment you leave this page</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="oto-cta-section">
+        <div class="container" style="text-align: center;">
+            <button class="cta-primary" onclick="acceptOto()">
+                ✨ YES — Add My Soulmate Blueprint Bundle For $67
+            </button>
+            <p class="oto-charge-note">Adds $67 to your order. You will not be charged separately.</p>
+            <p class="oto-guarantee">60-day money-back guarantee · Instant PDF delivery</p>
+
+            <div class="decline-section">
+                <a href="#" class="decline-link" onclick="showDeclineModal(event)">
+                    No thanks — I'll skip this and complete my order without the Soulmate Bundle.
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- DECLINE MODAL -->
+    <div id="declineModal" class="modal-overlay" style="display:none;">
+        <div class="modal-card">
+            <h3>Wait — Are You Sure?</h3>
+            <p>Your Soulmate Bundle is only available right now at this price. After you leave this page, the price returns to $97.</p>
+            <button class="cta-primary" onclick="closeModal()">
+                NO — Take Me Back To My Offer
+            </button>
+            <a href="/thank-you" class="modal-decline-link" id="confirmDecline">
+                Yes, I'm sure — Skip this offer
+            </a>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">Star Signal</div>
+            <div class="footer-tagline">Illuminate your cosmic path.</div>
+            <div class="footer-links">
+                <a href="#about">About</a>
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="disclaimer">
+                © 2026 Star Signal. All rights reserved.<br><br>
+                Star Signal readings are intended for personal reflection and entertainment purposes only. They are not a substitute for professional advice, medical, psychological, or financial. Past results do not guarantee future outcomes. Your individual results may vary.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function acceptOto() {
+            // Placeholder — will integrate Whop one-click upsell API
+            // For now redirect to thank-you
+            window.location.href = '/thank-you?' + (sessionStorage.getItem('starSignalData') || '');
+        }
+
+        function showDeclineModal(e) {
+            e.preventDefault();
+            document.getElementById('declineModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('declineModal').style.display = 'none';
+        }
+
+        // Load personalisation
+        document.addEventListener('DOMContentLoaded', () => {
+            const stored = sessionStorage.getItem('starSignalData') || window.location.search.slice(1);
+            const params = new URLSearchParams(stored);
+            const firstName = params.get('firstName') || '';
+            if (firstName) {
+                document.getElementById('otoName').textContent = firstName + ', ';
+            }
+        });
+    </script>
+</body>
+</html>

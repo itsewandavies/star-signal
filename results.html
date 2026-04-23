@@ -1696,15 +1696,17 @@
             });
         }
         
+        // ── CHECKOUT REDIRECT ──
+        function goToCheckout() {
+            const params = new URLSearchParams(window.location.search);
+            window.location.href = '/checkout?' + params.toString();
+        }
+
         // ── BUTTON LISTENERS ──
         function setupButtonListeners() {
-            const buttons = document.querySelectorAll('.cta-primary, .cta-button');
+            const buttons = document.querySelectorAll('.cta-primary');
             buttons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    // In production, this would redirect to checkout
-                    console.log('CTA clicked - would redirect to checkout');
-                    // Placeholder for payment integration
-                });
+                btn.addEventListener('click', goToCheckout);
             });
         }
 

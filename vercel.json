@@ -1,31 +1,12 @@
 {
+  "rewrites": [
+    { "source": "/checkout", "destination": "/checkout.html" },
+    { "source": "/oto-1", "destination": "/oto-1.html" },
+    { "source": "/thank-you", "destination": "/thank-you.html" },
+    { "source": "/quiz", "destination": "/quiz.html" },
+    { "source": "/results", "destination": "/results.html" }
+  ],
   "headers": [
-    {
-      "source": "/index.html",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/quiz.html",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/results.html",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=1800, must-revalidate"
-        }
-      ]
-    }
+    { "source": "/(.*)", "headers": [{"key": "Cache-Control", "value": "public, max-age=3600, must-revalidate"}] }
   ]
 }
