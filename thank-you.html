@@ -379,17 +379,36 @@
             isComplete = true;
             currentProgress = 100;
             document.getElementById('progressFill').style.width = '100%';
-            
+
+            // Store reading ID for OTO page
+            localStorage.setItem('ss_reading_id', uuid);
+
+            // Store payment_id for OTO one-click charge
+            const urlParams = new URLSearchParams(window.location.search);
+            const paymentId = urlParams.get('payment_id') || urlParams.get('pay') || urlParams.get('receipt_id') || '';
+            if (paymentId) localStorage.setItem('ss_payment_id', paymentId);
+
             // Show success state
             document.getElementById('loadingState').classList.add('hidden');
             document.getElementById('fallbackState').classList.add('hidden');
             document.getElementById('successState').classList.remove('hidden');
-            
+
             // Set email and button
             document.getElementById('emailDisplay').textContent = email;
             document.getElementById('openButton').onclick = () => {
-                window.location.href = `/reading?uuid=${uuid}`;
+                // Redirect to OTO page (before showing reading)
+                const otoUrl = `/oto.html?payment_id=${encodeURIComponent(paymentId)}&reading_id=${encodeURIComponent(uuid)}`;
+                window.location.href = otoUrl;
             };
+
+            // Auto-redirect after 3 seconds if user doesn't click
+            setTimeout(() => {
+                if (paymentId) {
+                    window.location.href = `/oto.html?payment_id=${encodeURIComponent(paymentId)}&reading_id=${encodeURIComponent(uuid)}`;
+                } else {
+                    window.location.href = `/r/${uuid}`;
+                }
+            }, 3000);
         }
 
         function showFallback() {

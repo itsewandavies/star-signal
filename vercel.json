@@ -5,8 +5,8 @@
     "ANTHROPIC_API_KEY": "@ANTHROPIC_API_KEY",
     "SUPABASE_URL": "@SUPABASE_URL",
     "SUPABASE_SERVICE_ROLE_KEY": "@SUPABASE_SERVICE_ROLE_KEY",
-    "LOOPS_API_KEY": "@LOOPS_API_KEY",
-    "WHOP_API_KEY": "@WHOP_API_KEY",
+    "RESEND_API_KEY": "@RESEND_API_KEY",
+    "WHOP_API_KEY_2": "@WHOP_API_KEY_2",
     "WHOP_WEBHOOK_SECRET": "@WHOP_WEBHOOK_SECRET"
   },
   "functions": {
@@ -19,6 +19,10 @@
     {
       "source": "/api/:path*",
       "destination": "/api/:path*"
+    },
+    {
+      "source": "/r/:id",
+      "destination": "/reading.html"
     },
     {
       "source": "/reading",

@@ -361,7 +361,7 @@ Generate and return ONLY valid JSON (no markdown, no extra text) with this exact
 
   try {
     const response = await client.messages.create({
-      model: "claude-opus-4-5-20250805",
+      model: "claude-haiku-4-5",
       max_tokens: 8000,
       temperature: 0.7,
       messages: [

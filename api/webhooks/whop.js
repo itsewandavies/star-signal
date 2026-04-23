@@ -48,33 +48,62 @@ function extractPayload(body) {
   return null;
 }
 
-// Send email via Loops transactional API
+// Send email via Resend transactional API
 async function sendLoopsEmail(email, firstName, readingUrl, lifePathNumber) {
   try {
-    const response = await fetch("https://app.loops.so/api/v1/transactional", {
+    const name = firstName || 'Cosmic Traveler';
+    const html = `
+      <div style="font-family: Georgia, serif; max-width: 580px; margin: 0 auto; background: #FDFBF7; padding: 40px 32px; color: #2C2828;">
+        <div style="text-align:center; margin-bottom: 32px;">
+          <span style="font-size: 24px; font-style: italic; color: #2C2828;">✦ Star Signal</span>
+        </div>
+        <h1 style="font-size: 28px; font-weight: 600; margin-bottom: 8px; line-height: 1.2;">
+          ${name}, your Cosmic Blueprint is ready.
+        </h1>
+        <p style="font-size: 16px; color: #5A5252; margin-bottom: 24px; line-height: 1.6;">
+          Your personalised reading has been decoded — 40+ pages built entirely from your exact birth coordinates.
+          Your Life Path Number is <strong style="color: #B89600;">${lifePathNumber}</strong>.
+        </p>
+        <div style="text-align: center; margin: 32px 0;">
+          <a href="${readingUrl}" style="display: inline-block; background: linear-gradient(135deg, #D4AF37, #B89600); color: white; font-size: 17px; font-weight: 600; padding: 16px 40px; border-radius: 100px; text-decoration: none;">
+            🔮 Open My Cosmic Blueprint →
+          </a>
+        </div>
+        <p style="font-size: 14px; color: #5A5252; line-height: 1.6;">
+          This link is unique to you — bookmark it so you can return anytime.<br>
+          If the button doesn't work, copy and paste this link into your browser:<br>
+          <a href="${readingUrl}" style="color: #B89600; word-break: break-all;">${readingUrl}</a>
+        </p>
+        <hr style="border: none; border-top: 1px solid #E8D1D1; margin: 32px 0;">
+        <p style="font-size: 12px; color: #9A8F8F; text-align: center; line-height: 1.6;">
+          © 2026 Star Signal. Readings are intended for personal reflection and entertainment.
+          <br><a href="https://starsignal.co/unsubscribe?email=${encodeURIComponent(email)}" style="color: #9A8F8F;">Unsubscribe</a>
+        </p>
+      </div>
+    `;
+
+    const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.LOOPS_API_KEY}`,
+        "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        transactionalId: "star_signal_reading_ready",
-        email,
-        dataVariables: {
-          firstName,
-          readingUrl,
-          lifePathNumber,
-        },
+        from: "Star Signal <noreply@starsignal.co>",
+        to: [email],
+        subject: `✦ ${name}, your Cosmic Blueprint is ready`,
+        html: html,
       }),
     });
 
     if (!response.ok) {
-      console.warn(
-        `[LOOPS] Failed to send email to ${email}: ${response.status}`
-      );
+      const errText = await response.text();
+      console.warn(`[RESEND] Failed to send email to ${email}: ${response.status} — ${errText}`);
+    } else {
+      console.log(`[RESEND] Email sent successfully to ${email}`);
     }
   } catch (error) {
-    console.warn(`[LOOPS] Error sending email: ${error.message}`);
+    console.warn(`[RESEND] Error sending email: ${error.message}`);
     // Don't throw — email is nice-to-have, webhook must succeed
   }
 }

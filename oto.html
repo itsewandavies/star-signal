@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Special Addition | Star Signal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-cream: #FDFBF7;
+            --bg-alt: #F6F3EC;
+            --text-main: #2C2828;
+            --text-muted: #5A5252;
+            --accent-gold: #D4AF37;
+            --accent-gold-dark: #B89600;
+            --accent-lavender: #D8D0E3;
+            --accent-lavender-light: #F0EBF5;
+            --accent-rose: #E8D1D1;
+            --footer-bg: #2B233D;
+            --white: #FFFFFF;
+            --font-heading: 'Cormorant Garamond', serif;
+            --font-body: 'Inter', sans-serif;
+            --shadow-md: 0 8px 24px rgba(44,40,40,0.06);
+            --shadow-lg: 0 12px 32px rgba(212,175,55,0.25);
+            --radius-lg: 24px;
+            --radius-full: 9999px;
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-cream);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 600; line-height: 1.15; }
+        h1 { font-size: clamp(2rem, 5vw, 3.25rem); letter-spacing: -0.02em; margin-bottom: 1rem; }
+        h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); margin-bottom: 1.25rem; }
+        h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+        p { font-size: clamp(0.95rem, 2.5vw, 1.0625rem); color: var(--text-muted); }
+        .container { width: 100%; max-width: 760px; margin: 0 auto; padding: 0 1.25rem; }
+        .text-center { text-align: center; }
+        button { font-family: inherit; border: none; cursor: pointer; background: none; }
+
+        /* === TOP BAR === */
+        .top-bar {
+            background: #2B233D;
+            color: rgba(255,255,255,0.8);
+            text-align: center;
+            padding: 0.6rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+        .top-bar strong { color: var(--accent-gold); }
+
+        /* === HEADER === */
+        header {
+            padding: 1rem 1.25rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .brand-logo {
+            font-family: var(--font-heading);
+            font-size: 1.35rem;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-main);
+        }
+        .brand-logo svg { width: 18px; height: 18px; color: var(--accent-gold); }
+
+        /* === WAIT NOTICE === */
+        .wait-notice {
+            background: #FFF8E6;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem auto 0;
+            max-width: 680px;
+            text-align: center;
+        }
+        .wait-notice p { font-size: 0.9rem; color: var(--text-main); }
+        .wait-notice strong { color: var(--accent-gold-dark); }
+
+        /* === HERO === */
+        .hero {
+            padding: 2.5rem 0 2rem;
+            text-align: center;
+        }
+        .pre-headline {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-gold-dark);
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+        .oto-icon {
+            width: 72px; height: 72px;
+            margin: 0 auto 1.25rem;
+            color: var(--accent-gold);
+        }
+        .hero-sub {
+            font-size: 1.0625rem;
+            color: var(--text-muted);
+            max-width: 540px;
+            margin: 0 auto 2rem;
+        }
+
+        /* === CONTENT CARDS === */
+        .reveal-list {
+            background: var(--white);
+            border: 1px solid var(--accent-lavender);
+            border-radius: var(--radius-lg);
+            padding: 2rem 1.75rem;
+            margin: 0 auto 2rem;
+            box-shadow: var(--shadow-md);
+            text-align: left;
+        }
+        .reveal-list h3 {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 1.25rem;
+        }
+        .reveal-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.875rem;
+            margin-bottom: 0.875rem;
+        }
+        .reveal-item:last-child { margin-bottom: 0; }
+        .reveal-check {
+            width: 22px; height: 22px;
+            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .reveal-check svg { width: 12px; height: 12px; color: white; }
+        .reveal-item p { font-size: 0.9375rem; margin: 0; }
+        .reveal-item p strong { color: var(--text-main); font-weight: 600; }
+
+        /* === TESTIMONIAL === */
+        .mini-testimonial {
+            background: var(--bg-alt);
+            border-left: 3px solid var(--accent-gold);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            margin: 0 auto 2rem;
+            text-align: left;
+        }
+        .mini-testimonial p {
+            font-style: italic;
+            font-size: 1rem;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+        .mini-testimonial .attrib {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            font-style: normal;
+        }
+
+        /* === PRICING === */
+        .pricing-block {
+            text-align: center;
+            margin: 0 auto 1.5rem;
+        }
+        .price-original {
+            font-size: 1rem;
+            color: var(--text-muted);
+            text-decoration: line-through;
+            margin-bottom: 0.25rem;
+        }
+        .price-current {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-gold-dark);
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+        .price-note {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* === CTAs === */
+        .yes-btn {
+            display: block;
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-dark) 100%);
+            color: white;
+            font-size: 1.125rem;
+            font-weight: 600;
+            padding: 1.25rem 2rem;
+            border-radius: var(--radius-full);
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition-smooth);
+            text-align: center;
+            cursor: pointer;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        .yes-btn:hover { transform: translateY(-2px); filter: brightness(1.05); }
+        .yes-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .secure-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+        }
+        .secure-row svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+        .no-btn {
+            display: block;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-decoration: underline;
+            cursor: pointer;
+            margin: 1.25rem auto 0;
+            transition: color 0.2s;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+        }
+        .no-btn:hover { color: var(--text-main); }
+
+        /* === PROCESSING OVERLAY === */
+        .processing-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(253,251,247,0.95);
+            backdrop-filter: blur(8px);
+            z-index: 999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .processing-overlay.active { display: flex; }
+        .spinner {
+            width: 56px; height: 56px;
+            border: 3px solid var(--accent-lavender);
+            border-top-color: var(--accent-gold);
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .processing-overlay h3 {
+            font-family: var(--font-body);
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .processing-overlay p { font-size: 0.9rem; }
+
+        /* === ERROR STATE === */
+        .error-box {
+            display: none;
+            background: #FFF0F0;
+            border: 1px solid #FFB3B3;
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            text-align: center;
+            margin: 1rem auto 0;
+            max-width: 480px;
+        }
+        .error-box.active { display: block; }
+        .error-box p { font-size: 0.875rem; color: #c0392b; }
+
+        /* === GUARANTEE === */
+        .guarantee-block {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            background: var(--white);
+            border: 1px solid var(--accent-lavender);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin: 0 auto 2.5rem;
+            text-align: left;
+        }
+        .guarantee-icon { font-size: 2rem; flex-shrink: 0; }
+        .guarantee-block h4 {
+            font-family: var(--font-body);
+            font-size: 0.9375rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .guarantee-block p { font-size: 0.875rem; }
+
+        /* === FOOTER === */
+        footer {
+            background: var(--footer-bg);
+            padding: 2.5rem 1.25rem;
+            text-align: center;
+        }
+        footer .footer-logo {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-style: italic;
+            color: var(--accent-gold);
+            margin-bottom: 0.5rem;
+        }
+        footer .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.25rem;
+            margin: 1rem 0;
+        }
+        footer .footer-links a {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+        }
+        footer .footer-links a:hover { color: white; }
+        footer .disclaimer {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.35);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.15; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+        .bg-star {
+            position: fixed;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            animation: twinkle 4s infinite ease-in-out;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .star-1 { top: 10%; left: 5%; width: 3px; height: 3px; animation-delay: 0s; }
+        .star-2 { top: 30%; right: 8%; width: 4px; height: 4px; animation-delay: 1.2s; }
+        .star-3 { top: 65%; left: 7%; width: 2px; height: 2px; animation-delay: 2.4s; }
+        .star-4 { top: 80%; right: 5%; width: 3px; height: 3px; animation-delay: 0.7s; }
+
+        .main-content { position: relative; z-index: 1; }
+    </style>
+</head>
+<body>
+
+    <!-- Background Stars -->
+    <div class="bg-star star-1"></div>
+    <div class="bg-star star-2"></div>
+    <div class="bg-star star-3"></div>
+    <div class="bg-star star-4"></div>
+
+    <!-- Processing Overlay -->
+    <div class="processing-overlay" id="processingOverlay">
+        <div class="spinner"></div>
+        <h3>Adding to your Blueprint...</h3>
+        <p>Please don't close this tab.</p>
+    </div>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        ✨ Your Cosmic Blueprint is being prepared — <strong>one quick addition before you see it</strong>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="brand-logo">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"/></svg>
+            Star Signal
+        </div>
+    </header>
+
+    <div class="main-content">
+        <div class="container">
+
+            <!-- Wait notice -->
+            <div class="wait-notice">
+                <p>⏳ Your Cosmic Blueprint is being decoded right now — it will be ready in under 60 seconds.<br>
+                <strong>While you wait, there's one thing we want to offer you — but only right now, before you see your reading.</strong></p>
+            </div>
+
+            <!-- Hero -->
+            <div class="hero text-center">
+                <span class="pre-headline" id="otoPreHeadline">✨ Special Addition</span>
+                <div class="oto-icon" id="otoIcon">
+                    <!-- Injected by JS -->
+                </div>
+                <h1 id="otoHeadline">Loading...</h1>
+                <p class="hero-sub" id="otoSubhead">Loading...</p>
+            </div>
+
+            <!-- What's revealed -->
+            <div class="reveal-list">
+                <h3>Added to your Blueprint — exclusively right now:</h3>
+                <div id="revealItems">
+                    <!-- Injected by JS based on life area -->
+                </div>
+            </div>
+
+            <!-- Testimonial -->
+            <div class="mini-testimonial" id="otoTestimonial">
+                <!-- Injected by JS -->
+            </div>
+
+            <!-- Pricing -->
+            <div class="pricing-block">
+                <div class="price-original">Normal price: $97</div>
+                <div class="price-current">$67</div>
+                <div class="price-note">One-time · Adds directly to your Blueprint · No extra checkout</div>
+            </div>
+
+            <!-- YES button -->
+            <button class="yes-btn" id="yesBtn" onclick="processUpsell()">
+                <span id="yesBtnText">🔮 YES — Add This To My Blueprint</span>
+            </button>
+            <div class="secure-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Your card on file is charged · No new card details needed · Instant addition
+            </div>
+
+            <!-- Error box -->
+            <div class="error-box" id="errorBox">
+                <p id="errorMsg">Something went wrong. Please try again or skip below.</p>
+            </div>
+
+            <!-- NO THANKS -->
+            <button class="no-btn" id="noBtn" onclick="skipOto()">
+                No thanks — just take me to my free Blueprint
+            </button>
+
+            <!-- Guarantee -->
+            <div class="guarantee-block" style="margin-top: 2.5rem;">
+                <div class="guarantee-icon">🛡️</div>
+                <div>
+                    <h4>60-Day Money-Back Guarantee</h4>
+                    <p>If you add this and it doesn't feel worth every penny, email us within 60 days for a full refund. The reading stays yours regardless.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">Star Signal</div>
+            <div class="footer-links">
+                <a href="/privacy">Privacy Policy</a>
+                <a href="/terms">Terms of Service</a>
+                <a href="/contact">Contact</a>
+            </div>
+            <div class="disclaimer">© 2026 Star Signal. All rights reserved. Star Signal readings are intended for personal reflection and entertainment.</div>
+        </div>
+    </footer>
+
+    <script>
+    // ============================================================
+    // OTO CONFIG — segmented by life area (Q6 answer)
+    // ============================================================
+    const OTO_CONTENT = {
+        love: {
+            preHeadline: '💘 For Your Love & Relationships Path',
+            icon: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="72" height="72">
+                <path d="M50 80 C50 80 15 58 15 35 C15 22 25 14 35 14 C42 14 48 18 50 22 C52 18 58 14 65 14 C75 14 85 22 85 35 C85 58 50 80 50 80Z" fill="currentColor" opacity="0.3" stroke="currentColor" stroke-width="2"/>
+                <path d="M50 65 C50 65 28 50 28 37 C28 30 33 26 39 26 C43 26 47 28 50 32 C53 28 57 26 61 26 C67 26 72 30 72 37 C72 50 50 65 50 65Z" fill="currentColor" opacity="0.6"/>
+            </svg>`,
+            headline: 'Your Soulmate Profile Is Ready — But There\'s One Section Missing',
+            subhead: 'The Blueprint you\'re about to receive reveals the initial. This addition reveals the timeline, the cosmic block keeping them away, and exactly how to clear it.',
+            reveals: [
+                { strong: 'The exact month your soulmate enters (or re-enters) your life', text: ' — specific to your 2026 Venus transits' },
+                { strong: 'The "false match" pattern you keep repeating', text: ' — and the energetic signature that breaks it' },
+                { strong: 'The cosmic block preventing the connection from activating', text: ' — and a 7-minute ritual to clear it' },
+                { strong: 'Your soulmate\'s Life Path Number', text: ' — and why 94% of compatible matches share this trait' },
+                { strong: 'The 3 signs the universe is sending you right now', text: ' — that most women completely miss' },
+            ],
+            testimonial: {
+                quote: '"The soulmate timeline said late April. On April 22nd I matched with someone whose name starts with the exact letter my Blueprint mentioned. We\'ve been talking every day since. I physically shook when I connected the dots."',
+                attrib: '— Kira L., 33 · Austin, USA · Verified Buyer'
+            }
+        },
+        money: {
+            preHeadline: '💰 For Your Money & Abundance Path',
+            icon: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="72" height="72">
+                <circle cx="50" cy="50" r="35" stroke="currentColor" stroke-width="2" fill="currentColor" opacity="0.1"/>
+                <path d="M50 20 L55 38 L75 38 L60 50 L65 68 L50 58 L35 68 L40 50 L25 38 L45 38 Z" fill="currentColor" opacity="0.6" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="50" cy="50" r="8" fill="currentColor"/>
+            </svg>`,
+            headline: 'Your Wealth Archetype Is Decoded — But You Need The Activation Window',
+            subhead: 'The Blueprint reveals your archetype. This addition reveals the exact 3-month window in 2026 when your financial channel opens — and what to do when it does.',
+            reveals: [
+                { strong: 'Your exact 3-month Abundance Portal window in 2026', text: ' — the dates when wealth flow is cosmically amplified' },
+                { strong: 'The hidden money block from your family line', text: ' — and the specific thought pattern that\'s kept it alive' },
+                { strong: 'Your numerological income path', text: ' — the type of work where money flows to you naturally vs. against you' },
+                { strong: 'The 2 wealth "false starts" your chart shows for 2026', text: ' — so you don\'t waste energy chasing the wrong opportunity' },
+                { strong: 'Your daily 4-minute abundance ritual', text: ' — aligned to your Life Path and 2026 transits' },
+            ],
+            testimonial: {
+                quote: '"The Wealth Archetype section described exactly why every business I tried felt like pushing a boulder uphill. The activation window dates? I landed my biggest client ever during that exact window. Completely changed how I approach money."',
+                attrib: '— Maria R., 41 · Madrid, Spain · Verified Buyer'
+            }
+        },
+        purpose: {
+            preHeadline: '🔮 For Your Life Purpose & Career Path',
+            icon: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="72" height="72">
+                <circle cx="50" cy="50" r="30" stroke="currentColor" stroke-width="2"/>
+                <path d="M50 20 L53 38 L70 50 L53 62 L50 80 L47 62 L30 50 L47 38 Z" fill="currentColor" opacity="0.6"/>
+                <circle cx="50" cy="50" r="8" stroke="currentColor" stroke-width="2" fill="currentColor" opacity="0.3"/>
+            </svg>`,
+            headline: 'Your Life Mission Is Clear — But One Question Remains',
+            subhead: 'The Blueprint gives you the direction. This addition gives you the map: the exact moment your Purpose Portal activates, and the 3 steps to align with it before anyone else does.',
+            reveals: [
+                { strong: 'Your Life Mission in one sentence', text: ' — specific to your Life Path, Destiny, and current transit' },
+                { strong: 'The year (and quarter) your Purpose Portal fully activates', text: ' — it may already be open right now' },
+                { strong: 'The 3 signs you\'re currently misaligned with your mission', text: ' — and what each one is costing you' },
+                { strong: 'The specific type of work where your numbers say you\'ll thrive', text: ' — not a vague "follow your passion" — an actual framework' },
+                { strong: 'The 2026 pivot window', text: ' — the 6-week period when a career or path change will meet the least resistance' },
+            ],
+            testimonial: {
+                quote: '"I spent 12 years in a career that paid well but felt completely wrong. The Purpose section described the misalignment better than any therapist ever had. Three months later I made a change I should have made a decade ago."',
+                attrib: '— Rebecca H., 52 · London, UK · Verified Buyer'
+            }
+        },
+        spiritual: {
+            preHeadline: '🧿 For Your Spiritual Growth & Awakening Path',
+            icon: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="72" height="72">
+                <circle cx="50" cy="50" r="32" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 5"/>
+                <path d="M50 15 L54 35 L72 28 L60 46 L80 50 L60 54 L72 72 L54 65 L50 85 L46 65 L28 72 L40 54 L20 50 L40 46 L28 28 L46 35 Z" fill="currentColor" opacity="0.3"/>
+                <circle cx="50" cy="50" r="14" fill="currentColor" opacity="0.6"/>
+                <circle cx="50" cy="50" r="5" fill="currentColor"/>
+            </svg>`,
+            headline: 'Your Awakening Is Mapped — But Your Gifts Need To Be Named',
+            subhead: 'The Blueprint outlines the path. This addition identifies your 3 dominant spiritual gifts, the chakra imbalance currently blocking you, and the practice that accelerates everything.',
+            reveals: [
+                { strong: 'Your 3 dominant spiritual gifts', text: ' — most people only consciously know 1, and suppress the other 2' },
+                { strong: 'The specific chakra imbalance slowing your expansion', text: ' — and the 5-minute daily practice to clear it' },
+                { strong: 'Your past-life energetic signature', text: ' — the unconscious pattern carried forward that\'s showing up in this lifetime' },
+                { strong: 'The practices that will accelerate your awakening in 2026', text: ' — matched to your numerological profile, not generic advice' },
+                { strong: 'The "Quantum Activation" window for your gifts', text: ' — the window in 2026 when your sensitivity expands most rapidly' },
+            ],
+            testimonial: {
+                quote: '"The spiritual gifts section made me realise I\'d been suppressing my intuition because I thought it wasn\'t \'real\'. I\'ve been practising what it recommended for 8 weeks and genuinely cannot explain what\'s been happening around me."',
+                attrib: '— Chen L., 37 · Toronto, Canada · Verified Buyer'
+            }
+        }
+    };
+
+    // ============================================================
+    // INIT — read params from URL + localStorage
+    // ============================================================
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    // Payment ID — needed for one-click charge
+    const paymentId = urlParams.get('payment_id') || urlParams.get('pay') || urlParams.get('receipt_id') || localStorage.getItem('ss_payment_id');
+    
+    // Reading UUID — where to redirect after
+    const readingId = urlParams.get('reading_id') || localStorage.getItem('ss_reading_id');
+    
+    // Life area from quiz (Q6) — determines OTO content
+    const savedAnswers = JSON.parse(localStorage.getItem('ss_quiz_answers') || '{}');
+    const lifeArea = savedAnswers[5] || urlParams.get('area') || 'love'; // Q6 is index 5 (0-based)
+    
+    // Affiliate/tracking data
+    const affiliateCode = localStorage.getItem('ss_ref') || urlParams.get('via') || urlParams.get('ref') || '';
+    const trackingId = localStorage.getItem('ss_tid') || '';
+    const fbc = localStorage.getItem('ss_fbc') || '';
+    const fbp = localStorage.getItem('ss_fbp') || '';
+
+    // Map life area answer to content key
+    function getContentKey(area) {
+        const val = (area || '').toString().toLowerCase();
+        if (val.includes('love') || val.includes('relationship') || val === '0') return 'love';
+        if (val.includes('money') || val.includes('abundance') || val === '1') return 'money';
+        if (val.includes('purpose') || val.includes('career') || val === '2') return 'purpose';
+        if (val.includes('spiritual') || val.includes('awakening') || val === '3') return 'spiritual';
+        return 'love'; // default
+    }
+
+    const contentKey = getContentKey(lifeArea);
+    const content = OTO_CONTENT[contentKey];
+
+    // ============================================================
+    // RENDER content
+    // ============================================================
+    function renderOTO() {
+        document.getElementById('otoPreHeadline').textContent = content.preHeadline;
+        document.getElementById('otoIcon').innerHTML = content.icon;
+        document.getElementById('otoHeadline').textContent = content.headline;
+        document.getElementById('otoSubhead').textContent = content.subhead;
+
+        // Reveal items
+        const revealContainer = document.getElementById('revealItems');
+        revealContainer.innerHTML = content.reveals.map(item => `
+            <div class="reveal-item">
+                <div class="reveal-check">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
+                <p><strong>${item.strong}</strong>${item.text}</p>
+            </div>
+        `).join('');
+
+        // Testimonial
+        document.getElementById('otoTestimonial').innerHTML = `
+            <p>${content.testimonial.quote}</p>
+            <div class="attrib">${content.testimonial.attrib}</div>
+        `;
+    }
+
+    renderOTO();
+
+    // ============================================================
+    // PROCESS UPSELL — one-click charge
+    // ============================================================
+    async function processUpsell() {
+        if (!paymentId) {
+            showError('We could not find your original payment. Please skip below and contact support if needed.');
+            return;
+        }
+
+        const btn = document.getElementById('yesBtn');
+        btn.disabled = true;
+        document.getElementById('processingOverlay').classList.add('active');
+
+        const productNames = {
+            love: 'Soulmate Deep Blueprint',
+            money: 'Abundance Deep Blueprint',
+            purpose: 'Purpose Deep Blueprint',
+            spiritual: 'Awakening Deep Blueprint'
+        };
+
+        // OTO_PLAN_ID is replaced at deploy time — see checkout.html for the Whop Plan ID
+        const OTO_PLAN_ID = 'STAR_SIGNAL_OTO_PLAN_ID'; // ← replaced with real ID
+
+        try {
+            const response = await fetch('/api/process-upsell', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    payment_id: paymentId,
+                    amount: 67,
+                    product_name: productNames[contentKey] || 'Star Signal Deep Blueprint',
+                    plan_id: OTO_PLAN_ID,
+                    affiliate_code: affiliateCode,
+                    tracking_id: trackingId,
+                    fbc: fbc,
+                    fbp: fbp,
+                    life_area: contentKey,
+                    reading_id: readingId
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                // Mark OTO as purchased in localStorage (reading page reads this)
+                localStorage.setItem('ss_oto_purchased', 'true');
+                localStorage.setItem('ss_oto_area', contentKey);
+                
+                // Redirect to reading
+                redirectToReading();
+            } else {
+                document.getElementById('processingOverlay').classList.remove('active');
+                btn.disabled = false;
+                showError(result.error || 'Payment could not be processed. Please skip below or try again.');
+            }
+        } catch (err) {
+            document.getElementById('processingOverlay').classList.remove('active');
+            btn.disabled = false;
+            showError('A network error occurred. Please check your connection and try again, or skip below.');
+        }
+    }
+
+    function skipOto() {
+        redirectToReading();
+    }
+
+    function redirectToReading() {
+        if (readingId) {
+            window.location.href = `/r/${readingId}`;
+        } else {
+            // Fallback — shouldn't happen but just in case
+            window.location.href = '/';
+        }
+    }
+
+    function showError(msg) {
+        const box = document.getElementById('errorBox');
+        document.getElementById('errorMsg').textContent = msg;
+        box.classList.add('active');
+        box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Safety: if no payment_id at all, just show skip link prominently
+    if (!paymentId) {
+        console.warn('No payment_id found — OTO charge will fail. Showing skip button prominently.');
+        document.getElementById('yesBtn').style.display = 'none';
+        document.getElementById('noBtn').style.cssText = 'font-size: 1rem; color: var(--accent-gold-dark); font-weight: 600; text-decoration: none; margin-top: 1rem;';
+        document.getElementById('noBtn').textContent = '→ Take me to my Cosmic Blueprint';
+    }
+    </script>
+</body>
+</html>
