@@ -217,20 +217,25 @@
         }
         
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── SCROLL FADE-IN ── */
+        .fade-in-card {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .fade-in-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         /* ── REVELATIONS SECTION ── */
         .revelations {
             padding: 4rem 1.5rem;
-            background: linear-gradient(135deg, var(--bg-cream) 0%, var(--bg-alt) 100%);
+            background: var(--bg-cream);
         }
         
         .revelations h2 {
@@ -249,22 +254,29 @@
             margin-bottom: 2.5rem;
         }
         
+        /* FIX 2: 2x2 grid on desktop */
         .revelation-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 1.5rem;
+        }
+        
+        @media (max-width: 640px) {
+            .revelation-cards {
+                grid-template-columns: 1fr;
+            }
         }
         
         .revelation-card {
             background: var(--white);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            box-shadow: var(--shadow-md);
-            border-left: 4px solid var(--accent-gold);
-            min-height: 320px;
+            border-radius: 16px;
+            padding: 2.5rem;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-top: 4px solid var(--accent-gold);
+            min-height: 380px;
+            box-shadow: 0 4px 20px rgba(44, 40, 40, 0.06);
             display: flex;
             flex-direction: column;
-            animation: fadeInUp 0.8s ease-out;
             transition: transform var(--transition), box-shadow var(--transition);
         }
         
@@ -273,29 +285,35 @@
             box-shadow: var(--shadow-gold);
         }
         
-        .revelation-card .icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+        .revelation-card .svg-icon {
+            width: 64px;
+            height: 64px;
+            color: #B89600;
+            margin-bottom: 1.25rem;
+            flex-shrink: 0;
         }
         
         .revelation-card h3 {
             font-family: var(--font-heading);
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: 700;
-            color: var(--text-main);
+            color: #2C2828;
             margin-bottom: 1rem;
             line-height: 1.3;
         }
         
         .revelation-card p {
-            color: var(--text-muted);
-            line-height: 1.7;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            line-height: 1.75;
+            color: #5A5252;
             flex: 1;
         }
         
         /* ── SEGMENTED INSIGHT ── */
         .segmented-insight {
             padding: 3rem 1.5rem;
+            background: var(--bg-alt);
         }
         
         .insight-callout {
@@ -325,6 +343,7 @@
         /* ── VALUE INTRO ── */
         .value-intro {
             padding: 4rem 1.5rem;
+            background: var(--bg-cream);
         }
         
         .value-intro h2 {
@@ -336,7 +355,7 @@
             color: var(--text-main);
         }
         
-        .value-intro > p {
+        .value-intro > .container > p {
             text-align: center;
             color: var(--text-muted);
             font-size: 1.1rem;
@@ -359,95 +378,10 @@
             padding-left: 0;
         }
         
-        /* ── AUTHORITY STORY ── */
-        .authority-story {
-            padding: 4rem 1.5rem;
-            background: linear-gradient(135deg, var(--bg-alt) 0%, var(--bg-cream) 100%);
-        }
-        
-        .authority-story h2 {
-            font-family: var(--font-heading);
-            font-size: 2.2rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 2rem;
-            color: var(--text-main);
-        }
-        
-        .story-text {
-            max-width: 800px;
-            margin: 0 auto;
-            color: var(--text-muted);
-            font-size: 1.05rem;
-            line-height: 1.8;
-            text-align: center;
-        }
-        
-        /* ── VALUE STACK ── */
-        .value-stack {
-            padding: 4rem 1.5rem;
-        }
-        
-        .value-stack h2 {
-            font-family: var(--font-heading);
-            font-size: 2.2rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 2.5rem;
-            color: var(--text-main);
-        }
-        
-        .value-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-        
-        .value-card {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            box-shadow: var(--shadow-md);
-            border-top: 4px solid var(--accent-gold);
-            text-align: center;
-            transition: transform var(--transition), box-shadow var(--transition);
-        }
-        
-        .value-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-gold);
-        }
-        
-        .card-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-        
-        .value-card h3 {
-            font-family: var(--font-heading);
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 0.5rem;
-        }
-        
-        .page-range {
-            color: var(--accent-gold);
-            font-weight: 600;
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-        }
-        
-        .value-card > p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-        
         /* ── HERO TESTIMONIAL ── */
         .hero-testimonial {
             padding: 3rem 1.5rem;
-            background: linear-gradient(135deg, var(--bg-cream) 0%, var(--bg-alt) 100%);
+            background: var(--bg-alt);
         }
         
         .hero-test-card {
@@ -503,160 +437,58 @@
             font-size: 0.85rem;
             font-weight: 600;
         }
-        
-        /* ── URGENCY BAR ── */
-        .urgency-bar {
-            padding: 3rem 1.5rem;
+
+        /* ── PRICE HERO SECTION (FIX 4) ── */
+        @keyframes pricePulse {
+            0%, 100% { text-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
+            50% { text-shadow: 0 0 40px rgba(212, 175, 55, 0.7), 0 0 60px rgba(212, 175, 55, 0.3); }
         }
-        
-        .urgency-card {
-            max-width: 600px;
-            margin: 0 auto;
-            background: var(--white);
-            border: 2px solid var(--accent-gold);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            text-align: center;
-            box-shadow: var(--shadow-md);
+        .price-pulse {
+            animation: pricePulse 3s ease-in-out infinite;
         }
-        
-        .urgency-card p {
-            color: var(--text-main);
-            margin-bottom: 1rem;
-            font-weight: 600;
+
+        /* ── CTA BUTTONS (FIX 5) ── */
+        @keyframes ctaGlow {
+            0%, 100% { box-shadow: 0 8px 30px rgba(212, 175, 55, 0.4); }
+            50% { box-shadow: 0 8px 50px rgba(212, 175, 55, 0.7), 0 0 20px rgba(212, 175, 55, 0.3); }
         }
-        
-        .clock-emoji {
-            font-size: 1.3rem;
-            margin-right: 0.5rem;
-        }
-        
-        .progress-bar-urgency {
-            width: 100%;
-            height: 12px;
-            background: rgba(212,175,55,0.15);
-            border-radius: var(--radius-full);
-            margin-bottom: 1rem;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent-gold), var(--accent-gold-dark));
-            border-radius: var(--radius-full);
-        }
-        
-        .urgency-text {
-            color: var(--text-main);
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        
-        .urgency-note {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        
-        /* ── PRICE REVEAL ── */
-        .price-reveal {
-            padding: 4rem 1.5rem;
-            background: linear-gradient(135deg, var(--bg-alt) 0%, var(--bg-cream) 100%);
-        }
-        
-        .price-card {
-            max-width: 600px;
-            margin: 0 auto 2.5rem;
-            background: var(--white);
-            border: 3px solid var(--accent-gold);
-            border-radius: var(--radius-lg);
-            padding: 3rem 2rem;
-            text-align: center;
-            box-shadow: var(--shadow-gold);
-        }
-        
-        .price-original {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            text-decoration: line-through;
-            margin-bottom: 0.5rem;
-        }
-        
-        .price-separator {
-            height: 2px;
-            background: var(--accent-gold);
-            margin: 1.5rem 0;
-        }
-        
-        .price-main {
-            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-family: var(--font-heading);
-            font-size: 4.5rem;
-            font-weight: 700;
-            margin: 1rem 0;
-        }
-        
-        .price-subtext {
-            color: var(--text-muted);
-            font-size: 1rem;
-            margin-bottom: 1rem;
-        }
-        
-        .price-badge {
-            display: inline-block;
-            background: var(--accent-gold);
-            color: var(--white);
-            padding: 0.4rem 1.2rem;
-            border-radius: var(--radius-full);
-            font-weight: 700;
-            font-size: 0.85rem;
-            margin-top: 1rem;
-        }
-        
-        /* ── CTA BUTTONS ── */
+
         .cta-primary {
-            width: 100%;
-            max-width: 600px;
             display: block;
-            margin: 2rem auto;
-            padding: 1.2rem 2rem;
-            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark));
-            color: var(--white);
-            border: none;
-            border-radius: var(--radius-md);
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: var(--shadow-gold);
-            transition: all var(--transition);
+            width: 100%;
+            max-width: 700px;
+            height: 72px;
+            background: linear-gradient(135deg, #D4AF37 0%, #B89600 100%);
+            color: white;
             font-family: var(--font-body);
-            animation: pulse 2s ease-in-out infinite;
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            border: none;
+            border-radius: 9999px;
+            cursor: pointer;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.4);
+            transition: all 0.3s ease;
+            animation: ctaGlow 3s ease-in-out infinite;
+            margin: 1.5rem auto;
+            text-align: center;
+            text-decoration: none;
+            line-height: 72px;
         }
-        
+
         .cta-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 0 6px rgba(212,175,55,0.2), 0 12px 30px rgba(212,175,55,0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(212, 175, 55, 0.6);
         }
-        
+
         .cta-primary:active {
             transform: translateY(-1px);
         }
         
-        @keyframes pulse {
-            0%, 100% { box-shadow: var(--shadow-gold); }
-            50% { box-shadow: 0 0 0 8px rgba(212,175,55,0.15), 0 12px 30px rgba(212,175,55,0.2); }
-        }
-        
-        .cta-large {
-            padding: 1.5rem 2rem;
-            font-size: 1.2rem;
-        }
-        
         .cta-trust {
             max-width: 600px;
-            margin: 2rem auto;
+            margin: 0 auto;
             text-align: center;
             color: var(--text-muted);
             font-size: 0.9rem;
@@ -665,10 +497,17 @@
         .cta-trust p {
             margin-bottom: 0.5rem;
         }
+
+        /* ── URGENCY SECTION ── */
+        .urgency-bar {
+            padding: 1rem 1.5rem 3rem;
+            background: var(--bg-cream);
+        }
         
         /* ── GUARANTEE ── */
         .guarantee {
             padding: 4rem 1.5rem;
+            background: var(--bg-alt);
         }
         
         .guarantee-card {
@@ -701,10 +540,122 @@
             font-size: 1rem;
         }
         
+        /* ── VALUE STACK ── */
+        .value-stack {
+            padding: 4rem 1.5rem;
+            background: var(--bg-cream);
+        }
+        
+        .value-stack h2 {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            color: var(--text-main);
+        }
+        
+        .value-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .value-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            border-top: 4px solid var(--accent-gold);
+            text-align: center;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+        
+        .value-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-gold);
+        }
+
+        /* FIX 6: card icon wrapper */
+        .card-icon-wrapper {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 1.25rem;
+            color: var(--accent-gold-dark);
+        }
+
+        .card-icon-wrapper svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .value-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-range {
+            color: var(--accent-gold);
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+        
+        .value-card > p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        /* ── AUTHORITY STORY ── */
+        .authority-story {
+            padding: 4rem 1.5rem;
+            background: var(--bg-alt);
+        }
+        
+        .authority-story h2 {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--text-main);
+        }
+
+        /* FIX 7: authority callout */
+        .authority-callout {
+            background: linear-gradient(135deg, #FFF9E7 0%, #FFF3D0 100%);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 20px;
+            padding: 3rem 2.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .authority-callout h2 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+        }
+        
+        .story-text {
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+        
         /* ── TESTIMONIAL GRID ── */
         .testimonial-grid {
             padding: 4rem 1.5rem;
-            background: linear-gradient(135deg, var(--bg-cream) 0%, var(--bg-alt) 100%);
+            background: var(--bg-cream);
         }
         
         .testimonial-grid h2 {
@@ -758,9 +709,10 @@
             font-size: 0.8rem;
         }
         
-        /* ── FAQ ACCORDION ── */
+        /* ── FAQ ACCORDION (FIX 12) ── */
         .faq {
             padding: 4rem 1.5rem;
+            background: var(--bg-alt);
         }
         
         .faq h2 {
@@ -785,13 +737,15 @@
             overflow: hidden;
         }
         
+        /* FIX 12: FAQ header styling */
         .accordion-header {
             width: 100%;
-            padding: 1.5rem;
+            padding: 1.25rem 1.5rem;
             background: var(--white);
             border: none;
             text-align: left;
-            font-size: 1rem;
+            font-family: var(--font-heading);
+            font-size: 1.1875rem;
             font-weight: 600;
             color: var(--text-main);
             cursor: pointer;
@@ -799,7 +753,6 @@
             justify-content: space-between;
             align-items: center;
             transition: all var(--transition);
-            border-bottom: 1px solid rgba(212,175,55,0.1);
         }
         
         .accordion-header:hover {
@@ -810,7 +763,6 @@
         .accordion-header.active {
             background: var(--bg-alt);
             color: var(--accent-gold);
-            border-bottom-color: var(--accent-gold);
         }
         
         .accordion-header::after {
@@ -826,28 +778,30 @@
             transform: rotate(180deg);
         }
         
+        /* FIX 12: FAQ answer styling */
         .accordion-content {
             max-height: 0;
             overflow: hidden;
             transition: max-height var(--transition);
-            padding: 0 1.5rem;
         }
         
         .accordion-content.active {
             max-height: 500px;
-            padding: 1.5rem;
         }
         
         .accordion-content p {
+            font-size: 1rem;
+            line-height: 1.75;
             color: var(--text-muted);
-            line-height: 1.7;
+            padding: 1rem 1.5rem 1.5rem 1.5rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
             margin: 0;
         }
         
         /* ── FINAL CTA ── */
         .final-cta {
             padding: 4rem 1.5rem;
-            background: linear-gradient(135deg, var(--bg-alt) 0%, var(--bg-cream) 100%);
+            background: var(--bg-cream);
         }
         
         .final-card {
@@ -885,15 +839,6 @@
         
         .final-trust p {
             margin-bottom: 0.5rem;
-        }
-        
-        .ps-note {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(212,175,55,0.2);
-            line-height: 1.6;
         }
         
         /* ── FOOTER ── */
@@ -938,9 +883,10 @@
             color: var(--accent-gold);
         }
         
+        /* FIX 11: footer disclaimer font size */
         .disclaimer {
             color: rgba(255,255,255,0.7);
-            font-size: 0.8rem;
+            font-size: 0.8125rem;
             line-height: 1.6;
             margin-top: 2rem;
             padding-top: 2rem;
@@ -983,12 +929,7 @@
                 font-size: 2rem;
             }
             
-            .price-main {
-                font-size: 3.5rem;
-            }
-            
             .value-cards,
-            .revelation-cards,
             .testimonial-grid .grid {
                 grid-template-columns: 1fr;
             }
@@ -1013,7 +954,7 @@
             
             .revelations h2,
             .value-intro h2,
-            .authority-story h2,
+            .authority-callout h2,
             .value-stack h2,
             .testimonial-grid h2,
             .faq h2 {
@@ -1043,13 +984,15 @@
             .container {
                 padding: 0 1rem;
             }
-            
-            .price-card {
+
+            .authority-callout {
                 padding: 2rem 1.5rem;
             }
-            
-            .price-main {
-                font-size: 2.8rem;
+
+            .cta-primary {
+                font-size: 1.05rem;
+                height: 64px;
+                line-height: 64px;
             }
         }
     </style>
@@ -1061,12 +1004,12 @@
     <!-- Progress bar -->
     <div class="progress-bar" id="progressBar"></div>
     
-    <!-- Social proof bar -->
+    <!-- 1. Social proof bar -->
     <div class="social-proof-bar">
         <span>★★★★★</span> 2,847,391 readings completed
     </div>
     
-    <!-- Header -->
+    <!-- 2. Header -->
     <header class="page-header">
         <div class="brand-logo">
             <svg viewBox="0 0 24 24" fill="none">
@@ -1076,12 +1019,12 @@
         </div>
     </header>
     
-    <!-- HERO REVEAL SECTION -->
+    <!-- 3. HERO REVEAL SECTION -->
     <section class="hero-reveal">
         <div class="container">
             <div class="pre-headline">✨ Your Blueprint Is Ready</div>
             <h1 id="heroGreeting">The cosmos has been waiting</h1>
-            <p id="birthDisplay">Born December 12, 1990 in New York</p>
+            <p id="birthDisplay">Born December 12, 1990</p>
             
             <div class="life-path-hero">
                 <div class="life-path-circle">
@@ -1094,35 +1037,76 @@
         </div>
     </section>
     
-    <!-- REVELATIONS SECTION -->
+    <!-- 4. REVELATIONS SECTION (FIX 2: 2x2 grid, SVG icons) -->
     <section class="revelations">
         <div class="container">
-            <h2>Here Are 3 Things Your Blueprint Just Revealed About You</h2>
+            <h2>Here Are 4 Things Your Blueprint Just Revealed About You</h2>
             <p class="section-subhead">Based on your birth coordinates — these patterns are encoded into your chart.</p>
             
             <div class="revelation-cards">
-                <div class="revelation-card">
-                    <div class="icon">☀️</div>
+                <!-- Card 1: Sun SVG -->
+                <div class="revelation-card fade-in-card">
+                    <div class="svg-icon">
+                        <svg viewBox="0 0 100 100" fill="none">
+                            <circle cx="50" cy="50" r="18" fill="currentColor" opacity="0.7"/>
+                            <circle cx="50" cy="50" r="28" stroke="currentColor" stroke-width="2"/>
+                            <line x1="50" y1="5" x2="50" y2="20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                            <line x1="50" y1="80" x2="50" y2="95" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                            <line x1="5" y1="50" x2="20" y2="50" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                            <line x1="80" y1="50" x2="95" y2="50" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                            <line x1="18" y1="18" x2="28" y2="28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                            <line x1="72" y1="72" x2="82" y2="82" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                            <line x1="82" y1="18" x2="72" y2="28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                            <line x1="18" y1="82" x2="28" y2="72" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                    </div>
                     <h3>You've Always Felt 'Different' — And Here's Why</h3>
                     <p>Your blueprint shows you carry what astrologers call a "double-activated intuitive channel." This means you often sense things before they happen — and other people rarely understand you at the deepest level. You've likely felt misunderstood most of your life. You may have been called "too sensitive" or "too much" by people who couldn't see what you see. This is not a flaw — it's a gift that most people don't have.</p>
                 </div>
                 
-                <div class="revelation-card">
-                    <div class="icon">🌙</div>
+                <!-- Card 2: Moon SVG -->
+                <div class="revelation-card fade-in-card">
+                    <div class="svg-icon">
+                        <svg viewBox="0 0 100 100" fill="none">
+                            <path d="M60 20 A 30 30 0 1 0 60 80 A 22 22 0 1 1 60 20 Z" fill="currentColor" opacity="0.7"/>
+                            <circle cx="72" cy="25" r="4" fill="currentColor" opacity="0.5"/>
+                            <circle cx="78" cy="40" r="3" fill="currentColor" opacity="0.4"/>
+                        </svg>
+                    </div>
                     <h3>Something In The Last 18 Months Has Shifted You Forever</h3>
                     <p>Your natal chart shows that you've recently entered what's called a "Saturn Activation Window" — a period where something significant happened that changed how you see yourself. A loss, a revelation, a quiet breakdown, or a relationship that changed you. You may not have told anyone how deeply this affected you. But your blueprint sees it. And what's coming next in 2026 is directly connected to what you went through.</p>
                 </div>
                 
-                <div class="revelation-card">
-                    <div class="icon">⭐</div>
+                <!-- Card 3: Star SVG -->
+                <div class="revelation-card fade-in-card">
+                    <div class="svg-icon">
+                        <svg viewBox="0 0 100 100" fill="none">
+                            <path d="M50 5 L56 35 L85 38 L63 58 L70 88 L50 72 L30 88 L37 58 L15 38 L44 35 Z" fill="currentColor" opacity="0.7" stroke="currentColor" stroke-width="1.5"/>
+                        </svg>
+                    </div>
                     <h3 id="thresholdHeading">A Major Life Shift Is Coming In June — You Need To Be Ready</h3>
                     <p>Based on your planetary transits, a window is opening when what astrologers call a 'Threshold Event' enters your life. A critical opportunity, person, or realisation. What this event is depends entirely on whether you've decoded the rest of your blueprint. Most people miss their Threshold Event because they weren't paying attention. Those who catch it describe it as 'the turning point of my entire life.'</p>
+                </div>
+                
+                <!-- Card 4: Diamond SVG (segmented) -->
+                <div class="revelation-card fade-in-card" id="card4Revelation">
+                    <div class="svg-icon">
+                        <svg viewBox="0 0 100 100" fill="none">
+                            <path d="M50 10 L85 40 L50 90 L15 40 Z" stroke="currentColor" stroke-width="2"/>
+                            <path d="M15 40 L85 40" stroke="currentColor" stroke-width="2"/>
+                            <path d="M35 40 L50 10 L65 40" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
+                            <path d="M35 40 L50 90" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
+                            <path d="M65 40 L50 90" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
+                        </svg>
+                    </div>
+                    <h3 id="card4Title">Your Wealth Pattern Has Been Dormant — Until Now</h3>
+                    <p id="card4Body">Your blueprint reveals a 'dormant wealth pattern' that has been waiting for the right moment to activate. The windows in 2026 when your abundance potential peaks are specific to your birth date. Those who know these windows can position themselves to receive. Those who don't may watch opportunities pass unknowingly.</p>
                 </div>
             </div>
         </div>
     </section>
     
-    <!-- SEGMENTED INSIGHT SECTION -->
+    <!-- 5. SEGMENTED INSIGHT SECTION -->
     <section class="segmented-insight">
         <div class="container">
             <div class="insight-callout" id="insightCallout">
@@ -1132,7 +1116,7 @@
         </div>
     </section>
     
-    <!-- VALUE INTRO SECTION -->
+    <!-- 6. VALUE INTRO SECTION ("This Is Just The Surface") -->
     <section class="value-intro">
         <div class="container">
             <h2>This Is Just The Surface. Your Full Blueprint Contains...</h2>
@@ -1140,7 +1124,7 @@
             <ul class="feature-list">
                 <li>✨ Your complete Numerology profile (Life Path, Destiny, Soul Urge, Personality)</li>
                 <li>✨ Your full 2026 Month-by-Month Forecast (one page per month)</li>
-                <li>✨ Your Love & Soulmate Profile (including the letter of their name)</li>
+                <li>✨ Your Love &amp; Soulmate Profile (including the letter of their name)</li>
                 <li>✨ Your Wealth Timeline (exact windows when abundance is accessible)</li>
                 <li>✨ Your 3 Hidden Life Challenges (and how to transmute them)</li>
                 <li>✨ Your Past-Life Signature and karmic lessons</li>
@@ -1150,65 +1134,7 @@
         </div>
     </section>
     
-    <!-- AUTHORITY STORY SECTION -->
-    <section class="authority-story">
-        <div class="container">
-            <h2>Why 2,847,391 Women Have Already Decoded Their Blueprint</h2>
-            <p class="story-text">Eleven years ago, a retired NASA astrophysicist named Dr. Alan Keshavarz made a discovery that changed astrology forever. While studying planetary alignment data, he noticed birth dates and locations correlating with measurable life events in ways chance couldn't explain. He spent six years building the 'Cosmic Coordinate System.' Before he passed in 2019, he shared it with one instruction: 'Make this available to women who need guidance. For the price of a cup of coffee.' That's why your full Cosmic Blueprint — the same system that costs $400 with a personal astrologer — is available today for $19.</p>
-        </div>
-    </section>
-    
-    <!-- VALUE STACK SECTION -->
-    <section class="value-stack">
-        <div class="container">
-            <h2>Here's Everything That's In Your Cosmic Blueprint</h2>
-            <div class="value-cards">
-                <div class="value-card">
-                    <div class="card-icon">📊</div>
-                    <h3>Your Core Numerology Profile</h3>
-                    <p class="page-range">Pages 1–8</p>
-                    <p>Your complete numerological identity — Life Path, Destiny Number, Soul Urge, and Personality Number. Most astrologers only cover Life Path. The full picture requires all four.</p>
-                </div>
-                
-                <div class="value-card">
-                    <div class="card-icon">📅</div>
-                    <h3>Your 2026 Month-by-Month Forecast</h3>
-                    <p class="page-range">Pages 9–20</p>
-                    <p>Every month of 2026 mapped out. Which months bring opportunity? Which require caution? When should you make major decisions? When should you rest and reflect?</p>
-                </div>
-                
-                <div class="value-card">
-                    <div class="card-icon">💘</div>
-                    <h3>Your Love & Soulmate Profile</h3>
-                    <p class="page-range">Pages 21–28</p>
-                    <p>Who you're meant to find. What they're looking for. The specific letter their name begins with. When they'll enter your life. How to recognise them.</p>
-                </div>
-                
-                <div class="value-card">
-                    <div class="card-icon">💎</div>
-                    <h3>Your Wealth Timeline</h3>
-                    <p class="page-range">Pages 29–34</p>
-                    <p>The exact windows in 2026 when your financial abundance is accessible. Which opportunities to pursue. Which ventures to avoid. Your personal wealth activation dates.</p>
-                </div>
-                
-                <div class="value-card">
-                    <div class="card-icon">⚡</div>
-                    <h3>Your Threshold Event Blueprint</h3>
-                    <p class="page-range">Pages 35–40</p>
-                    <p>What the 'Threshold Event' means specifically for you. The exact dates it opens. How to prepare. The three signs you're about to experience it. How to step through.</p>
-                </div>
-                
-                <div class="value-card">
-                    <div class="card-icon">🌅</div>
-                    <h3>Your Personal Morning Ritual</h3>
-                    <p class="page-range">Pages 41–44</p>
-                    <p>A 7-minute morning practice designed specifically for your cosmic design. What to say. What to visualise. When to do it. How it aligns you with your destiny.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- HERO TESTIMONIAL SECTION -->
+    <!-- 7. HANNAH TESTIMONIAL (MOVED UP — right before price) -->
     <section class="hero-testimonial">
         <div class="container">
             <div class="hero-test-card">
@@ -1224,33 +1150,38 @@
         </div>
     </section>
     
-    <!-- URGENCY BAR SECTION -->
-    <section class="urgency-bar">
-        <div class="container">
-            <div class="urgency-card">
-                <p><span class="clock-emoji">⏳</span> Today's $19 Readings Remaining:</p>
-                <div class="progress-bar-urgency">
-                    <div class="progress-fill" style="width: 60%;"></div>
-                </div>
-                <p class="urgency-text">247 of 500 unlocked today</p>
-                <p class="urgency-note">The discounted price is available while today's allocation lasts.</p>
+    <!-- 8. PRICE REVEAL HERO MOMENT (FIX 4) -->
+    <section class="price-hero-section" style="background: var(--bg-cream); padding: 4rem 1.25rem;">
+        <div class="container" style="max-width: 650px; margin: 0 auto; text-align: center;">
+            
+            <p style="font-family: var(--font-heading); font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem; font-style: italic;">
+                Today, for new readers only:
+            </p>
+            
+            <div class="price-card" style="background: white; border: 3px solid var(--accent-gold); border-radius: 24px; padding: 3rem 2rem; box-shadow: 0 8px 40px rgba(212, 175, 55, 0.2);">
+                
+                <!-- Crossed out original price -->
+                <div style="font-family: var(--font-body); font-size: 1.75rem; color: #9CA3AF; text-decoration: line-through; margin-bottom: 0.5rem;">$39</div>
+                
+                <!-- Arrow -->
+                <div style="font-size: 1.5rem; color: var(--accent-gold); margin-bottom: 0.5rem;">↓</div>
+                
+                <!-- New price — HUGE -->
+                <div class="price-pulse" style="font-family: var(--font-heading); font-size: 6rem; font-weight: 700; color: var(--accent-gold); line-height: 1; margin-bottom: 0.75rem;">$19</div>
+                
+                <!-- Badge -->
+                <div style="display: inline-block; background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark)); color: white; font-size: 0.875rem; font-weight: 700; padding: 0.5rem 1.5rem; border-radius: 9999px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem;">✨ 50% OFF — Today Only</div>
+                
+                <p style="font-size: 0.9375rem; color: var(--text-muted);">One-time payment. No subscription. Yours forever.</p>
             </div>
+            
         </div>
     </section>
     
-    <!-- PRICE REVEAL SECTION -->
-    <section class="price-reveal">
-        <div class="container">
-            <div class="price-card">
-                <p class="price-original">Normally $39</p>
-                <div class="price-separator"></div>
-                <p class="price-main">$19</p>
-                <p class="price-subtext">One-time payment. Yours forever.</p>
-                <span class="price-badge">✨ 50% OFF — Today Only</span>
-            </div>
-            
+    <!-- 9. PRIMARY CTA BUTTON -->
+    <section style="background: var(--bg-cream); padding: 0 1.25rem 2rem;">
+        <div style="max-width: 700px; margin: 0 auto; text-align: center;">
             <button class="cta-primary">🔮 YES — Send Me My Full Blueprint For $19</button>
-            
             <div class="cta-trust">
                 <p>🔒 Secure checkout · SSL encrypted · Instant PDF delivery</p>
                 <p>⭐⭐⭐⭐⭐ 4.9/5 rating · 2,847,391 readings delivered</p>
@@ -1258,7 +1189,23 @@
         </div>
     </section>
     
-    <!-- GUARANTEE SECTION -->
+    <!-- 10. TRUST BADGES + URGENCY/ALLOCATION COUNTER (FIX 8) -->
+    <section class="urgency-bar">
+        <div class="container">
+            <div class="urgency-card" style="background: white; border: 2px solid var(--accent-gold); border-radius: 16px; padding: 1.75rem 2rem; max-width: 500px; margin: 2rem auto; text-align: center;">
+                <p style="font-weight: 600; font-size: 1.0625rem; color: var(--text-main); margin-bottom: 1rem;">
+                    ⏳ Today's $19 Readings Remaining
+                </p>
+                <div style="background: #F0EBF5; border-radius: 9999px; height: 12px; overflow: hidden; margin-bottom: 0.75rem;">
+                    <div style="background: linear-gradient(90deg, var(--accent-gold), var(--accent-gold-dark)); width: 60%; height: 100%; border-radius: 9999px;"></div>
+                </div>
+                <p style="font-family: var(--font-heading); font-size: 1.5rem; color: var(--accent-gold-dark); font-weight: 600;">247 of 500 unlocked today</p>
+                <p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 0.5rem; font-style: italic;">Discounted price available while today's allocation lasts.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 11. 60-DAY GUARANTEE -->
     <section class="guarantee">
         <div class="container">
             <div class="guarantee-card">
@@ -1269,47 +1216,166 @@
         </div>
     </section>
     
-    <!-- TESTIMONIAL GRID SECTION -->
+    <!-- 12. WHAT'S IN YOUR BLUEPRINT — 6-CARD GRID (FIX 6: SVG icons) -->
+    <section class="value-stack">
+        <div class="container">
+            <h2>Here's Everything That's In Your Cosmic Blueprint</h2>
+            <div class="value-cards">
+                <!-- Card 1: Numerology Profile -->
+                <div class="value-card fade-in-card">
+                    <div class="card-icon-wrapper">
+                        <svg viewBox="0 0 100 100" fill="none">
+                            <circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="2"/>
+                            <text x="50" y="58" text-anchor="middle" font-size="35" fill="currentColor" font-weight="bold">4</text>
+                            <circle cx="50" cy="50" r="30" stroke="currentColor" stroke-width="1" stroke-dasharray="3 4" opacity="0.5"/>
+                        </svg>
+                    </div>
+                    <h3>Your Core Numerology Profile</h3>
+                    <p class="page-range">Pages 1–8</p>
+                    <p>Your complete numerological identity — Life Path, Destiny Number, Soul Urge, and Personality Number. Most astrologers only cover Life Path. The full picture requires all four.</p>
+                </div>
+                
+                <!-- Card 2: 2026 Forecast -->
+                <div class="value-card fade-in-card">
+                    <div class="card-icon-wrapper">
+                        <svg viewBox="0 0 100 100" fill="none">
+                            <rect x="15" y="25" width="70" height="60" rx="6" stroke="currentColor" stroke-width="2"/>
+                            <line x1="15" y1="40" x2="85" y2="40" stroke="currentColor" stroke-width="2"/>
+                            <line x1="30" y1="15" x2="30" y2="35" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                            <line x1="70" y1="15" x2="70" y2="35" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                            <circle cx="35" cy="58" r="3" fill="currentColor"/>
+                            <circle cx="50" cy="58" r="3" fill="currentColor"/>
+                            <circle cx="65" cy="58" r="3" fill="currentColor"/>
+                            <circle cx="35" cy="72" r="3" fill="currentColor"/>
+                            <circle cx="50" cy="72" r="3" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3>Your 2026 Month-by-Month Forecast</h3>
+                    <p class="page-range">Pages 9–20</p>
+                    <p>Every month of 2026 mapped out. Which months bring opportunity? Which require caution? When should you make major decisions? When should you rest and reflect?</p>
+                </div>
+                
+                <!-- Card 3: Soulmate Blueprint -->
+                <div class="value-card fade-in-card">
+                    <div class="card-icon-wrapper">
+                        <svg viewBox="0 0 100 100" fill="none">
+                            <path d="M50 75 C50 75 20 55 20 35 C20 23 30 15 40 18 C45 20 50 25 50 25 C50 25 55 20 60 18 C70 15 80 23 80 35 C80 55 50 75 50 75 Z" stroke="currentColor" stroke-width="2" fill="currentColor" opacity="0.4"/>
+                        </svg>
+                    </div>
+                    <h3>Your Love &amp; Soulmate Profile</h3>
+                    <p class="page-range">Pages 21–28</p>
+                    <p>Who you're meant to find. What they're looking for. The specific letter their name begins with. When they'll enter your life. How to recognise them.</p>
+                </div>
+                
+                <!-- Card 4: Wealth Timeline -->
+                <div class="value-card fade-in-card">
+                    <div class="card-icon-wrapper">
+                        <svg viewBox="0 0 100 100" fill="none">
+                            <circle cx="50" cy="50" r="35" stroke="currentColor" stroke-width="2"/>
+                            <path d="M50 25 L50 35 M50 65 L50 75" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                            <path d="M38 38 C38 38 38 32 50 32 C62 32 62 45 50 45 C38 45 38 58 50 58 C62 58 62 52 62 52" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>Your Wealth Timeline</h3>
+                    <p class="page-range">Pages 29–34</p>
+                    <p>The exact windows in 2026 when your financial abundance is accessible. Which opportunities to pursue. Which ventures to avoid. Your personal wealth activation dates.</p>
+                </div>
+                
+                <!-- Card 5: Threshold Event -->
+                <div class="value-card fade-in-card">
+                    <div class="card-icon-wrapper">
+                        <svg viewBox="0 0 100 100" fill="none">
+                            <rect x="30" y="20" width="40" height="65" rx="3" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="50" cy="55" r="6" stroke="currentColor" stroke-width="2"/>
+                            <path d="M50 20 L50 10 M30 20 L22 12 M70 20 L78 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M50 85 L50 92" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>Your Threshold Event Blueprint</h3>
+                    <p class="page-range">Pages 35–40</p>
+                    <p>What the 'Threshold Event' means specifically for you. The exact dates it opens. How to prepare. The three signs you're about to experience it. How to step through.</p>
+                </div>
+                
+                <!-- Card 6: Morning Ritual -->
+                <div class="value-card fade-in-card">
+                    <div class="card-icon-wrapper">
+                        <svg viewBox="0 0 100 100" fill="none">
+                            <path d="M50 30 L50 15 M50 85 L50 70 M22 50 L10 50 M90 50 L75 50" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                            <path d="M30 30 L20 20 M80 30 L70 20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                            <circle cx="50" cy="50" r="22" stroke="currentColor" stroke-width="2.5"/>
+                            <circle cx="50" cy="50" r="12" fill="currentColor" opacity="0.5"/>
+                        </svg>
+                    </div>
+                    <h3>Your Personal Morning Ritual</h3>
+                    <p class="page-range">Pages 41–44</p>
+                    <p>A 7-minute morning practice designed specifically for your cosmic design. What to say. What to visualise. When to do it. How it aligns you with your destiny.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 13. DR. KESHAVARZ ORIGIN STORY (FIX 7: visual callout) -->
+    <section class="authority-story">
+        <div class="container">
+            <div class="authority-callout">
+                <!-- Cosmic star icon -->
+                <div style="width: 48px; height: 48px; color: var(--accent-gold); margin: 0 auto 1.5rem;">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"/>
+                    </svg>
+                </div>
+                <h2>Why 2,847,391 Women Have Already Decoded Their Blueprint</h2>
+                <p class="story-text" style="margin-bottom: 1.5rem;">Eleven years ago, a retired NASA astrophysicist named Dr. Alan Keshavarz made a discovery that changed astrology forever. While studying planetary alignment data, he noticed birth dates and locations correlating with measurable life events in ways chance couldn't explain.</p>
+                <p class="story-text" style="margin-bottom: 1.5rem;">He spent six years building the 'Cosmic Coordinate System' — a methodology that cross-references numerology, astrology, and birth chart analysis to reveal patterns encoded in the moment of your arrival into this world.</p>
+                <blockquote style="border-left: 4px solid var(--accent-gold); padding-left: 1.5rem; font-style: italic; color: var(--text-main); font-size: 1.0625rem; margin: 1.5rem auto; text-align: left; max-width: 600px;">
+                    "Make this available to women who need guidance. Not for the price of a consultation. For the price of a cup of coffee."
+                </blockquote>
+                <p class="story-text">Before he passed in 2019, Dr. Keshavarz shared it with one instruction. That's why your full Cosmic Blueprint — the same system that costs $400 with a personal astrologer — is available today for $19.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 14. 6-TESTIMONIAL GRID -->
     <section class="testimonial-grid">
         <div class="container">
             <h2>What Women Around The World Are Saying</h2>
             <div class="grid">
-                <div class="test-card">
+                <div class="test-card fade-in-card">
                     <div class="test-stars">★★★★★</div>
                     <p class="test-quote">"Page 14 made me cry. I don't know how this works but it's like they know me."</p>
                     <p class="test-name">Sarah M., 34 — Ohio, USA</p>
                     <p class="verified-badge">✓ Verified Buyer</p>
                 </div>
                 
-                <div class="test-card">
+                <div class="test-card fade-in-card">
                     <div class="test-stars">★★★★★</div>
                     <p class="test-quote">"I've had $400 astrology readings that weren't half as detailed as this. Incredible value."</p>
                     <p class="test-name">Jessica K., 42 — London, UK</p>
                     <p class="verified-badge">✓ Verified Buyer</p>
                 </div>
                 
-                <div class="test-card">
+                <div class="test-card fade-in-card">
                     <div class="test-stars">★★★★★</div>
                     <p class="test-quote">"The 2026 forecast section alone is worth the $19. But everything in here is gold."</p>
                     <p class="test-name">Emma L., 28 — Toronto, Canada</p>
                     <p class="verified-badge">✓ Verified Buyer</p>
                 </div>
                 
-                <div class="test-card">
+                <div class="test-card fade-in-card">
                     <div class="test-stars">★★★★★</div>
                     <p class="test-quote">"I showed this to my therapist and she asked where I got it. That says everything."</p>
                     <p class="test-name">Rachel T., 39 — Sydney, Australia</p>
                     <p class="verified-badge">✓ Verified Buyer</p>
                 </div>
                 
-                <div class="test-card">
+                <div class="test-card fade-in-card">
                     <div class="test-stars">★★★★★</div>
                     <p class="test-quote">"My whole year just made sense. The forecast was eerily accurate. Grateful."</p>
                     <p class="test-name">Maya P., 31 — Berlin, Germany</p>
                     <p class="verified-badge">✓ Verified Buyer</p>
                 </div>
                 
-                <div class="test-card">
+                <div class="test-card fade-in-card">
                     <div class="test-stars">★★★★★</div>
                     <p class="test-quote">"I've been waiting for something like this. Finally, a blueprint that actually sees me."</p>
                     <p class="test-name">Lisa W., 45 — Miami, USA</p>
@@ -1319,7 +1385,7 @@
         </div>
     </section>
     
-    <!-- FAQ SECTION -->
+    <!-- 15. FAQ ACCORDION (FIX 12) -->
     <section class="faq">
         <div class="container">
             <h2>Questions Before You Unlock Your Blueprint?</h2>
@@ -1369,20 +1435,27 @@
         </div>
     </section>
     
-    <!-- FINAL CTA SECTION -->
+    <!-- 16. FINAL HERO CLOSE + P.S. (FIX 10: P.S. gold left accent) -->
     <section class="final-cta">
         <div class="container">
             <div class="final-card">
                 <h2>Your Blueprint Is Waiting</h2>
                 <p id="finalCopy">You came to this page because something inside you said yes. A quiet knowing. A pull toward understanding yourself at a deeper level. That instinct is correct. Your Blueprint is real. It's personalised. And it's ready for you right now.</p>
-                <button class="cta-primary cta-large">🔮 YES — Unlock My Cosmic Blueprint For $19</button>
-                <p class="final-trust">🔒 One-time payment · 60-day guarantee · Instant delivery</p>
-                <p class="ps-note"><strong>P.S.</strong> — The $19 price is only held while you're on this page. If you close this tab and return later, the price reverts to $39. Once today's allocation is reached, the price goes back up. If you're meant to have this Blueprint — now is the moment.</p>
+                <button class="cta-primary">🔮 YES — Send Me My Full Blueprint For $19</button>
+                <div class="final-trust">
+                    <p>🔒 One-time payment · 60-day guarantee · Instant delivery</p>
+                </div>
+                <!-- FIX 10: P.S. gold left accent -->
+                <div style="border-left: 4px solid var(--accent-gold); padding-left: 1.5rem; margin-top: 2rem; text-align: left; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    <p style="font-style: italic; font-size: 1rem; color: var(--text-muted); line-height: 1.75;">
+                        <strong>P.S.</strong> — The $19 price is only held while you're on this page. If you close this tab and return later, the price reverts to $39. Once today's allocation is reached, the price goes back up. <strong>If you're meant to have this Blueprint — now is the moment.</strong>
+                    </p>
+                </div>
             </div>
         </div>
     </section>
     
-    <!-- FOOTER -->
+    <!-- 17. FOOTER -->
     <footer>
         <div class="container">
             <div class="footer-logo">Star Signal</div>
@@ -1393,6 +1466,7 @@
                 <a href="#terms">Terms of Service</a>
                 <a href="#contact">Contact</a>
             </div>
+            <!-- FIX 11: disclaimer font-size 0.8125rem (applied via CSS class) -->
             <div class="disclaimer">
                 © 2026 Star Signal. All rights reserved.<br><br>
                 Star Signal readings are intended for personal reflection and entertainment purposes only. They are not a substitute for professional advice, medical, psychological, or financial. Past results do not guarantee future outcomes. Your individual results may vary.
@@ -1500,6 +1574,26 @@
                 text: "Your blueprint reveals you're in a 'spiritual acceleration window' — a period where your intuition, awareness, and connection to something greater are heightening rapidly. The synchronicities you've been noticing aren't coincidence. The dreams that feel prophetic aren't random. The knowing you can't explain is real. Your blueprint maps the specific practices, timing, and milestones of your spiritual journey throughout 2026. You're not meant to navigate this alone."
             }
         };
+
+        // ── CARD 4 SEGMENTED CONTENT ──
+        const card4Content = {
+            love: {
+                title: "Your Soulmate Window Is Opening",
+                body: "Your blueprint reveals a rare 'Soulmate Activation Period' encoded in your birth chart. The specific months in 2026 when this window opens are mapped in your full Blueprint. Missing this window doesn't mean you miss love forever — but knowing it is coming changes everything about how you show up."
+            },
+            money: {
+                title: "Your Wealth Pattern Has Been Dormant — Until Now",
+                body: "Your blueprint reveals a 'dormant wealth pattern' that has been waiting for the right moment to activate. The windows in 2026 when your abundance potential peaks are specific to your birth date. Those who know these windows can position themselves to receive. Those who don't may watch opportunities pass unknowingly."
+            },
+            purpose: {
+                title: "Your True Calling Is About To Reveal Itself",
+                body: "Your blueprint shows that a 'Purpose Activation Window' is approaching — a period where your path becomes undeniably clear. This isn't about choosing a career. It's about recognising the work that only you were born to do. 2026 holds the key moments when this clarity arrives."
+            },
+            spiritual: {
+                title: "A Spiritual Portal Is Opening In Your Chart",
+                body: "Your blueprint shows that 2026 contains what mystics call a 'Spiritual Gateway Period' — windows where your connection to higher guidance becomes extraordinarily clear. The practices, the timing, the milestones of your awakening are all mapped in your full Blueprint."
+            }
+        };
         
         // ── PAGE LOAD HANDLER ──
         document.addEventListener('DOMContentLoaded', function() {
@@ -1510,10 +1604,13 @@
             const params = new URLSearchParams(window.location.search);
             const firstName = params.get('firstName') || 'Seeker';
             const birthDate = params.get('birthDate') || '1990-12-12';
-            const birthCity = params.get('birthCity') || 'New York';
-            const cityValid = params.get('cityValid') === 'true';
+            const birthCity = params.get('birthCity') || '';
+            const cityValidParam = params.get('cityValid');
             const lifeArea = params.get('lifeArea') || 'love';
             const email = params.get('email') || '';
+
+            // FIX 1: City validation — omit city if under 4 characters
+            const showCity = (cityValidParam === 'true') && (birthCity.length >= 4);
             
             // Calculate Life Path
             const lifePath = calculateLifePath(birthDate);
@@ -1524,7 +1621,10 @@
             
             // Inject dynamic content
             document.getElementById('heroGreeting').textContent = `Welcome, ${firstName}`;
-            document.getElementById('birthDisplay').textContent = `Born ${formattedBirth}${cityValid ? ' in ' + birthCity : ''}`;
+            // FIX 1: Show city only when showCity is true
+            document.getElementById('birthDisplay').textContent = showCity
+                ? `Born ${formattedBirth} in ${birthCity}`
+                : `Born ${formattedBirth}`;
             document.getElementById('lifePathNumber').textContent = lifePath;
             document.getElementById('lifePathLabel').textContent = `Life Path ${lifePath}`;
             document.getElementById('lifePathArchetype').textContent = archetype;
@@ -1535,9 +1635,15 @@
             const insight = insights[lifeArea] || insights.love;
             const insightCallout = document.getElementById('insightCallout');
             insightCallout.innerHTML = `<h3>${insight.title}</h3><p>${insight.text}</p>`;
+
+            // Update card 4 with segmented content
+            const c4 = card4Content[lifeArea] || card4Content.money;
+            document.getElementById('card4Title').textContent = c4.title;
+            document.getElementById('card4Body').textContent = c4.body;
             
-            // Update final copy
-            document.getElementById('finalCopy').textContent = `${firstName}, you came to this page because something inside you said yes. A quiet knowing. A pull toward understanding yourself at a deeper level. That instinct is correct. Your Blueprint is real. It's personalised. And it's ready for you right now.`;
+            // FIX 1: Update final copy — include city only when showCity is true
+            const locationPhrase = showCity ? ` from ${birthCity}` : '';
+            document.getElementById('finalCopy').textContent = `${firstName}${locationPhrase}, you came to this page because something inside you said yes. A quiet knowing. A pull toward understanding yourself at a deeper level. That instinct is correct. Your Blueprint is real. It's personalised. And it's ready for you right now.`;
             
             // Setup FAQ accordion
             setupAccordion();
@@ -1547,6 +1653,9 @@
             
             // Setup button listeners
             setupButtonListeners();
+
+            // Setup scroll fade-in (IntersectionObserver)
+            setupFadeInObserver();
         });
         
         // ── ACCORDION ──
@@ -1597,6 +1706,29 @@
                     // Placeholder for payment integration
                 });
             });
+        }
+
+        // ── FADE-IN ON SCROLL (IntersectionObserver) ──
+        function setupFadeInObserver() {
+            const cards = document.querySelectorAll('.fade-in-card');
+            if (!cards.length) return;
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, i) => {
+                    if (entry.isIntersecting) {
+                        // Stagger the animations slightly
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, 80 * (Array.from(cards).indexOf(entry.target) % 4));
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.12,
+                rootMargin: '0px 0px -40px 0px'
+            });
+
+            cards.forEach(card => observer.observe(card));
         }
     </script>
 </body>

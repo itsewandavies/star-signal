@@ -968,16 +968,20 @@
     function nextFromQ5() {
         const city = document.getElementById('birth-city').value.trim();
         const errEl = document.getElementById('city-error');
-        if (city.length < 2) {
-            errEl.classList.add('visible');
+        // FIX 13: cityValid=true only if city length >= 4
+        answers.birthCity = city;
+        if (city.length < 4) {
             answers.cityIsValid = false;
-            answers.birthCity = city || '';
+            // Still allow proceeding if they typed something (>= 2 chars), just mark invalid
+            if (city.length < 2) {
+                errEl.classList.add('visible');
+                return;
+            }
         } else {
-            errEl.classList.remove('visible');
-            answers.birthCity = city;
             answers.cityIsValid = true;
-            goTo('q6');
         }
+        errEl.classList.remove('visible');
+        goTo('q6');
     }
 
     // ── Q8 COSMIC SIGNS ──
