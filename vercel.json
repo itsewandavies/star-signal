@@ -1,7 +1,4 @@
 {
-  "buildCommand": "echo 'Static site - no build needed'",
-  "outputDirectory": ".",
-  "domains": ["starsignal.co"],
   "headers": [
     {
       "source": "/index.html",
@@ -29,12 +26,6 @@
           "value": "public, max-age=1800, must-revalidate"
         }
       ]
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/:path*",
-      "destination": "/:path*/index.html"
     }
   ]
 }
