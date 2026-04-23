@@ -780,10 +780,7 @@
         // PLAN IDs — confirmed live Whop products
         // ============================================================
         const PLAN_FE_ONLY = 'plan_WrudbHcLudmhj';     // $19 — Cosmic Blueprint only
-        const PLAN_FE_BUMP = 'STAR_SIGNAL_BUNDLE_PLAN_ID'; // $46 — Blueprint + Love Prophecy bundle
-        //                   ↑ REPLACE THIS with the plan_id of the
-        //                     "Star Signal — Blueprint + Love Prophecy Bundle" product ($46)
-        //                     that still needs to be created in Whop.
+        const PLAN_FE_BUMP = 'plan_VcKKBavba0EAG'; // $46 — Blueprint + Love Prophecy bundle
 
         // ============================================================
         // SESSIONS — pre-load both on page load so switching is instant
@@ -828,14 +825,18 @@
 
                 const data = await response.json();
 
-                if (!data.session_id) throw new Error('No session ID returned');
+                // V5 returns purchase_url; V2 returns session_id
+                const checkoutUrl = data.purchase_url ||
+                    (data.session_id ? `https://whop.com/checkout/${data.session_id}/` : null);
+
+                if (!checkoutUrl) throw new Error('No checkout URL returned');
 
                 // Load Whop embed into container
                 const container = document.getElementById(containerId);
                 const loading   = document.getElementById(loadingId);
 
                 const iframe = document.createElement('iframe');
-                iframe.src    = `https://whop.com/checkout/${data.session_id}/`;
+                iframe.src    = checkoutUrl;
                 iframe.style  = 'width: 100%; min-height: 480px; border: none; display: block;';
                 iframe.title  = 'Secure Checkout';
                 iframe.allow  = 'payment';
