@@ -221,25 +221,30 @@ async function sendReadingEmail(email, firstName, readingUrl, lifePathNumber) {
             </div>
         `;
 
-        const response = await fetch('https://api.resend.com/emails', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${process.env.RESEND_API_KEY}`
-            },
-            body: JSON.stringify({
-                from:    'Star Signal <noreply@starsignal.co>',
-                to:      [email],
-                subject: `✦ ${name}, your Cosmic Blueprint is ready`,
-                html:    html
-            })
-        });
-
-        if (!response.ok) {
-            const errText = await response.text();
-            console.warn(`[RESEND] Failed for ${email}: ${response.status} — ${errText}`);
+        // RESEND EMAIL — Skip if no API key configured
+        if (!process.env.RESEND_API_KEY) {
+            console.log(`[RESEND] API key not configured — skipping email. User can access reading at: starsignal.co/r/${uuid}`);
         } else {
-            console.log(`[RESEND] Email sent to ${email}`);
+            const response = await fetch('https://api.resend.com/emails', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${process.env.RESEND_API_KEY}`
+                },
+                body: JSON.stringify({
+                    from:    'Star Signal <noreply@starsignal.co>',
+                    to:      [email],
+                    subject: `✦ ${name}, your Cosmic Blueprint is ready`,
+                    html:    html
+                })
+            });
+
+            if (!response.ok) {
+                const errText = await response.text();
+                console.warn(`[RESEND] Failed for ${email}: ${response.status} — ${errText}`);
+            } else {
+                console.log(`[RESEND] Email sent to ${email}`);
+            }
         }
     } catch (error) {
         console.warn(`[RESEND] Error: ${error.message}`);
