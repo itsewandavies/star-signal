@@ -1,8 +1,18 @@
 {
   "name": "star-signal",
   "version": "1.0.0",
-  "description": "Star Signal - Cosmic Blueprint Quiz Funnel",
+  "description": "Star Signal cosmic blueprint funnel",
+  "main": "index.js",
   "scripts": {
-    "start": "echo 'Static HTML funnel. Open index.html in browser.'"
+    "dev": "vercel dev",
+    "build": "echo 'Static build'",
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "@supabase/supabase-js": "^2.49.4"
+  },
+  "engines": {
+    "node": "20.x"
   }
 }

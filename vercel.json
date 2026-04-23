@@ -1,12 +1,53 @@
 {
+  "buildCommand": "npm install",
+  "outputDirectory": ".",
+  "env": {
+    "ANTHROPIC_API_KEY": "@ANTHROPIC_API_KEY",
+    "SUPABASE_URL": "@SUPABASE_URL",
+    "SUPABASE_SERVICE_ROLE_KEY": "@SUPABASE_SERVICE_ROLE_KEY",
+    "LOOPS_API_KEY": "@LOOPS_API_KEY",
+    "WHOP_API_KEY": "@WHOP_API_KEY",
+    "WHOP_WEBHOOK_SECRET": "@WHOP_WEBHOOK_SECRET"
+  },
+  "functions": {
+    "api/**/*.js": {
+      "memory": 1024,
+      "maxDuration": 60
+    }
+  },
   "rewrites": [
-    { "source": "/checkout", "destination": "/checkout.html" },
-    { "source": "/oto-1", "destination": "/oto-1.html" },
-    { "source": "/thank-you", "destination": "/thank-you.html" },
-    { "source": "/quiz", "destination": "/quiz.html" },
-    { "source": "/results", "destination": "/results.html" }
+    {
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
+    },
+    {
+      "source": "/reading",
+      "destination": "/reading.html"
+    }
   ],
   "headers": [
-    { "source": "/(.*)", "headers": [{"key": "Cache-Control", "value": "public, max-age=3600, must-revalidate"}] }
+    {
+      "source": "/api/:path*",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, PUT, DELETE, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Authorization"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/index.html",
+      "destination": "/"
+    }
   ]
 }
