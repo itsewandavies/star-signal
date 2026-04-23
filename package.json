@@ -1,0 +1,8 @@
+{
+  "name": "star-signal",
+  "version": "1.0.0",
+  "description": "Star Signal - Cosmic Blueprint Quiz Funnel",
+  "scripts": {
+    "start": "echo 'Static HTML funnel. Open index.html in browser.'"
+  }
+}

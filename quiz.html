@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Your Cosmic Blueprint | Star Signal</title>
+    <meta name="description" content="Answer 9 questions to reveal your free personalized cosmic blueprint.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-cream: #FDFBF7;
+            --bg-alt: #F6F3EC;
+            --text-main: #2C2828;
+            --text-muted: #5A5252;
+            --accent-lavender: #D8D0E3;
+            --accent-lavender-light: #F0EBF5;
+            --accent-gold: #D4AF37;
+            --accent-gold-dark: #B89600;
+            --footer-bg: #2B233D;
+            --white: #FFFFFF;
+            --font-heading: 'Cormorant Garamond', serif;
+            --font-body: 'Inter', sans-serif;
+            --shadow-sm: 0 4px 12px rgba(44,40,40,0.03);
+            --shadow-md: 0 8px 24px rgba(44,40,40,0.06);
+            --shadow-lg: 0 12px 32px rgba(212,175,55,0.25);
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-full: 9999px;
+            --transition-smooth: all 0.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-cream);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ── PROGRESS BAR ── */
+        .progress-bar-track {
+            position: fixed; top: 0; left: 0; width: 100%; height: 4px;
+            background: rgba(212,175,55,0.15); z-index: 200;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-gold-dark));
+            transition: width 0.5s cubic-bezier(0.16,1,0.3,1);
+            width: 0%;
+        }
+
+        /* ── HEADER ── */
+        .quiz-header {
+            position: fixed; top: 4px; left: 0; width: 100%;
+            padding: 0.75rem 1.25rem;
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(253,251,247,0.96);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(212,175,55,0.1);
+        }
+        .brand-logo {
+            font-family: var(--font-heading);
+            font-size: 1.2rem; font-style: italic;
+            display: flex; align-items: center; gap: 0.4rem;
+            color: var(--text-main);
+        }
+        .brand-logo svg { width: 18px; height: 18px; color: var(--accent-gold); }
+        .q-counter {
+            font-size: 0.75rem; font-weight: 600;
+            color: var(--text-muted); letter-spacing: 0.05em;
+        }
+
+        /* ── MAIN WRAPPER ── */
+        .quiz-wrapper {
+            min-height: 100vh;
+            padding-top: 80px;
+            display: flex; flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        /* ── QUESTION SCREENS ── */
+        .q-screen {
+            display: none;
+            width: 100%; max-width: 580px;
+            padding: 2rem 1.25rem 6rem 1.25rem;
+            flex-direction: column; align-items: center;
+            text-align: center; animation: fadeUp 0.45s ease forwards;
+        }
+        .q-screen.active { display: flex; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pre-headline {
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.15em; color: var(--accent-gold-dark);
+            margin-bottom: 0.6rem; display: inline-block;
+        }
+        h2 {
+            font-family: var(--font-heading); font-size: clamp(1.6rem, 5vw, 2.25rem);
+            font-weight: 600; line-height: 1.2; color: var(--text-main);
+            margin-bottom: 0.75rem;
+        }
+        .q-subtext {
+            font-size: 0.9rem; color: var(--text-muted);
+            margin-bottom: 1.75rem; line-height: 1.6; max-width: 440px;
+        }
+        .q-helper {
+            font-size: 0.8rem; color: var(--accent-gold-dark);
+            margin-bottom: 1.5rem; font-weight: 500;
+        }
+
+        /* ── OPTION CARDS (single-select) ── */
+        .options-grid {
+            width: 100%; display: flex; flex-direction: column; gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .options-grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+        .option-card {
+            background: var(--white);
+            border: 2px solid transparent;
+            border-radius: var(--radius-md);
+            padding: 1rem 1.25rem;
+            cursor: pointer; text-align: left;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-sm);
+            display: flex; align-items: center; gap: 0.75rem;
+            font-size: 0.9375rem; color: var(--text-main); font-weight: 500;
+            position: relative;
+        }
+        .option-card:hover {
+            border-color: rgba(212,175,55,0.4);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+        .option-card.selected {
+            border-color: var(--accent-gold);
+            background: #FFFBEE;
+            box-shadow: 0 0 0 1px rgba(212,175,55,0.2), var(--shadow-sm);
+        }
+        .option-card.selected::after {
+            content: '✓';
+            position: absolute; right: 1rem; top: 50%; transform: translateY(-50%);
+            color: var(--accent-gold-dark); font-weight: 700; font-size: 0.875rem;
+        }
+        .option-icon { font-size: 1.375rem; flex-shrink: 0; }
+        .option-text { display: flex; flex-direction: column; }
+        .option-label { font-weight: 600; font-size: 0.9375rem; }
+        .option-sublabel { font-size: 0.8rem; color: var(--text-muted); font-weight: 400; margin-top: 0.1rem; }
+
+        /* Center-aligned card style (for gender) */
+        .option-card.centered {
+            flex-direction: column; text-align: center; justify-content: center;
+            padding: 1.25rem 0.75rem;
+        }
+        .option-card.centered .option-icon { font-size: 1.75rem; margin-bottom: 0.25rem; }
+
+        /* ── CHECKBOX OPTIONS (multi-select Q8) ── */
+        .checkbox-option {
+            background: var(--white);
+            border: 2px solid transparent;
+            border-radius: var(--radius-md);
+            padding: 1rem 1.25rem;
+            cursor: pointer; text-align: left;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-sm);
+            display: flex; align-items: center; gap: 0.875rem;
+            font-size: 0.9375rem; color: var(--text-main); font-weight: 500;
+        }
+        .checkbox-option:hover {
+            border-color: rgba(212,175,55,0.4); box-shadow: var(--shadow-md);
+        }
+        .checkbox-option.selected {
+            border-color: var(--accent-gold); background: #FFFBEE;
+        }
+        .cb-box {
+            width: 22px; height: 22px; flex-shrink: 0;
+            border: 2px solid var(--accent-lavender);
+            border-radius: 6px; background: var(--white);
+            display: flex; align-items: center; justify-content: center;
+            transition: var(--transition-smooth); font-size: 0.75rem;
+        }
+        .checkbox-option.selected .cb-box {
+            background: var(--accent-gold); border-color: var(--accent-gold);
+            color: white;
+        }
+
+        /* ── INPUT FIELDS ── */
+        .input-wrapper { width: 100%; margin-bottom: 0.75rem; }
+        .input-label {
+            display: block; font-size: 0.75rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--text-muted); margin-bottom: 0.5rem; text-align: left;
+        }
+        .q-input {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 2px solid var(--accent-lavender);
+            border-radius: var(--radius-md);
+            background: var(--white);
+            font-family: var(--font-body);
+            font-size: 1rem; color: var(--text-main);
+            outline: none; transition: var(--transition-smooth);
+            box-shadow: var(--shadow-sm);
+        }
+        .q-input:focus { border-color: var(--accent-gold); box-shadow: 0 0 0 3px rgba(212,175,55,0.12); }
+        .q-input::placeholder { color: #B0A8A8; }
+
+        .date-row { display: flex; gap: 0.5rem; }
+        .date-row .q-input { text-align: center; }
+
+        select.q-input { appearance: none; cursor: pointer; }
+
+        .dont-know-row {
+            display: flex; align-items: center; gap: 0.5rem;
+            margin-top: 0.5rem; cursor: pointer;
+            font-size: 0.875rem; color: var(--text-muted);
+        }
+        .dont-know-row input[type=checkbox] {
+            width: 18px; height: 18px; accent-color: var(--accent-gold); cursor: pointer;
+        }
+        .time-field { transition: var(--transition-smooth); overflow: hidden; max-height: 100px; }
+        .time-field.hidden { max-height: 0; opacity: 0; pointer-events: none; }
+
+        .input-helper {
+            font-size: 0.8rem; color: var(--accent-gold-dark);
+            margin-top: 0.75rem; line-height: 1.5; text-align: left;
+            background: rgba(212,175,55,0.06); border-radius: 10px;
+            padding: 0.75rem 1rem; border-left: 3px solid var(--accent-gold);
+        }
+
+        /* ── EMAIL INPUT ── */
+        .email-wrapper { width: 100%; margin-bottom: 1rem; }
+        .email-input-large {
+            width: 100%; padding: 1.1rem 1.25rem;
+            border: 2px solid var(--accent-lavender);
+            border-radius: var(--radius-md);
+            font-family: var(--font-body); font-size: 1.0625rem;
+            color: var(--text-main); background: var(--white);
+            outline: none; transition: var(--transition-smooth);
+            box-shadow: var(--shadow-sm); text-align: center;
+        }
+        .email-input-large:focus { border-color: var(--accent-gold); box-shadow: 0 0 0 3px rgba(212,175,55,0.12); }
+        .email-input-large::placeholder { color: #B0A8A8; }
+
+        /* ── CTA BUTTON ── */
+        .cta-button {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 100%; max-width: 400px;
+            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-dark) 100%);
+            color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+            font-weight: 600; font-size: 1.0625rem;
+            padding: 1.1rem 2rem; border-radius: var(--radius-full);
+            box-shadow: var(--shadow-md); border: none; cursor: pointer;
+            transition: var(--transition-smooth); position: relative; overflow: hidden;
+            font-family: var(--font-body);
+        }
+        .cta-button:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+        .cta-button:active { transform: translateY(0); }
+        .cta-button.disabled { opacity: 0.5; pointer-events: none; }
+
+        .back-link {
+            margin-top: 1rem; font-size: 0.8125rem; color: var(--text-muted);
+            cursor: pointer; text-decoration: underline; opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        .back-link:hover { opacity: 1; }
+
+        .trust-note {
+            font-size: 0.75rem; color: var(--text-muted);
+            margin-top: 0.75rem; display: flex; align-items: center;
+            justify-content: center; gap: 0.35rem; opacity: 0.8;
+        }
+        .trust-note svg { flex-shrink: 0; }
+
+        /* ── Q-SPECIFIC: Q6 life area icons (2x2) ── */
+        .options-grid-2x2 {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; width: 100%;
+            margin-bottom: 1.5rem;
+        }
+        .option-card-area {
+            background: var(--white);
+            border: 2px solid transparent;
+            border-radius: var(--radius-lg);
+            padding: 1.25rem 1rem;
+            cursor: pointer; text-align: center;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-sm);
+            display: flex; flex-direction: column;
+            align-items: center; gap: 0.5rem;
+        }
+        .option-card-area:hover { border-color: rgba(212,175,55,0.4); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+        .option-card-area.selected { border-color: var(--accent-gold); background: #FFFBEE; }
+        .area-emoji { font-size: 2rem; }
+        .area-label { font-weight: 600; font-size: 0.9rem; color: var(--text-main); }
+        .area-sub { font-size: 0.75rem; color: var(--text-muted); }
+
+        /* ── LOADING SCREEN ── */
+        #loading-screen {
+            background: var(--footer-bg); min-height: calc(100vh - 80px);
+            width: 100%; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; padding: 2rem;
+            text-align: center;
+        }
+        .loading-icon {
+            width: 80px; height: 80px; margin: 0 auto 2rem auto;
+            animation: spinSlow 8s linear infinite;
+            color: var(--accent-gold);
+        }
+        .loading-title {
+            font-family: var(--font-heading); font-size: 2rem;
+            color: var(--white); margin-bottom: 0.5rem;
+        }
+        .loading-sub { font-size: 0.875rem; color: rgba(255,255,255,0.6); margin-bottom: 2.5rem; }
+        .loading-steps { list-style: none; text-align: left; max-width: 340px; }
+        .loading-step {
+            font-size: 0.875rem; color: rgba(255,255,255,0.4);
+            padding: 0.5rem 0; display: flex; align-items: center; gap: 0.75rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            transition: color 0.4s ease;
+        }
+        .loading-step:last-child { border-bottom: none; }
+        .loading-step .step-check {
+            width: 20px; height: 20px; border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.2);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; font-size: 0.6rem; transition: all 0.4s ease;
+        }
+        .loading-step.done { color: rgba(255,255,255,0.9); }
+        .loading-step.done .step-check {
+            background: var(--accent-gold); border-color: var(--accent-gold); color: white;
+        }
+        .loading-progress-bar {
+            width: 100%; max-width: 340px; height: 4px;
+            background: rgba(255,255,255,0.1); border-radius: 2px;
+            margin-top: 2rem; overflow: hidden;
+        }
+        .loading-progress-fill {
+            height: 100%; width: 0%;
+            background: linear-gradient(90deg, var(--accent-gold), #E8C86A);
+            border-radius: 2px; transition: width 0.5s ease;
+        }
+
+        @keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* ── STICKY BOTTOM NAV WRAPPER ── */
+        .sticky-nav {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: rgba(253,251,247,0.97);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            padding: 0.875rem 1.25rem; z-index: 50;
+            display: flex; flex-direction: column; align-items: center;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+            border-top: 1px solid rgba(212,175,55,0.12);
+        }
+        .sticky-nav.hidden { display: none; }
+
+        @media (min-width: 600px) {
+            .options-grid-2col { gap: 1rem; }
+            .option-card { padding: 1.1rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-bar-track">
+    <div class="progress-bar-fill" id="progress-fill"></div>
+</div>
+
+<!-- Header -->
+<header class="quiz-header">
+    <a href="index.html" class="brand-logo">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" fill="currentColor"/></svg>
+        Star Signal
+    </a>
+    <span class="q-counter" id="q-counter">Question 1 of 9</span>
+</header>
+
+<div class="quiz-wrapper">
+
+    <!-- ══ Q1: Commitment Opener ══ -->
+    <div class="q-screen active" id="q1">
+        <span class="pre-headline">Before we begin...</span>
+        <h2>Do you ever feel like something bigger is trying to guide you — but you can't quite hear the message?</h2>
+        <div class="options-grid">
+            <div class="option-card" onclick="selectOption('q1','yes_always',this)">
+                <span class="option-icon">✨</span>
+                <span class="option-text"><span class="option-label">Yes — I feel it constantly</span></span>
+            </div>
+            <div class="option-card" onclick="selectOption('q1','sometimes',this)">
+                <span class="option-icon">🌙</span>
+                <span class="option-text"><span class="option-label">Sometimes — especially lately</span></span>
+            </div>
+            <div class="option-card" onclick="selectOption('q1','not_sure',this)">
+                <span class="option-icon">🔮</span>
+                <span class="option-text"><span class="option-label">I'm not sure, but I want to find out</span></span>
+            </div>
+            <div class="option-card" onclick="selectOption('q1','curious',this)">
+                <span class="option-icon">⭐</span>
+                <span class="option-text"><span class="option-label">No, but I'm curious</span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ Q2: Gender ══ -->
+    <div class="q-screen" id="q2">
+        <span class="pre-headline">Let's personalise your reading</span>
+        <h2>I identify as...</h2>
+        <div class="options-grid-2col" style="margin-bottom:1.5rem;">
+            <div class="option-card centered" onclick="selectOption('gender','woman',this)">
+                <span class="option-icon">♀️</span>
+                <span class="option-label">Woman</span>
+            </div>
+            <div class="option-card centered" onclick="selectOption('gender','man',this)">
+                <span class="option-icon">♂️</span>
+                <span class="option-label">Man</span>
+            </div>
+        </div>
+        <div class="options-grid" style="margin-bottom:1.5rem;">
+            <div class="option-card" onclick="selectOption('gender','nonbinary',this)">
+                <span class="option-icon">🌈</span>
+                <span class="option-text"><span class="option-label">Non-binary / Prefer not to say</span></span>
+            </div>
+        </div>
+        <span class="back-link" onclick="goBack()">← Back</span>
+    </div>
+
+    <!-- ══ Q3: Birth Date ══ -->
+    <div class="q-screen" id="q3">
+        <span class="pre-headline">Your birth date holds the first key</span>
+        <h2>When were you born?</h2>
+        <p class="q-subtext">Your birth date reveals your Life Path Number — one of the most powerful forces in numerology.</p>
+        <div class="input-wrapper">
+            <label class="input-label">Date of Birth</label>
+            <input type="date" id="birth-date" class="q-input" max="2010-12-31" min="1920-01-01"
+                   oninput="storeInput('birthDate', this.value)">
+        </div>
+        <div class="input-helper">
+            Your birth date determines your Life Path Number — it defines your destiny, your ideal partner, and your wealth cycle.
+        </div>
+        <br>
+        <button class="cta-button" id="q3-btn" onclick="nextFromInput('q3','birthDate')" style="margin-top:0.5rem;">
+            Continue →
+        </button>
+        <span class="back-link" onclick="goBack()">← Back</span>
+    </div>
+
+    <!-- ══ Q4: Birth Time ══ -->
+    <div class="q-screen" id="q4">
+        <span class="pre-headline">Now for something most people don't know...</span>
+        <h2>What time were you born?</h2>
+        <p class="q-subtext">Your exact birth time determines your Rising Sign — the mask you show the world.</p>
+        <div class="input-wrapper">
+            <div class="time-field" id="time-field">
+                <label class="input-label">Birth Time</label>
+                <input type="time" id="birth-time" class="q-input" oninput="storeInput('birthTime', this.value)">
+            </div>
+            <label class="dont-know-row" id="dont-know-label">
+                <input type="checkbox" id="dont-know-time" onchange="toggleDontKnowTime(this)">
+                <span>I don't know my exact birth time</span>
+            </label>
+        </div>
+        <div class="input-helper">
+            If you don't know your birth time, that's okay. We'll use advanced numerology to fill in the gaps — your reading will still be deeply accurate.
+        </div>
+        <br>
+        <button class="cta-button" onclick="nextFromQ4()" style="margin-top:0.5rem;">Continue →</button>
+        <span class="back-link" onclick="goBack()">← Back</span>
+    </div>
+
+    <!-- ══ Q5: Birth City ══ -->
+    <div class="q-screen" id="q5">
+        <span class="pre-headline">The final piece of your cosmic coordinates</span>
+        <h2>What city were you born in?</h2>
+        <p class="q-subtext">Your birth location affects your astrological house placements — this is what separates a real reading from a generic horoscope.</p>
+        <div class="input-wrapper">
+            <label class="input-label">City of Birth</label>
+            <input type="text" id="birth-city" class="q-input" placeholder="e.g. London, Manchester, New York..."
+                   oninput="storeInput('birthCity', this.value)" autocomplete="off">
+        </div>
+        <br>
+        <button class="cta-button" onclick="nextFromInput('q5','birthCity')" style="margin-top:0.5rem;">Continue →</button>
+        <span class="back-link" onclick="goBack()">← Back</span>
+    </div>
+
+    <!-- ══ Q6: Life Area Selector ══ -->
+    <div class="q-screen" id="q6">
+        <span class="pre-headline">Your blueprint is 73% decoded...</span>
+        <h2>Which area of your life needs the most cosmic guidance right now?</h2>
+        <p class="q-subtext">This shapes which insights we surface first in your reading.</p>
+        <div class="options-grid-2x2">
+            <div class="option-card-area" onclick="selectArea('love',this)">
+                <span class="area-emoji">💘</span>
+                <span class="area-label">Love &amp; Relationships</span>
+                <span class="area-sub">Soulmates &amp; connection</span>
+            </div>
+            <div class="option-card-area" onclick="selectArea('money',this)">
+                <span class="area-emoji">💰</span>
+                <span class="area-label">Money &amp; Abundance</span>
+                <span class="area-sub">Wealth &amp; financial flow</span>
+            </div>
+            <div class="option-card-area" onclick="selectArea('purpose',this)">
+                <span class="area-emoji">🔮</span>
+                <span class="area-label">Life Purpose &amp; Career</span>
+                <span class="area-sub">Mission &amp; direction</span>
+            </div>
+            <div class="option-card-area" onclick="selectArea('spiritual',this)">
+                <span class="area-emoji">🧿</span>
+                <span class="area-label">Spiritual Growth</span>
+                <span class="area-sub">Awakening &amp; gifts</span>
+            </div>
+        </div>
+        <span class="back-link" onclick="goBack()">← Back</span>
+    </div>
+
+    <!-- ══ Q7: Relationship Status ══ -->
+    <div class="q-screen" id="q7">
+        <span class="pre-headline">Your Venus placement depends on this...</span>
+        <h2>What best describes your relationship status right now?</h2>
+        <div class="options-grid">
+            <div class="option-card" onclick="selectOption('relationship','single',this)">
+                <span class="option-icon">⭐</span>
+                <span class="option-text"><span class="option-label">Single and searching for "the one"</span></span>
+            </div>
+            <div class="option-card" onclick="selectOption('relationship','relationship_unsure',this)">
+                <span class="option-icon">💭</span>
+                <span class="option-text"><span class="option-label">In a relationship but unsure</span></span>
+            </div>
+            <div class="option-card" onclick="selectOption('relationship','committed',this)">
+                <span class="option-icon">💑</span>
+                <span class="option-text"><span class="option-label">Happily committed</span></span>
+            </div>
+            <div class="option-card" onclick="selectOption('relationship','heartbreak',this)">
+                <span class="option-icon">💔</span>
+                <span class="option-text"><span class="option-label">Recovering from heartbreak</span></span>
+            </div>
+            <div class="option-card" onclick="selectOption('relationship','complicated',this)">
+                <span class="option-icon">🌀</span>
+                <span class="option-text"><span class="option-label">Complicated — it's hard to explain 💔</span></span>
+            </div>
+        </div>
+        <span class="back-link" onclick="goBack()">← Back</span>
+    </div>
+
+    <!-- ══ Q8: Belief Lock-In (multi-select) ══ -->
+    <div class="q-screen" id="q8">
+        <span class="pre-headline">One last question before your blueprint is ready...</span>
+        <h2>Have you noticed any of these "cosmic signs" in the last few weeks?</h2>
+        <p class="q-subtext">Select all that apply.</p>
+        <div class="options-grid" id="q8-options">
+            <div class="checkbox-option" onclick="toggleCheckbox('cosmicSigns','repeating_numbers',this)">
+                <div class="cb-box">✓</div>
+                <span>Repeating numbers (11:11, 222, 333, 444)</span>
+            </div>
+            <div class="checkbox-option" onclick="toggleCheckbox('cosmicSigns','deja_vu',this)">
+                <div class="cb-box">✓</div>
+                <span>Déjà vu or unexplained coincidences</span>
+            </div>
+            <div class="checkbox-option" onclick="toggleCheckbox('cosmicSigns','vivid_dreams',this)">
+                <div class="cb-box">✓</div>
+                <span>Vivid dreams that felt important</span>
+            </div>
+            <div class="checkbox-option" onclick="toggleCheckbox('cosmicSigns','strong_intuition',this)">
+                <div class="cb-box">✓</div>
+                <span>A strong intuition about someone or something</span>
+            </div>
+            <div class="checkbox-option" onclick="toggleCheckbox('cosmicSigns','none',this)" id="cb-none">
+                <div class="cb-box">✓</div>
+                <span>None of these <em>yet</em></span>
+            </div>
+        </div>
+        <button class="cta-button" id="q8-btn" onclick="nextQuestion()" style="margin-top:0.25rem;">Continue →</button>
+        <span class="back-link" onclick="goBack()">← Back</span>
+    </div>
+
+    <!-- ══ Q9: Email Capture ══ -->
+    <div class="q-screen" id="q9">
+        <div class="loading-icon" style="width:60px;height:60px;margin-bottom:1rem;color:var(--accent-gold);animation:none;">
+            <svg viewBox="0 0 100 100" fill="none">
+                <path d="M50 5 L53 35 L80 20 L60 45 L95 50 L60 55 L80 80 L53 65 L50 95 L47 65 L20 80 L40 55 L5 50 L40 45 L20 20 L47 35 Z" fill="var(--accent-gold)" opacity="0.5"/>
+                <circle cx="50" cy="50" r="18" fill="#FDFBF7" stroke="var(--accent-gold)" stroke-width="2"/>
+                <path d="M56 36 A 12 12 0 0 0 56 64 A 14 14 0 0 1 56 36" fill="var(--accent-gold-dark)"/>
+            </svg>
+        </div>
+        <span class="pre-headline">Your Cosmic Blueprint Is Ready ✨</span>
+        <h2>Where should we send your personalized reading?</h2>
+        <p class="q-subtext">We're preparing your 40+ page Cosmic Blueprint with your Life Path Number, 2026 Forecast, Soulmate Profile, and Wealth Timeline.</p>
+        <div class="email-wrapper">
+            <input type="email" id="user-email" class="email-input-large"
+                   placeholder="Enter your best email address..."
+                   oninput="storeInput('email', this.value)">
+        </div>
+        <button class="cta-button" id="q9-btn" onclick="submitQuiz()">
+            ✨ Reveal My Blueprint →
+        </button>
+        <div class="trust-note">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            Your email is secure. We never share your information.
+        </div>
+        <span class="back-link" onclick="goBack()">← Back</span>
+    </div>
+
+    <!-- ══ LOADING SCREEN ══ -->
+    <div id="loading-screen" style="display:none;">
+        <div class="loading-icon">
+            <svg viewBox="0 0 100 100" fill="none">
+                <path d="M50 5 L53 35 L80 20 L60 45 L95 50 L60 55 L80 80 L53 65 L50 95 L47 65 L20 80 L40 55 L5 50 L40 45 L20 20 L47 35 Z" fill="var(--accent-gold)" opacity="0.3"/>
+                <circle cx="50" cy="50" r="22" fill="transparent" stroke="var(--accent-gold)" stroke-width="2"/>
+                <path d="M58 32 A 15 15 0 0 0 58 68 A 18 18 0 0 1 58 32" fill="var(--accent-gold)"/>
+                <circle cx="50" cy="50" r="3" fill="var(--accent-gold)"/>
+            </svg>
+        </div>
+        <div class="loading-title">Decoding Your Blueprint...</div>
+        <div class="loading-sub">This takes just a few seconds</div>
+        <ul class="loading-steps" id="loading-steps-list">
+            <li class="loading-step" id="step-1">
+                <div class="step-check">✓</div>
+                <span>🌟 Calculating your natal chart...</span>
+            </li>
+            <li class="loading-step" id="step-2">
+                <div class="step-check">✓</div>
+                <span>🔢 Decoding numerological sequences...</span>
+            </li>
+            <li class="loading-step" id="step-3">
+                <div class="step-check">✓</div>
+                <span>📊 Analysing 2026 planetary transits...</span>
+            </li>
+            <li class="loading-step" id="step-4">
+                <div class="step-check">✓</div>
+                <span>✨ Preparing your personal blueprint...</span>
+            </li>
+        </ul>
+        <div class="loading-progress-bar">
+            <div class="loading-progress-fill" id="loading-progress-fill"></div>
+        </div>
+    </div>
+
+</div><!-- end quiz-wrapper -->
+
+<script>
+    // ── STATE ──
+    const state = {
+        current: 1,
+        total: 9,
+        history: [1],
+        answers: {}
+    };
+
+    // ── PROGRESS ──
+    function updateProgress(n) {
+        const pct = ((n - 1) / state.total) * 100;
+        document.getElementById('progress-fill').style.width = pct + '%';
+        document.getElementById('q-counter').textContent = 'Question ' + n + ' of ' + state.total;
+    }
+
+    // ── NAVIGATION ──
+    function showQuestion(n) {
+        document.querySelectorAll('.q-screen').forEach(q => q.classList.remove('active'));
+        const target = document.getElementById('q' + n);
+        if (target) {
+            target.classList.add('active');
+            updateProgress(n);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+
+    function goBack() {
+        if (state.history.length > 1) {
+            state.history.pop();
+            state.current = state.history[state.history.length - 1];
+            showQuestion(state.current);
+        } else {
+            window.location.href = 'index.html';
+        }
+    }
+
+    function advanceTo(n) {
+        state.current = n;
+        state.history.push(n);
+        showQuestion(n);
+    }
+
+    function nextQuestion() {
+        if (state.current < state.total) {
+            advanceTo(state.current + 1);
+        } else {
+            submitQuiz();
+        }
+    }
+
+    // ── SINGLE SELECT ──
+    function selectOption(key, value, el) {
+        el.closest('.options-grid, .options-grid-2col').querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+        el.classList.add('selected');
+        state.answers[key] = value;
+        // Auto-advance after short delay
+        setTimeout(() => nextQuestion(), 320);
+    }
+
+    // ── AREA SELECT (Q6) ──
+    function selectArea(value, el) {
+        document.querySelectorAll('.option-card-area').forEach(c => c.classList.remove('selected'));
+        el.classList.add('selected');
+        state.answers['lifeArea'] = value;
+        setTimeout(() => nextQuestion(), 320);
+    }
+
+    // ── CHECKBOX (Q8 multi-select) ──
+    function toggleCheckbox(key, value, el) {
+        if (!Array.isArray(state.answers[key])) state.answers[key] = [];
+        if (value === 'none') {
+            // Toggle "none" — deselect all others
+            const isNowSelected = !el.classList.contains('selected');
+            document.querySelectorAll('#q8-options .checkbox-option').forEach(c => c.classList.remove('selected'));
+            if (isNowSelected) {
+                el.classList.add('selected');
+                state.answers[key] = ['none'];
+            } else {
+                state.answers[key] = [];
+            }
+            return;
+        }
+        // Remove "none" if selecting something real
+        document.getElementById('cb-none').classList.remove('selected');
+        state.answers[key] = state.answers[key].filter(v => v !== 'none');
+
+        el.classList.toggle('selected');
+        if (el.classList.contains('selected')) {
+            if (!state.answers[key].includes(value)) state.answers[key].push(value);
+        } else {
+            state.answers[key] = state.answers[key].filter(v => v !== value);
+        }
+    }
+
+    // ── TEXT/DATE INPUTS ──
+    function storeInput(key, value) {
+        state.answers[key] = value;
+    }
+
+    function nextFromInput(questionId, requiredKey) {
+        const val = state.answers[requiredKey] || '';
+        if (!val.trim()) {
+            const input = document.getElementById(questionId === 'q3' ? 'birth-date' : 'birth-city');
+            if (input) { input.focus(); input.style.borderColor = 'var(--accent-gold)'; }
+            return;
+        }
+        nextQuestion();
+    }
+
+    // ── Q4 SPECIAL ──
+    function toggleDontKnowTime(cb) {
+        const field = document.getElementById('time-field');
+        if (cb.checked) {
+            field.classList.add('hidden');
+            state.answers['birthTime'] = 'unknown';
+        } else {
+            field.classList.remove('hidden');
+            state.answers['birthTime'] = document.getElementById('birth-time').value || '';
+        }
+    }
+
+    function nextFromQ4() {
+        const dontKnow = document.getElementById('dont-know-time').checked;
+        if (!dontKnow && !state.answers['birthTime']) {
+            state.answers['birthTime'] = 'unknown';
+        }
+        nextQuestion();
+    }
+
+    // ── LIFE PATH CALCULATION ──
+    function calculateLifePath(dateStr) {
+        if (!dateStr) return 7;
+        const clean = dateStr.replace(/-/g, '');
+        const digits = clean.split('').map(Number);
+        let sum = digits.reduce((a, b) => a + b, 0);
+        let iterations = 0;
+        while (sum > 9 && ![11, 22, 33].includes(sum) && iterations < 10) {
+            sum = String(sum).split('').map(Number).reduce((a, b) => a + b, 0);
+            iterations++;
+        }
+        return sum || 7;
+    }
+
+    // ── SUBMIT & LOADING ──
+    function submitQuiz() {
+        const email = state.answers['email'] || '';
+        if (!email || !email.includes('@')) {
+            const input = document.getElementById('user-email');
+            if (input) { input.focus(); input.style.borderColor = 'var(--accent-gold-dark)'; }
+            return;
+        }
+
+        // Calculate life path from birth date
+        state.answers['lifePathNumber'] = calculateLifePath(state.answers['birthDate'] || '');
+
+        // Store in sessionStorage
+        sessionStorage.setItem('starSignalQuiz', JSON.stringify(state.answers));
+
+        // Show loading screen
+        document.getElementById('q-counter').textContent = 'Almost ready...';
+        document.getElementById('progress-fill').style.width = '100%';
+        document.querySelectorAll('.q-screen').forEach(q => q.classList.remove('active'));
+        document.getElementById('loading-screen').style.display = 'flex';
+        document.getElementById('loading-screen').style.flexDirection = 'column';
+        document.getElementById('loading-screen').style.alignItems = 'center';
+        document.getElementById('loading-screen').style.justifyContent = 'center';
+
+        // Animate loading steps
+        const steps = ['step-1','step-2','step-3','step-4'];
+        const progressFill = document.getElementById('loading-progress-fill');
+        steps.forEach((id, i) => {
+            setTimeout(() => {
+                document.getElementById(id).classList.add('done');
+                progressFill.style.width = ((i + 1) / steps.length * 100) + '%';
+            }, 800 + i * 900);
+        });
+
+        // Redirect after loading completes
+        setTimeout(() => {
+            window.location.href = 'results.html';
+        }, 4800);
+    }
+
+    // ── INIT ──
+    document.addEventListener('DOMContentLoaded', () => {
+        updateProgress(1);
+        // Restore from session if returning
+        const saved = sessionStorage.getItem('starSignalQuizDraft');
+        if (saved) {
+            try { Object.assign(state.answers, JSON.parse(saved)); } catch(e) {}
+        }
+    });
+</script>
+</body>
+</html>
