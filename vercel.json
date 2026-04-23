@@ -1,0 +1,40 @@
+{
+  "buildCommand": "echo 'Static site - no build needed'",
+  "outputDirectory": ".",
+  "domains": ["starsignal.co"],
+  "headers": [
+    {
+      "source": "/index.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/quiz.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/results.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=1800, must-revalidate"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/:path*",
+      "destination": "/:path*/index.html"
+    }
+  ]
+}
