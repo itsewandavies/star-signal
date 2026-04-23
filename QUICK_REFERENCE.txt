@@ -1,0 +1,94 @@
+================================================================================
+STAR SIGNAL — QUICK REFERENCE CARD
+================================================================================
+
+🌟 LIVE URLS
+  Landing:  https://star-signal-sandy.vercel.app/ (or starsignal.co once DNS updates)
+  Quiz:     https://star-signal-sandy.vercel.app/quiz.html
+  Results:  https://star-signal-sandy.vercel.app/results.html
+
+📊 TEST QUIZ FLOW
+  1. Go to landing page
+  2. Click any "Start My Reading" button
+  3. Complete all 9 questions
+  4. Submit → lands on results.html with personalized data
+
+🔑 KEY QUIZ QUESTIONS
+  Q1: Commitment opener (no negative option)
+  Q2: Gender segmentation
+  Q3: Birth date (calculates Life Path Number)
+  Q4: Birth time (has escape hatch for unknown)
+  Q5: Birth city
+  Q6: Life area selector (CRITICAL for OTO segmentation)
+  Q7: Relationship status (further sub-segmentation)
+  Q8: Cosmic signs (multi-select barnum)
+  Q9: Email capture (before results redirect)
+
+💰 SALES FUNNEL
+  Front End: $19 (Cosmic Blueprint PDF)
+  Bump:      $17 (Love Prophecy add-on)
+  OTO 1:     $67 (Cosmic Transformation Library)
+  OTO 2:     $147 (1-Year Quantum Blueprint)
+
+📱 PERSONALIZATION VARS PASSED VIA URL
+  ?birthDate=1990-03-14
+  &birthTime=14:30
+  &birthCity=Chicago
+  &lifeArea=love|money|purpose|spiritual
+  &relationshipStatus=[from Q7]
+  &email=user@example.com
+  &firstName=[from email or default to "Cosmic Traveler"]
+
+⚙️ GIT WORKFLOW
+  git checkout -b feature/your-feature
+  [edit files]
+  git add .
+  git commit -m "Update: description"
+  git push origin feature/your-feature
+  [merge to main on GitHub]
+  → Vercel auto-deploys
+
+🔗 GITHUB REPO
+  https://github.com/itsewandavies/star-signal
+  Main branch auto-deploys to Vercel
+
+⏳ BLOCKING ITEM
+  Update GoDaddy nameservers to Vercel DNS:
+    ns1.vercel-dns.com
+    ns2.vercel-dns.com
+  This makes starsignal.co resolve correctly (24-48hr propagation)
+
+🎯 NEXT IMMEDIATE TASKS
+  1. Update GoDaddy nameservers
+  2. Test starsignal.co end-to-end
+  3. Integrate Whop checkout
+  4. Set up email delivery (Loops)
+  5. Run $50 Meta test ad
+
+📈 CONVERSION TARGETS
+  Quiz completion: 60%+
+  Email capture: 85%+ of quiz completers
+  Results CTR: 25%+ click on $19
+  Checkout: 8-15% conversion
+  AOV: $50-100+ (with bumps + OTOs)
+
+📁 KEY FILES
+  index.html    → Landing page (DO NOT MODIFY per user)
+  quiz.html     → 9-question quiz with data capture
+  results.html  → Personalized results + $19 pitch
+  vercel.json   → Domain & routing config
+  package.json  → Project metadata
+
+✅ DEPLOYMENT STATUS
+  ✅ Repo created (GitHub)
+  ✅ Vercel connected (auto-deploy on push)
+  ✅ Three pages built (landing, quiz, results)
+  ✅ Personalization logic works (tested)
+  ✅ Results page verified (displays correctly)
+  ⏳ Domain DNS (awaiting GoDaddy update)
+  ❌ Payment gateway (Whop integration needed)
+  ❌ Email sequence (Loops integration needed)
+
+================================================================================
+You're live on Vercel. Just need to update nameservers at GoDaddy.
+================================================================================
