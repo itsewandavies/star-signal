@@ -663,24 +663,26 @@
                 </div>
 
                 <!-- ORDER BUMP -->
-                <div class="order-bump">
-                    <div class="bump-header">
-                        <span class="bump-arrow">➡</span>
-                        <label class="bump-checkbox-label">
-                            <input type="checkbox" id="bumpCheckbox" onchange="updateTotal()">
-                            <span class="bump-cta-text">YES! Add My 2026 Cosmic Forecast Calendar</span>
-                        </label>
-                    </div>
-                    <div class="bump-body">
-                        <h4>The 2026 Cosmic Forecast Calendar</h4>
-                        <p>A beautifully designed 12-month printable wall calendar where every month of 2026 is mapped to YOUR personal cosmic energy. Print it, hang it, and reference it daily.</p>
-                        <ul class="bump-features">
-                            <li>Your 3 Power Days &amp; 2 Caution Days each month (when to act, when to rest)</li>
-                            <li>The dominant energy theme for each month (Growth, Release, Portal, Acceleration)</li>
-                            <li>Your monthly affirmation aligned with your Life Path</li>
-                        </ul>
-                    </div>
-                </div>
+<div class="order-bump">
+    <div class="bump-header">
+        <span class="bump-arrow">➡</span>
+        <label class="bump-checkbox-label">
+            <input type="checkbox" id="bumpCheckbox" onchange="updateTotal()">
+            <span class="bump-cta-text">YES! Add My Partner Blueprint Comparison</span>
+        </label>
+    </div>
+    <div class="bump-body">
+        <h4>The Partner Blueprint Comparison</h4>
+        <p>Your Cosmic Blueprint shows your path. But you're not walking it alone. Enter the birth details of one important person in your life — your partner, your mother, your best friend, your sister — and we'll generate a complete compatibility overlay.</p>
+        <ul class="bump-features">
+            <li>Whether your Life Paths are aligned, parallel, or crossing</li>
+            <li>Where your energies amplify each other — and where they create friction</li>
+            <li>Your shared Threshold moments in 2026</li>
+            <li>The single most important truth this relationship's Blueprint can reveal</li>
+            <li>Compare to a private couple's astrology reading: $400+ at any practitioner</li>
+        </ul>
+    </div>
+</div>
 
                 <!-- ORDER TOTAL CARD -->
                 <div class="order-total-card">
@@ -690,8 +692,8 @@
                         <span>$19</span>
                     </div>
                     <div class="total-line bump-line" id="bumpTotalRow" style="display: none;">
-                        <span>2026 Forecast Calendar</span>
-                        <span>+$17</span>
+                        <span>Partner Blueprint Comparison</span>
+                        <span>+$27</span>
                     </div>
                     <div class="total-divider"></div>
                     <div class="total-final-line">
@@ -766,7 +768,7 @@
     <script>
         function updateTotal() {
             const bump = document.getElementById('bumpCheckbox').checked;
-            document.getElementById('grandTotal').textContent = bump ? '$36' : '$19';
+            document.getElementById('grandTotal').textContent = bump ? '$46' : '$19';
             document.getElementById('bumpTotalRow').style.display = bump ? 'flex' : 'none';
         }
 
