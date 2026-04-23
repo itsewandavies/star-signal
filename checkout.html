@@ -136,18 +136,31 @@
         }
 
         /* ── CHECKOUT LAYOUT ── */
-        .checkout-layout {
+        .checkout-grid {
             display: grid;
-            grid-template-columns: 60% 40%;
-            gap: 1.5rem;
-            padding: 1rem 1.25rem 3rem;
-            max-width: 1040px;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start; /* critical — allows sticky to work */
+            max-width: 960px;
             margin: 0 auto;
+            padding: 1rem 1.25rem 2rem;
+        }
+
+        .checkout-left {
+            /* normal flow */
+        }
+
+        .checkout-right {
+            position: sticky;
+            top: 80px; /* offset for sticky header */
         }
 
         @media (max-width: 767px) {
-            .checkout-layout {
+            .checkout-grid {
                 grid-template-columns: 1fr;
+            }
+            .checkout-right {
+                position: static; /* no sticky on mobile */
             }
         }
 
@@ -262,19 +275,21 @@
             line-height: 1.4;
         }
 
-        .bump-label {
+        /* ── BUMP CHECKBOX LABEL ── */
+        .bump-checkbox-label {
             display: flex;
             align-items: flex-start;
-            gap: 0.5rem;
+            gap: 0.75rem;
             cursor: pointer;
+            padding: 0.5rem 0;
         }
 
-        .bump-label input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: var(--accent-gold);
+        .bump-checkbox-label input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            min-width: 22px;
             cursor: pointer;
-            flex-shrink: 0;
+            accent-color: var(--accent-gold-dark);
             margin-top: 2px;
         }
 
@@ -305,13 +320,13 @@
             margin-bottom: 0.5rem;
         }
 
-        .bump-body ul {
+        .bump-features {
             list-style: none;
             margin: 0.5rem 0 0.75rem;
             padding: 0;
         }
 
-        .bump-body ul li {
+        .bump-features li {
             font-size: 0.875rem;
             color: var(--text-muted);
             padding: 0.15rem 0;
@@ -319,7 +334,7 @@
             position: relative;
         }
 
-        .bump-body ul li::before {
+        .bump-features li::before {
             content: '✓';
             position: absolute;
             left: 0;
@@ -337,36 +352,67 @@
             color: var(--text-muted);
         }
 
-        /* ── ORDER TOTAL ── */
-        .order-total {
-            background: var(--bg-alt);
-            border-radius: 10px;
-            padding: 1rem 1.25rem;
+        /* ── ORDER TOTAL CARD ── */
+        .order-total-card {
+            background: #FDFBF7;
+            border: 2px solid var(--accent-gold);
+            border-radius: 16px;
+            padding: 1.5rem;
             margin-top: 1.25rem;
         }
 
-        .total-row {
+        .total-heading {
+            font-family: var(--font-heading);
+            font-size: 1.125rem;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+        }
+
+        .total-line {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1rem;
+            color: var(--text-muted);
+            padding: 0.375rem 0;
+        }
+
+        .total-divider {
+            border-top: 1px solid rgba(212,175,55,0.3);
+            margin: 0.75rem 0;
+        }
+
+        .total-final-line {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.4rem 0;
-            font-size: 0.9375rem;
-            color: var(--text-muted);
         }
 
-        .total-row.total-final {
-            border-top: 1px solid rgba(212,175,55,0.3);
-            margin-top: 0.5rem;
-            padding-top: 0.75rem;
-            font-size: 1.0625rem;
+        .total-label {
+            font-family: var(--font-body);
+            font-size: 1.125rem;
+            font-weight: 700;
             color: var(--text-main);
         }
 
-        /* ── RIGHT COLUMN — EMBED ── */
-        .checkout-embed-col {
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
+        .total-amount {
+            font-family: var(--font-heading);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--accent-gold-dark);
+        }
+
+        /* ── CHECKOUT SPINNER ── */
+        .checkout-spinner {
+            width: 36px;
+            height: 36px;
+            border: 3px solid rgba(212, 175, 55, 0.2);
+            border-top-color: #D4AF37;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         /* ── TRUST SIGNALS ── */
@@ -374,6 +420,9 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 0.5rem;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 1.25rem 1.25rem;
         }
 
         .trust-item {
@@ -394,6 +443,10 @@
             border-radius: 14px;
             padding: 1.5rem;
             text-align: center;
+            max-width: 960px;
+            margin: 0 auto 1.25rem;
+            padding-left: 1.25rem;
+            padding-right: 1.25rem;
         }
 
         .guarantee-icon {
@@ -421,6 +474,10 @@
             border: 1px solid rgba(212,175,55,0.3);
             border-radius: 14px;
             padding: 1.25rem 1.5rem;
+            max-width: 960px;
+            margin: 0 auto 2rem;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .checkout-testimonial .stars {
@@ -526,6 +583,34 @@
             padding-top: 2rem;
             border-top: 1px solid rgba(255,255,255,0.1);
         }
+
+        /* ── BELOW-GRID WRAPPER ── */
+        .below-grid {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        /* ── MOBILE BUMP CARD TIGHTER SPACING ── */
+        @media (max-width: 767px) {
+            .order-bump {
+                padding: 1.25rem;
+            }
+            .bump-body p {
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem;
+            }
+            .bump-features {
+                font-size: 0.875rem;
+            }
+            .bump-features li {
+                padding: 0.25rem 0;
+                padding-left: 1.25rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -551,14 +636,16 @@
     <section class="page-title">
         <span class="pre-headline">✨ ALMOST THERE</span>
         <h1>Complete Your Order<span id="checkoutName"></span></h1>
-        <p>Your Cosmic Blueprint will be emailed instantly after payment.</p>
+        <p class="checkout-subhead" id="checkoutSubhead" style="font-size: 0.9375rem; color: #5A5252; margin-top: 0.5rem; font-style: italic;">
+            Your Cosmic Blueprint is ready to be sent to your inbox — instantly after payment.
+        </p>
     </section>
 
-    <!-- MAIN CHECKOUT LAYOUT -->
-    <div class="checkout-layout">
+    <!-- MAIN CHECKOUT LAYOUT (2-column on desktop) -->
+    <div class="checkout-grid">
 
-        <!-- LEFT: ORDER SUMMARY -->
-        <div class="order-summary-col">
+        <!-- LEFT: ORDER SUMMARY + BUMP -->
+        <div class="checkout-left">
             <div class="order-summary-card">
                 <h3>Your Order</h3>
 
@@ -584,75 +671,82 @@
                 <div class="order-bump">
                     <div class="bump-header">
                         <span class="bump-arrow">➡</span>
-                        <label class="bump-label">
+                        <label class="bump-checkbox-label">
                             <input type="checkbox" id="bumpCheckbox" onchange="updateTotal()">
                             <span class="bump-cta-text">✅ YES! Add My 2026 Cosmic Forecast Calendar — Only $17</span>
                         </label>
                     </div>
                     <div class="bump-body">
                         <h4>The 2026 Cosmic Forecast Calendar</h4>
-                        <p>The visual companion to your Blueprint. A beautifully designed 12-month wall calendar where every single month of 2026 is mapped to YOUR personal cosmic energy.</p>
-                        <ul>
-                            <li>Your 3 Power Days each month (when to take massive action)</li>
-                            <li>Your 2 Caution Days (when to pause and rest)</li>
-                            <li>The dominant energy theme for each month</li>
+                        <p>A beautifully designed 12-month printable wall calendar where every month of 2026 is mapped to YOUR personal cosmic energy. Print it, hang it, and reference it daily.</p>
+                        <ul class="bump-features">
+                            <li>Your 3 Power Days &amp; 2 Caution Days each month (when to act, when to rest)</li>
+                            <li>The dominant energy theme for each month (Growth, Release, Portal, Acceleration)</li>
                             <li>Your monthly affirmation aligned with your Life Path</li>
                         </ul>
-                        <p>Print it. Hang it. Reference it daily. Most women say this becomes the single most-used part of their Cosmic Blueprint experience.</p>
-                        <p class="bump-price-line"><span class="original">Normally $39.</span> Today only <strong>$17</strong> when added to your order.</p>
+                        <p class="bump-price-line"><span class="original" style="text-decoration: line-through; color: #9CA3AF;">Normally $39.</span> Today only <strong style="color: var(--accent-gold-dark);">$17</strong> when added to your order.</p>
                     </div>
                 </div>
 
-                <!-- ORDER TOTAL -->
-                <div class="order-total">
-                    <div class="total-row">
+                <!-- ORDER TOTAL CARD -->
+                <div class="order-total-card">
+                    <h4 class="total-heading">Order Summary</h4>
+                    <div class="total-line">
                         <span>Cosmic Blueprint</span>
                         <span>$19</span>
                     </div>
-                    <div class="total-row bump-total-row" id="bumpTotalRow" style="display:none;">
+                    <div class="total-line bump-line" id="bumpTotalRow" style="display: none;">
                         <span>2026 Forecast Calendar</span>
                         <span>+$17</span>
                     </div>
-                    <div class="total-row total-final">
-                        <span><strong>Total Today</strong></span>
-                        <span id="grandTotal"><strong>$19</strong></span>
+                    <div class="total-divider"></div>
+                    <div class="total-final-line">
+                        <span class="total-label">Total Today</span>
+                        <span class="total-amount" id="grandTotal">$19</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- RIGHT: WHOP EMBED + TRUST -->
-        <div class="checkout-embed-col">
-            <div id="whop-checkout-embed" style="background: white; border: 1px solid rgba(212,175,55,0.3); border-radius: 16px; padding: 2rem; min-height: 300px;">
-                <!-- Whop checkout embed will be inserted here -->
-                <div style="text-align:center; padding: 3rem 1rem; color: #5A5252; font-style: italic;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🔮</div>
-                    <p>Whop checkout will load here.</p>
-                    <p style="font-size: 0.875rem; margin-top: 0.5rem;">Replace this div with Whop's embed code.</p>
+        <!-- RIGHT: WHOP CHECKOUT EMBED (sticky on desktop) -->
+        <div class="checkout-right">
+            <p style="font-size: 0.875rem; color: #5A5252; text-align: center; margin-bottom: 1rem; font-style: italic;">
+                Enter your payment details below to receive your Blueprint instantly.
+            </p>
+            <div id="whop-checkout-embed" style="min-height: 480px; border: 1px solid rgba(212,175,55,0.3); border-radius: 16px; overflow: hidden; background: white;">
+                <div id="whop-loading" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 480px; gap: 1rem;">
+                    <div class="checkout-spinner"></div>
+                    <p style="font-size: 0.9375rem; color: #9CA3AF; font-style: italic;">Loading secure checkout...</p>
                 </div>
             </div>
+        </div>
 
-            <!-- Trust signals -->
-            <div class="trust-signals">
-                <div class="trust-item">🔒 SSL Secure Checkout</div>
-                <div class="trust-item">✓ 60-Day Money-Back Guarantee</div>
-                <div class="trust-item">✓ Instant PDF Delivery</div>
-                <div class="trust-item">✓ One-Time Payment · No Subscription</div>
-            </div>
+    </div>
+    <!-- END .checkout-grid -->
 
-            <!-- Guarantee box -->
-            <div class="guarantee-box">
-                <div class="guarantee-icon">🛡️</div>
-                <h4>The 'If It Doesn't Speak To You, Don't Pay' Promise</h4>
-                <p>Read your Blueprint for 60 days. If it doesn't feel like it was written specifically for you, email us for a full refund. You keep the Blueprint.</p>
-            </div>
+    <!-- BELOW GRID: Trust signals, guarantee, testimonial -->
+    <div class="below-grid">
 
-            <!-- Single testimonial -->
-            <div class="checkout-testimonial">
-                <div class="stars">⭐⭐⭐⭐⭐</div>
-                <p class="quote">"I almost closed the tab at checkout. So glad I didn't. The Blueprint was waiting for me 30 seconds after I paid and I haven't stopped reading it."</p>
-                <p class="author">— Rachel D., 34 · Verified Buyer</p>
-            </div>
+        <!-- Trust signals -->
+        <div class="trust-signals" style="padding: 0;">
+            <div class="trust-item">🔒 SSL Secure Checkout</div>
+            <div class="trust-item">✓ 60-Day Money-Back Guarantee</div>
+            <div class="trust-item">✓ Instant PDF Delivery</div>
+            <div class="trust-item">✓ One-Time Payment · No Subscription</div>
+        </div>
+
+        <!-- Guarantee box -->
+        <div class="guarantee-box" style="margin: 0;">
+            <div class="guarantee-icon">🛡️</div>
+            <h4>The 'If It Doesn't Speak To You, Don't Pay' Promise</h4>
+            <p>Read your Blueprint for 60 days. If it doesn't feel like it was written specifically for you, email us for a full refund. You keep the Blueprint.</p>
+        </div>
+
+        <!-- Single testimonial -->
+        <div class="checkout-testimonial" style="margin: 0 0 2rem;">
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <p class="quote">"I almost closed the tab at checkout. So glad I didn't. The Blueprint was waiting for me 30 seconds after I paid and I haven't stopped reading it."</p>
+            <p class="author">— Rachel D., 34 · Verified Buyer</p>
         </div>
 
     </div>
@@ -678,7 +772,7 @@
     <script>
         function updateTotal() {
             const bump = document.getElementById('bumpCheckbox').checked;
-            document.getElementById('grandTotal').innerHTML = bump ? '<strong>$36</strong>' : '<strong>$19</strong>';
+            document.getElementById('grandTotal').textContent = bump ? '$36' : '$19';
             document.getElementById('bumpTotalRow').style.display = bump ? 'flex' : 'none';
         }
 
@@ -688,6 +782,18 @@
             if (firstName) {
                 document.getElementById('checkoutName').textContent = ', ' + firstName;
             }
+
+            const lifePath = params.get('lifePath') || '';
+            const email = params.get('email') || '';
+            const subhead = document.getElementById('checkoutSubhead');
+            if (subhead) {
+                let subheadText = 'Your Cosmic Blueprint is ready to be sent';
+                if (email) subheadText += ` to ${email}`;
+                subheadText += ' — instantly after payment.';
+                if (lifePath) subheadText = `Your Life Path ${lifePath} Cosmic Blueprint is ready to be sent${email ? ' to ' + email : ''} — instantly after payment.`;
+                subhead.textContent = subheadText;
+            }
+
             // Store params in sessionStorage for OTO page
             sessionStorage.setItem('starSignalData', params.toString());
         });
