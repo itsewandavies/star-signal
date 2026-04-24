@@ -19,6 +19,26 @@
     {
       "source": "/reading",
       "destination": "/reading.html"
+    },
+    {
+      "source": "/checkout",
+      "destination": "/checkout.html"
+    },
+    {
+      "source": "/results",
+      "destination": "/results.html"
+    },
+    {
+      "source": "/quiz",
+      "destination": "/quiz.html"
+    },
+    {
+      "source": "/oto",
+      "destination": "/oto.html"
+    },
+    {
+      "source": "/thank-you",
+      "destination": "/thank-you.html"
     }
   ],
   "headers": [
