@@ -1461,7 +1461,7 @@
                 </div>
                 <!-- FIX 10: P.S. gold left accent -->
                 <div style="border-left: 4px solid var(--accent-gold); padding-left: 1.5rem; margin-top: 2rem; text-align: left; max-width: 600px; margin-left: auto; margin-right: auto;">
-                    <p style="font-style: italic; font-size: 1rem; color: var(--text-muted); line-height: 1.75;">
+                    <p id="psSection" style="font-style: italic; font-size: 1rem; color: var(--text-muted); line-height: 1.75;">
                         <strong>P.S.</strong> — Cosmic Traveler, you came to this page because something inside you said yes. A quiet knowing. A pull toward understanding yourself at a deeper level. That instinct is correct. Your Blueprint is real. It's personalised. And it's ready for you right now. The only question is whether you'll open it.
                     </p>
                 </div>
@@ -1506,18 +1506,18 @@
         
         // ── ARCHETYPE NAMES ──
         const archetypeNames = {
-            1: "The Pioneer",
-            2: "The Peacemaker",
-            3: "The Creative",
-            4: "The Builder",
-            5: "The Freedom Seeker",
-            6: "The Nurturer",
-            7: "The Seeker",
-            8: "The Achiever",
-            9: "The Humanitarian",
-            11: "The Intuitive",
-            22: "The Master Builder",
-            33: "The Master Teacher"
+            1: 'The Leader',
+            2: 'The Diplomat',
+            3: 'The Creator',
+            4: 'The Builder',
+            5: 'The Adventurer',
+            6: 'The Nurturer',
+            7: 'The Seeker',
+            8: 'The Manifestor',
+            9: 'The Humanitarian',
+            11: 'The Visionary',
+            22: 'The Master Builder',
+            33: 'The Master Teacher',
         };
         
         const archetypeIntros = {
@@ -1659,6 +1659,12 @@
             const locationPhrase = showCity ? ` from ${birthCity}` : '';
             document.getElementById('finalCopy').textContent = `${firstName}${locationPhrase}, you came to this page because something inside you said yes. A quiet knowing. A pull toward understanding yourself at a deeper level. That instinct is correct. Your Blueprint is real. It's personalised. And it's ready for you right now.`;
             
+            // Update P.S. section with firstName instead of hardcoded 'Cosmic Traveler'
+            const psEl = document.getElementById('psSection');
+            if (psEl) {
+                psEl.innerHTML = `<strong>P.S.</strong> — ${firstName}, you came to this page because something inside you said yes. A quiet knowing. A pull toward understanding yourself at a deeper level. That instinct is correct. Your Blueprint is real. It's personalised. And it's ready for you right now. The only question is whether you'll open it.`;
+            }
+            
             // Setup FAQ accordion
             setupAccordion();
             
@@ -1713,6 +1719,10 @@
         // ── CHECKOUT REDIRECT ──
         function goToCheckout() {
             const params = new URLSearchParams(window.location.search);
+            // Ensure lifePath is included (calculated on this page)
+            const birthDate = params.get('birthDate') || '1990-12-12';
+            const lifePathNumber = calculateLifePath(birthDate);
+            params.set('lifePath', lifePathNumber.toString());
             window.location.href = '/checkout?' + params.toString();
         }
 

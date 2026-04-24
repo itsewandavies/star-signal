@@ -16,20 +16,17 @@ async function unlockRecord(uuid, email) {
   let query = supabase.from("star_signal_readings");
 
   if (uuid) {
-    query = query.eq("id", uuid);
+    const { error } = await query
+      .update({ oto_unlocked: true, oto_unlocked_at: new Date().toISOString() })
+      .eq("id", uuid);
+    if (error) throw new Error(`Unlock failed: ${error.message}`);
   } else if (email) {
-    query = query.eq("email", email);
+    const { error } = await query
+      .update({ oto_unlocked: true, oto_unlocked_at: new Date().toISOString() })
+      .eq("email", email);
+    if (error) throw new Error(`Unlock failed: ${error.message}`);
   } else {
     throw new Error("uuid or email required");
-  }
-
-  const { error } = await query.update({
-    oto_unlocked: true,
-    oto_unlocked_at: new Date().toISOString(),
-  });
-
-  if (error) {
-    throw new Error(`Unlock failed: ${error.message}`);
   }
 }
 
@@ -50,7 +47,7 @@ export default async function handler(req, res) {
     const body = req.body;
 
     // Check if this is a Whop webhook
-    if (body.event === "payment.succeeded" && body.data?.metadata?.readingUuid) {
+    if (body.action === "payment_succeeded" && body.data?.metadata?.readingUuid) {
       // Whop OTO payment webhook
       const { readingUuid, email } = body.data.metadata;
 

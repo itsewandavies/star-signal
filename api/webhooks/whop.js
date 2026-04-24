@@ -223,7 +223,7 @@ async function sendReadingEmail(email, firstName, readingUrl, lifePathNumber) {
 
         // RESEND EMAIL — Skip if no API key configured
         if (!process.env.RESEND_API_KEY) {
-            console.log(`[RESEND] API key not configured — skipping email. User can access reading at: starsignal.co/r/${uuid}`);
+            console.log(`[RESEND] API key not configured — skipping email. User can access reading at: ${readingUrl}`);
         } else {
             const response = await fetch('https://api.resend.com/emails', {
                 method: 'POST',
@@ -255,9 +255,9 @@ async function sendReadingEmail(email, firstName, readingUrl, lifePathNumber) {
 // ============================================================
 // MAIN HANDLER
 // ============================================================
-export const config = { maxDuration: 60 };
+const config = { maxDuration: 60 };
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
     }

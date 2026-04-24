@@ -65,20 +65,21 @@ function calculatePersonalYear(birthDate) {
 
 // Get sun sign from birth month/day
 function getSunSign(birthDate) {
-  const [, month, day] = birthDate.split("-");
-  const monthDay = `${month}-${day}`;
-
-  // Find the matching sign
-  const dates = Object.keys(SUN_SIGNS).sort();
-  for (let i = 0; i < dates.length; i++) {
-    const current = dates[i];
-    const next = dates[(i + 1) % dates.length];
-
-    if (monthDay >= current && monthDay < next) {
-      return SUN_SIGNS[current];
-    }
-  }
-  return SUN_SIGNS["01-20"];
+  const [, month, day] = birthDate.split('-');
+  const m = parseInt(month);
+  const d = parseInt(day);
+  if ((m === 3 && d >= 21) || (m === 4 && d <= 19)) return 'Aries';
+  if ((m === 4 && d >= 20) || (m === 5 && d <= 20)) return 'Taurus';
+  if ((m === 5 && d >= 21) || (m === 6 && d <= 20)) return 'Gemini';
+  if ((m === 6 && d >= 21) || (m === 7 && d <= 22)) return 'Cancer';
+  if ((m === 7 && d >= 23) || (m === 8 && d <= 22)) return 'Leo';
+  if ((m === 8 && d >= 23) || (m === 9 && d <= 22)) return 'Virgo';
+  if ((m === 9 && d >= 23) || (m === 10 && d <= 22)) return 'Libra';
+  if ((m === 10 && d >= 23) || (m === 11 && d <= 21)) return 'Scorpio';
+  if ((m === 11 && d >= 22) || (m === 12 && d <= 21)) return 'Sagittarius';
+  if ((m === 12 && d >= 22) || (m === 1 && d <= 19)) return 'Capricorn';
+  if ((m === 1 && d >= 20) || (m === 2 && d <= 18)) return 'Aquarius';
+  return 'Pisces';
 }
 
 // Get soulmate initial (deterministic from birth data)
@@ -361,7 +362,7 @@ Generate and return ONLY valid JSON (no markdown, no extra text) with this exact
 
   try {
     const response = await client.messages.create({
-      model: "claude-haiku-4-5",
+      model: "claude-3-5-haiku-20241022",
       max_tokens: 8000,
       temperature: 0.7,
       messages: [

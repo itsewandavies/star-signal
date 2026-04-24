@@ -1,869 +1,1930 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Cosmic Blueprint | Star Signal</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-    <style>
-        :root {
-            --bg-cream: #FDFBF7;
-            --bg-alt: #F6F3EC;
-            --text-main: #2C2828;
-            --text-muted: #5A5252;
-            --accent-lavender: #D8D0E3;
-            --accent-rose-light: #F7EFEF;
-            --accent-gold: #D4AF37;
-            --accent-gold-dark: #B89600;
-            --footer-bg: #2B233D;
-            --white: #FFFFFF;
-            --font-heading: 'Cormorant Garamond', serif;
-            --font-body: 'Inter', sans-serif;
-            --shadow-sm: 0 4px 12px rgba(44, 40, 40, 0.03);
-            --shadow-md: 0 8px 24px rgba(44, 40, 40, 0.06);
-            --shadow-lg: 0 12px 32px rgba(212, 175, 55, 0.25);
-            --radius-lg: 24px;
-            --radius-full: 9999px;
-            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: var(--font-body);
-            background-color: var(--bg-cream);
-            color: var(--text-main);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 1.25rem;
-        }
-
-        h1, h2, h3 {
-            font-family: var(--font-heading);
-            font-weight: 600;
-            line-height: 1.15;
-            color: var(--text-main);
-        }
-
-        h1 {
-            font-size: clamp(2rem, 6vw, 3rem);
-            margin-bottom: 1rem;
-        }
-
-        h2 {
-            font-size: clamp(1.75rem, 4vw, 2.5rem);
-            margin-bottom: 2rem;
-        }
-
-        h3 {
-            font-size: 1.125rem;
-            margin-bottom: 0.75rem;
-        }
-
-        p {
-            font-size: clamp(0.95rem, 2vw, 1.0625rem);
-            color: var(--text-muted);
-            line-height: 1.8;
-        }
-
-        /* HEADER & SOCIAL PROOF */
-        .social-proof-bar {
-            background-color: var(--accent-rose-light);
-            text-align: center;
-            padding: 0.5rem 1rem;
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--text-main);
-            letter-spacing: 0.02em;
-        }
-
-        header {
-            padding: 1rem 1.25rem;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-        }
-
-        .brand-logo {
-            font-family: var(--font-heading);
-            font-size: 1.35rem;
-            font-style: italic;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .brand-logo svg {
-            width: 20px;
-            height: 20px;
-            color: var(--accent-gold);
-        }
-
-        /* READING PROGRESS BAR */
-        .progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-gold) 0%, var(--accent-gold-dark) 100%);
-            z-index: 1000;
-            transition: width 0.3s ease-out;
-        }
-
-        /* HERO SECTION */
-        .hero {
-            padding: 3rem 0 4rem;
-            text-align: center;
-            position: relative;
-        }
-
-        .hero-content {
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .pre-headline {
-            font-family: var(--font-body);
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--accent-gold-dark);
-            margin-bottom: 1rem;
-            display: inline-block;
-        }
-
-        .life-path-circle {
-            width: 220px;
-            height: 220px;
-            margin: 2rem auto;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
-            border: 2px solid var(--accent-gold);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
-            animation: pulseGlow 4s infinite alternate;
-        }
-
-        @keyframes pulseGlow {
-            0% { filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3)); transform: scale(1); }
-            100% { filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.6)); transform: scale(1.05); }
-        }
-
-        .life-path-number {
-            font-family: var(--font-heading);
-            font-size: 4rem;
-            font-weight: 600;
-            color: var(--accent-gold);
-        }
-
-        .life-path-name {
-            font-family: var(--font-heading);
-            font-size: 1.25rem;
-            font-style: italic;
-            color: var(--accent-gold-dark);
-            margin-top: 0.5rem;
-        }
-
-        /* SECTIONS */
-        .section {
-            padding: 4rem 0;
-        }
-
-        .section.alt-bg {
-            background-color: var(--bg-alt);
-            padding: 4rem 1.25rem;
-            margin: 0 -1.25rem;
-        }
-
-        .section-text {
-            max-width: 750px;
-            margin: 0 auto;
-        }
-
-        /* CARD GRID */
-        .card-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-            margin-top: 2.5rem;
-        }
-
-        @media (min-width: 768px) {
-            .card-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 2rem;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .card-grid.three-col {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        .card {
-            background: var(--white);
-            padding: 2rem;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-sm);
-            text-align: left;
-            transition: var(--transition-smooth);
-            border: 1px solid transparent;
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-md);
-            border-color: var(--accent-lavender);
-        }
-
-        .card h3 {
-            color: var(--text-main);
-            margin-bottom: 1rem;
-        }
-
-        .card p {
-            font-size: 0.9375rem;
-        }
-
-        .card-icon {
-            width: 56px;
-            height: 56px;
-            margin-bottom: 1.25rem;
-            color: var(--accent-gold-dark);
-            font-size: 2.5rem;
-        }
-
-        /* REVELATION CARDS */
-        .revelation-card {
-            background: var(--white);
-            padding: 2.5rem;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 2rem;
-            border-left: 4px solid var(--accent-gold);
-        }
-
-        .revelation-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-main);
-        }
-
-        /* MONTHLY FORECAST CARDS */
-        .forecast-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-            margin-top: 2.5rem;
-        }
-
-        @media (min-width: 768px) {
-            .forecast-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .forecast-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        .forecast-card {
-            background: var(--white);
-            padding: 1.5rem;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-sm);
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            border: 1px solid var(--accent-lavender);
-        }
-
-        .forecast-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .forecast-card.expanded {
-            grid-column: 1 / -1;
-            padding: 2rem;
-        }
-
-        .forecast-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 1rem;
-        }
-
-        .forecast-month {
-            font-family: var(--font-heading);
-            font-size: 1.125rem;
-            font-weight: 600;
-        }
-
-        .energy-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: var(--radius-full);
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .energy-badge.portal { background: rgba(212, 175, 55, 0.2); color: var(--accent-gold-dark); }
-        .energy-badge.growth { background: rgba(91, 179, 94, 0.2); color: #5bb35e; }
-        .energy-badge.release { background: rgba(253, 160, 133, 0.2); color: #fda085; }
-        .energy-badge.pause { background: rgba(142, 197, 252, 0.2); color: #8ec5fc; }
-        .energy-badge.acceleration { background: rgba(212, 175, 55, 0.2); color: var(--accent-gold-dark); }
-
-        .forecast-theme {
-            font-size: 0.9375rem;
-            color: var(--text-main);
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-
-        .forecast-expanded {
-            display: none;
-            animation: slideDown 0.3s ease-out;
-        }
-
-        .forecast-expanded.show {
-            display: block;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                max-height: 0;
-            }
-            to {
-                opacity: 1;
-                max-height: 500px;
-            }
-        }
-
-        /* OTO SECTION */
-        .oto-section {
-            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-dark) 100%);
-            color: var(--white);
-            padding: 4rem 1.25rem;
-            margin: 4rem -1.25rem 0 -1.25rem;
-            text-align: center;
-            border-radius: var(--radius-lg);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .oto-section h2 {
-            color: var(--white);
-            margin-bottom: 2rem;
-        }
-
-        .oto-locked {
-            position: relative;
-        }
-
-        .oto-blur {
-            filter: blur(4px);
-            pointer-events: none;
-            max-height: 200px;
-            overflow: hidden;
-        }
-
-        .oto-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, transparent 60%, var(--accent-gold));
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 1.5rem;
-        }
-
-        .lock-icon {
-            font-size: 3rem;
-        }
-
-        .oto-unlock-button {
-            background: var(--white);
-            color: var(--accent-gold-dark);
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: var(--radius-full);
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            display: inline-block;
-            margin-top: 2rem;
-        }
-
-        .oto-unlock-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-        }
-
-        .oto-unlocked-content {
-            background: var(--white);
-            color: var(--text-main);
-            padding: 2rem;
-            border-radius: var(--radius-lg);
-            margin-top: 2rem;
-        }
-
-        /* FOOTER */
-        footer {
-            background: var(--footer-bg);
-            color: var(--white);
-            padding: 4rem 1.25rem 3rem;
-            text-align: center;
-            margin-top: 4rem;
-        }
-
-        .footer-logo {
-            font-family: var(--font-heading);
-            font-size: 1.5rem;
-            font-style: italic;
-            margin-bottom: 0.5rem;
-            color: var(--accent-gold);
-        }
-
-        .footer-tagline {
-            font-size: 0.875rem;
-            color: rgba(255, 255, 255, 0.6);
-            margin-bottom: 2rem;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-links a {
-            font-size: 0.875rem;
-            color: rgba(255, 255, 255, 0.8);
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: var(--white);
-        }
-
-        /* LOADING STATE */
-        .loading-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            gap: 2rem;
-        }
-
-        .loading-spinner {
-            width: 120px;
-            height: 120px;
-            animation: spin 3s linear infinite;
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* ERROR STATE */
-        .error-state {
-            background: rgba(200, 100, 100, 0.1);
-            border: 1px solid rgba(200, 100, 100, 0.3);
-            padding: 2rem;
-            border-radius: var(--radius-lg);
-            text-align: center;
-            margin: 4rem 0;
-        }
-
-        .error-state h2 {
-            color: #c86464;
-            margin-bottom: 1rem;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            .section {
-                padding: 2rem 0;
-            }
-
-            .section.alt-bg {
-                margin: 0 -1.25rem;
-                padding: 2rem 1.25rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cosmic Blueprint | Star Signal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* =============================================
+       ROOT DESIGN TOKENS
+    ============================================= */
+    :root {
+      --bg-deep:      #0D0B1A;
+      --bg-mid:       #13112A;
+      --bg-card:      rgba(255,255,255,0.04);
+      --bg-card-gold: rgba(212,175,55,0.08);
+      --gold:         #D4AF37;
+      --gold-light:   #E8C84D;
+      --gold-dim:     rgba(212,175,55,0.35);
+      --cream:        #F0EBE3;
+      --cream-dim:    rgba(240,235,227,0.7);
+      --purple-muted: #9B8FB5;
+      --purple-dark:  #4A3F6B;
+      --white:        #FFFFFF;
+      --error:        #E07070;
+
+      --font-heading: 'Cormorant Garamond', serif;
+      --font-body:    'Inter', sans-serif;
+
+      --radius-sm:    10px;
+      --radius-md:    16px;
+      --radius-lg:    24px;
+      --radius-full:  9999px;
+
+      --shadow-gold:  0 0 40px rgba(212,175,55,0.12);
+      --shadow-card:  0 8px 32px rgba(0,0,0,0.4);
+
+      --transition:   all 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    /* =============================================
+       RESET + BASE
+    ============================================= */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-deep);
+      color: var(--cream);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; }
+    a   { color: var(--gold); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* =============================================
+       PROGRESS BAR
+    ============================================= */
+    #progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      z-index: 9999;
+      transition: width 0.1s linear;
+      box-shadow: 0 0 8px var(--gold);
+    }
+
+    /* =============================================
+       LOADING STATE
+    ============================================= */
+    #loading-state {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      background: radial-gradient(ellipse at 50% 30%, #1a1230 0%, var(--bg-deep) 70%);
+    }
+
+    .loader-logo {
+      font-family: var(--font-heading);
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      color: var(--gold);
+      letter-spacing: 0.08em;
+    }
+
+    .spinner {
+      width: 56px; height: 56px;
+      border: 2px solid var(--gold-dim);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-text {
+      font-family: var(--font-heading);
+      font-size: clamp(1.1rem, 3vw, 1.4rem);
+      color: var(--purple-muted);
+      font-style: italic;
+      letter-spacing: 0.04em;
+    }
+
+    .loading-stars {
+      position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+    }
+
+    .loading-stars span {
+      position: absolute;
+      width: 2px; height: 2px;
+      background: var(--gold);
+      border-radius: 50%;
+      opacity: 0;
+      animation: twinkle var(--dur, 3s) var(--delay, 0s) infinite;
+    }
+
+    @keyframes twinkle {
+      0%,100% { opacity: 0; transform: scale(1); }
+      50%      { opacity: 0.8; transform: scale(1.5); }
+    }
+
+    /* =============================================
+       ERROR STATE
+    ============================================= */
+    #error-state {
+      display: none;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1.25rem;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .error-icon { font-size: 3rem; }
+
+    .error-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      color: var(--gold);
+    }
+
+    .error-msg {
+      color: var(--purple-muted);
+      max-width: 420px;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* =============================================
+       MAIN READING — HIDDEN UNTIL LOADED
+    ============================================= */
+    #reading-content { display: none; }
+
+    /* =============================================
+       CONTAINER
+    ============================================= */
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    .container-narrow {
+      max-width: 780px;
+    }
+
+    /* =============================================
+       SECTION WRAPPER
+    ============================================= */
+    .section {
+      padding: clamp(3rem, 8vw, 5.5rem) 0;
+      position: relative;
+    }
+
+    .section-inner {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .section-inner.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =============================================
+       ORNAMENTAL DIVIDER
+    ============================================= */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: clamp(2rem, 5vw, 3.5rem) 0;
+    }
+
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    }
+
+    .divider-gem {
+      color: var(--gold);
+      font-size: 1rem;
+      letter-spacing: 0.3em;
+    }
+
+    /* section heading */
+    .section-tag {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold-dim);
+      padding: 0.3rem 0.8rem;
+      border-radius: var(--radius-full);
+      margin-bottom: 1.25rem;
+    }
+
+    .section-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      font-weight: 600;
+      color: var(--cream);
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-heading span { color: var(--gold); }
+
+    .section-sub {
+      font-size: clamp(0.9rem, 2vw, 1rem);
+      color: var(--purple-muted);
+      max-width: 560px;
+      margin-bottom: 2.5rem;
+    }
+
+    /* =============================================
+       GLASSMORPHISM CARD
+    ============================================= */
+    .glass-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.07);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: var(--radius-md);
+      padding: clamp(1.25rem, 3vw, 2rem);
+      box-shadow: var(--shadow-card);
+    }
+
+    .glass-card.gold-border {
+      border-color: var(--gold-dim);
+      background: var(--bg-card-gold);
+      box-shadow: var(--shadow-gold), var(--shadow-card);
+    }
+
+    /* =============================================
+       HERO SECTION
+    ============================================= */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding: 5rem 0 4rem;
+    }
+
+    /* Cosmic bg */
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(100,60,180,0.4) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(212,175,55,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 10% 60%, rgba(40,20,90,0.5) 0%, transparent 70%),
+        var(--bg-deep);
+      z-index: 0;
+    }
+
+    /* CSS-only stars */
+    .stars-layer {
+      position: absolute; inset: 0;
+      pointer-events: none; z-index: 0;
+      overflow: hidden;
+    }
+
+    .stars-layer::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 40% 8%, rgba(212,175,55,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 25%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 12%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(2px 2px at 82% 35%, rgba(212,175,55,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 92% 18%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 15% 65%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 35% 72%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 58%, rgba(212,175,55,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 78% 70%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 88% 82%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 20% 88%, rgba(212,175,55,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 48% 90%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 67% 93%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(2px 2px at 5% 45%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 95% 55%, rgba(212,175,55,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 30% 30%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 73% 48%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 50% 50%, rgba(212,175,55,0.3) 0%, transparent 100%);
+      animation: starDrift 60s linear infinite;
+    }
+
+    .stars-layer::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 8% 30%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 22% 55%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(2px 2px at 45% 20%, rgba(212,175,55,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 63% 75%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 84% 42%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 97% 68%, rgba(212,175,55,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 18% 78%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 56% 85%, rgba(255,255,255,0.5) 0%, transparent 100%);
+      animation: starDrift 90s linear infinite reverse;
+      opacity: 0.6;
+    }
+
+    @keyframes starDrift {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-20px); }
+    }
+
+    .hero-content {
+      position: relative; z-index: 1;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* Life path circle */
+    .lp-orbit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: clamp(90px, 15vw, 120px);
+      height: clamp(90px, 15vw, 120px);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,175,55,0.15), rgba(212,175,55,0.03));
+      border: 2px solid var(--gold);
+      box-shadow: 0 0 40px rgba(212,175,55,0.25), inset 0 0 30px rgba(212,175,55,0.05);
+      margin: 1.75rem auto 0.75rem;
+      flex-direction: column;
+      gap: 0;
+      animation: pulse-orbit 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse-orbit {
+      0%, 100% { box-shadow: 0 0 40px rgba(212,175,55,0.25), inset 0 0 30px rgba(212,175,55,0.05); }
+      50%       { box-shadow: 0 0 60px rgba(212,175,55,0.45), inset 0 0 40px rgba(212,175,55,0.12); }
+    }
+
+    .lp-label {
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.8;
+    }
+
+    .lp-number {
+      font-family: var(--font-heading);
+      font-size: clamp(2.5rem, 6vw, 3.5rem);
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .hero-name {
+      font-family: var(--font-heading);
+      font-size: clamp(2.2rem, 7vw, 4.5rem);
+      font-weight: 600;
+      color: var(--cream);
+      letter-spacing: -0.01em;
+    }
+
+    .hero-name span { color: var(--gold); }
+
+    .hero-archetype {
+      font-family: var(--font-heading);
+      font-size: clamp(1.1rem, 3vw, 1.6rem);
+      font-style: italic;
+      color: var(--purple-muted);
+      margin-top: 0.25rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+      font-size: 0.85rem;
+      color: var(--purple-muted);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-meta-dot { color: var(--gold); opacity: 0.5; }
+
+    .hero-opening {
+      max-width: 680px;
+      margin: 2rem auto 0;
+      font-family: var(--font-heading);
+      font-size: clamp(1.05rem, 2.5vw, 1.3rem);
+      font-style: italic;
+      color: var(--cream-dim);
+      line-height: 1.85;
+    }
+
+    .hero-scroll-hint {
+      margin-top: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.7;
+    }
+
+    .scroll-arrow {
+      width: 20px; height: 20px;
+      border-right: 1.5px solid var(--gold);
+      border-bottom: 1.5px solid var(--gold);
+      transform: rotate(45deg);
+      animation: bounce-arrow 2s ease-in-out infinite;
+      margin-top: 0.25rem;
+    }
+
+    @keyframes bounce-arrow {
+      0%, 100% { transform: rotate(45deg) translateY(0); }
+      50%       { transform: rotate(45deg) translateY(5px); }
+    }
+
+    /* =============================================
+       REVELATION SECTION
+    ============================================= */
+    .revelation-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 780px) {
+      .revelation-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .revelation-grid { grid-template-columns: 1fr; }
+    }
+
+    .rev-card {
+      padding: clamp(1.25rem, 3vw, 1.75rem);
+      border-radius: var(--radius-md);
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.07);
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .rev-card.threshold {
+      background: var(--bg-card-gold);
+      border-color: var(--gold-dim);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .rev-icon {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    .rev-tag {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--purple-muted);
+    }
+
+    .rev-card.threshold .rev-tag { color: var(--gold); }
+
+    .rev-headline {
+      font-family: var(--font-heading);
+      font-size: clamp(1.15rem, 2.5vw, 1.4rem);
+      font-weight: 600;
+      color: var(--cream);
+      line-height: 1.3;
+    }
+
+    .rev-body {
+      font-size: 0.875rem;
+      color: var(--cream-dim);
+      line-height: 1.75;
+    }
+
+    .threshold-month {
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.02em;
+    }
+
+    /* =============================================
+       NUMEROLOGY SECTION
+    ============================================= */
+    .stats-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 1.5rem 0 2rem;
+    }
+
+    .stat-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--bg-card);
+      border: 1px solid var(--gold-dim);
+      border-radius: var(--radius-full);
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--cream);
+    }
+
+    .stat-pill strong {
+      color: var(--gold);
+      font-size: 1rem;
+      font-family: var(--font-heading);
+    }
+
+    .life-path-text {
+      font-size: clamp(0.9rem, 2vw, 1rem);
+      color: var(--cream-dim);
+      line-height: 1.85;
+      margin-bottom: 2rem;
+    }
+
+    .numerology-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    @media (max-width: 620px) {
+      .numerology-grid { grid-template-columns: 1fr; }
+    }
+
+    .num-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .num-big {
+      font-family: var(--font-heading);
+      font-size: clamp(2.5rem, 6vw, 3.5rem);
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .num-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--purple-muted);
+    }
+
+    .num-meaning {
+      font-size: 0.82rem;
+      color: var(--cream-dim);
+      line-height: 1.6;
+      text-align: center;
+      margin-top: 0.25rem;
+    }
+
+    /* =============================================
+       LIFE AREA BLUEPRINT SECTION
+    ============================================= */
+    .blueprint-text {
+      font-size: clamp(0.9rem, 2vw, 1.0625rem);
+      color: var(--cream-dim);
+      line-height: 1.9;
+    }
+
+    .blueprint-text p + p {
+      margin-top: 1.25em;
+    }
+
+    /* =============================================
+       FORECAST SECTION
+    ============================================= */
+    .forecast-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 780px) {
+      .forecast-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 480px) {
+      .forecast-grid { grid-template-columns: 1fr; }
+    }
+
+    .month-card {
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255,255,255,0.08);
+      overflow: hidden;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .month-card:hover {
+      border-color: var(--gold-dim);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .month-card[data-energy="Portal"]       { background: rgba(100,60,180,0.15); }
+    .month-card[data-energy="Growth"]       { background: rgba(60,180,120,0.1); }
+    .month-card[data-energy="Release"]      { background: rgba(180,60,100,0.1); }
+    .month-card[data-energy="Acceleration"] { background: rgba(212,175,55,0.1); }
+    .month-card[data-energy="Pause"]        { background: rgba(60,100,180,0.1); }
+
+    .month-header {
+      padding: 1rem 1.25rem 0.75rem;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .month-name {
+      font-family: var(--font-heading);
+      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+      font-weight: 600;
+      color: var(--cream);
+    }
+
+    .energy-badge {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border-radius: var(--radius-full);
+      white-space: nowrap;
+    }
+
+    .energy-badge.Portal       { background: rgba(100,60,180,0.4); color: #C9AEFF; border: 1px solid rgba(180,120,255,0.3); }
+    .energy-badge.Growth       { background: rgba(60,180,120,0.3); color: #7DFFBC; border: 1px solid rgba(60,180,120,0.3); }
+    .energy-badge.Release      { background: rgba(180,60,100,0.3); color: #FF9BBF; border: 1px solid rgba(180,60,100,0.3); }
+    .energy-badge.Acceleration { background: rgba(212,175,55,0.25); color: var(--gold); border: 1px solid var(--gold-dim); }
+    .energy-badge.Pause        { background: rgba(60,100,180,0.3); color: #9BBEFF; border: 1px solid rgba(60,100,180,0.3); }
+
+    .month-theme {
+      padding: 0 1.25rem 1rem;
+      font-size: 0.8rem;
+      color: var(--purple-muted);
+      line-height: 1.5;
+    }
+
+    .month-expand-btn {
+      width: 100%;
+      padding: 0.6rem 1.25rem;
+      background: rgba(255,255,255,0.04);
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      color: var(--gold);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      transition: background 0.2s;
+      min-height: 44px;
+    }
+
+    .month-expand-btn:hover { background: rgba(212,175,55,0.08); }
+
+    .expand-chevron {
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+
+    .month-card.open .expand-chevron { transform: rotate(180deg); }
+
+    .month-detail {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.45s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .month-card.open .month-detail { max-height: 600px; }
+
+    .month-detail-inner {
+      padding: 1rem 1.25rem 1.25rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .month-detail-text {
+      font-size: 0.82rem;
+      color: var(--cream-dim);
+      line-height: 1.75;
+    }
+
+    .day-row {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .day-chip {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-full);
+    }
+
+    .day-chip.power { background: rgba(212,175,55,0.2); color: var(--gold); border: 1px solid var(--gold-dim); }
+    .day-chip.caution { background: rgba(180,60,100,0.2); color: #FF9BBF; border: 1px solid rgba(180,60,100,0.3); }
+
+    .day-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--purple-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .month-affirmation {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: clamp(0.9rem, 2vw, 1.05rem);
+      color: var(--gold);
+      border-left: 2px solid var(--gold-dim);
+      padding-left: 0.75rem;
+      line-height: 1.55;
+    }
+
+    /* =============================================
+       MORNING RITUAL SECTION
+    ============================================= */
+    .ritual-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 620px) {
+      .ritual-grid { grid-template-columns: 1fr; }
+    }
+
+    .ritual-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .ritual-icon { font-size: 1.75rem; }
+
+    .ritual-title {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--cream);
+    }
+
+    .ritual-text {
+      font-size: 0.82rem;
+      color: var(--cream-dim);
+      line-height: 1.7;
+    }
+
+    .ritual-full {
+      font-size: clamp(0.88rem, 2vw, 0.98rem);
+      color: var(--cream-dim);
+      line-height: 1.9;
+      margin-bottom: 1.75rem;
+    }
+
+    .ritual-affirmation {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: clamp(1.3rem, 3.5vw, 1.9rem);
+      color: var(--gold);
+      text-align: center;
+      line-height: 1.5;
+      padding: 2rem;
+      border: 1px solid var(--gold-dim);
+      border-radius: var(--radius-md);
+      background: var(--bg-card-gold);
+      box-shadow: var(--shadow-gold);
+    }
+
+    /* =============================================
+       OTO SECTION
+    ============================================= */
+    #oto-section {
+      position: relative;
+    }
+
+    .oto-locked-wrapper {
+      text-align: center;
+    }
+
+    .oto-life-headline {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 600;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+    }
+
+    .oto-life-sub {
+      font-size: 0.9rem;
+      color: var(--purple-muted);
+      margin-bottom: 2rem;
+    }
+
+    .oto-teaser-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .oto-teaser-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      font-size: 0.92rem;
+      color: var(--cream-dim);
+      text-align: left;
+      width: 100%;
+    }
+
+    .oto-teaser-list li::before {
+      content: '✦';
+      color: var(--gold);
+      flex-shrink: 0;
+      margin-top: 0.1em;
+      font-size: 0.75rem;
+    }
+
+    .oto-blur-preview {
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      padding: 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius-md);
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: clamp(0.95rem, 2vw, 1.15rem);
+      color: var(--cream-dim);
+      line-height: 1.7;
+      filter: blur(5px);
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .oto-price-tag {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 0.25rem;
+    }
+
+    .oto-price-label {
+      font-size: 0.8rem;
+      color: var(--purple-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .oto-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, #C49B27 100%);
+      color: #0D0B1A;
+      font-family: var(--font-body);
+      font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+      font-weight: 700;
+      padding: 1rem 2.5rem;
+      border: none;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      min-height: 56px;
+      transition: var(--transition);
+      box-shadow: 0 4px 24px rgba(212,175,55,0.4);
+      letter-spacing: 0.02em;
+    }
+
+    .oto-cta-btn:hover:not(:disabled) {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 36px rgba(212,175,55,0.55);
+    }
+
+    .oto-cta-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .oto-sub-label {
+      margin-top: 0.75rem;
+      font-size: 0.78rem;
+      color: var(--purple-muted);
+    }
+
+    .btn-spinner {
+      display: none;
+      width: 18px; height: 18px;
+      border: 2px solid rgba(0,0,0,0.2);
+      border-top-color: #0D0B1A;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    .oto-cta-btn.loading .btn-spinner { display: block; }
+    .oto-cta-btn.loading .btn-text { display: none; }
+
+    .oto-error-msg {
+      display: none;
+      margin-top: 1rem;
+      padding: 0.75rem 1.25rem;
+      background: rgba(224,112,112,0.1);
+      border: 1px solid rgba(224,112,112,0.3);
+      border-radius: var(--radius-sm);
+      color: var(--error);
+      font-size: 0.85rem;
+    }
+
+    /* OTO unlocked states */
+    .oto-unlocked-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .oto-reveal-card {
+      background: var(--bg-card-gold);
+      border: 1px solid var(--gold-dim);
+      border-radius: var(--radius-md);
+      padding: clamp(1.5rem, 3vw, 2.25rem);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .oto-reveal-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .oto-reveal-value {
+      font-family: var(--font-heading);
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 700;
+      color: var(--cream);
+    }
+
+    .oto-reveal-value span { color: var(--gold); }
+
+    .oto-text {
+      font-size: clamp(0.88rem, 2vw, 1rem);
+      color: var(--cream-dim);
+      line-height: 1.85;
+    }
+
+    .oto-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    @media (max-width: 620px) {
+      .oto-cards-grid { grid-template-columns: 1fr; }
+    }
+
+    .oto-mini-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
+
+    .oto-mini-card-num {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .oto-mini-card-title {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      color: var(--cream);
+      margin-bottom: 0.4rem;
+    }
+
+    .oto-mini-card-text {
+      font-size: 0.8rem;
+      color: var(--cream-dim);
+      line-height: 1.65;
+    }
+
+    .oto-quote {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: clamp(1.15rem, 3vw, 1.6rem);
+      color: var(--cream);
+      line-height: 1.55;
+      border-left: 3px solid var(--gold);
+      padding-left: 1.25rem;
+      margin: 0.5rem 0;
+    }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    .reading-footer {
+      padding: 3rem 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-note {
+      font-size: 0.75rem;
+      color: var(--purple-muted);
+    }
+
+    /* =============================================
+       UTILITY
+    ============================================= */
+    .text-gold  { color: var(--gold); }
+    .text-cream { color: var(--cream); }
+    .text-muted { color: var(--purple-muted); }
+    .mt-1 { margin-top: 0.5rem; }
+    .mt-2 { margin-top: 1rem; }
+    .mt-3 { margin-top: 1.5rem; }
+
+    /* =============================================
+       DARK SECTION ALTERNATING
+    ============================================= */
+    .section-alt {
+      background: rgba(255,255,255,0.018);
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-deep); }
+    ::-webkit-scrollbar-thumb { background: var(--purple-dark); border-radius: 3px; }
+
+  </style>
 </head>
 <body>
-    <div class="progress-bar" id="progressBar"></div>
 
-    <div class="social-proof-bar" id="socialProofBar" style="display: none;">
-        ⭐⭐⭐⭐⭐ Reading generated for <span id="socialProofName"></span>
-    </div>
+<!-- ============================================
+     PROGRESS BAR
+============================================ -->
+<div id="progress-bar"></div>
 
-    <header class="container">
-        <div class="brand-logo">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" fill="currentColor"/>
-            </svg>
-            Star Signal
+<!-- ============================================
+     LOADING STATE
+============================================ -->
+<div id="loading-state">
+  <div class="loading-stars" id="loading-stars-container"></div>
+  <div class="loader-logo">✦ Star Signal ✦</div>
+  <div class="spinner"></div>
+  <p class="loading-text">Reading the cosmos...</p>
+</div>
+
+<!-- ============================================
+     ERROR STATE
+============================================ -->
+<div id="error-state" style="display:none; min-height:100vh; display:none; align-items:center; justify-content:center; flex-direction:column; gap:1.25rem; padding:2rem; text-align:center;">
+  <div class="error-icon">✦</div>
+  <h2 class="error-title">The stars went quiet</h2>
+  <p class="error-msg" id="error-msg">We couldn't retrieve your reading at this time. Please try refreshing the page, or contact support.</p>
+  <a href="mailto:support@starsignal.app" style="color:var(--gold); font-size:0.875rem;">support@starsignal.app</a>
+</div>
+
+<!-- ============================================
+     MAIN READING CONTENT
+============================================ -->
+<div id="reading-content" style="display:none;">
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="stars-layer"></div>
+    <div class="container hero-content">
+      <div class="section-inner" id="hero-inner">
+
+        <h1 class="hero-name"><span id="hero-first-name">Your</span>'s Cosmic Blueprint</h1>
+
+        <div class="lp-orbit">
+          <span class="lp-label">LP</span>
+          <span class="lp-number" id="hero-lp">—</span>
         </div>
-    </header>
 
-    <!-- LOADING STATE -->
-    <div id="loadingState" class="loading-state">
-        <svg class="loading-spinner" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M50 5 L53 35 L80 20 L60 45 L95 50 L60 55 L80 80 L53 65 L50 95 L47 65 L20 80 L40 55 L5 50 L40 45 L20 20 L47 35 Z" fill="var(--accent-gold)" opacity="0.4"/>
-            <circle cx="50" cy="50" r="22" fill="none" stroke="var(--accent-gold)" stroke-width="2"/>
-            <path d="M58 32 A 15 15 0 0 0 58 68" fill="none" stroke="var(--accent-gold-dark)" stroke-width="2"/>
-        </svg>
-        <h1>Unlocking Your Blueprint...</h1>
-    </div>
+        <p class="hero-archetype" id="hero-archetype">The Mystic</p>
 
-    <!-- ERROR STATE -->
-    <div id="errorState" class="hidden">
-        <div class="container">
-            <div class="error-state">
-                <h2>Your reading link may have expired</h2>
-                <p>Please check your email for the correct link, or <a href="/">start a new reading</a>.</p>
-            </div>
+        <div class="hero-meta">
+          <span id="hero-sun-sign">☀️ —</span>
+          <span class="hero-meta-dot">·</span>
+          <span id="hero-birth-city">—</span>
         </div>
-    </div>
 
-    <!-- READING CONTENT -->
-    <main id="readingContent" class="hidden">
-        <!-- HERO SECTION -->
-        <section class="hero container">
-            <div class="hero-content">
-                <span class="pre-headline">✨ Your Personal Cosmic Blueprint</span>
-                <h1 id="heroHeading"></h1>
-                <p id="heroBorn" style="font-size: 0.95rem; margin-bottom: 2rem;"></p>
+        <p class="hero-opening" id="hero-opening">Loading your cosmic message...</p>
 
-                <div class="life-path-circle">
-                    <div class="life-path-number" id="lifePathNumber"></div>
-                    <div class="life-path-name" id="lifePathName"></div>
-                </div>
-
-                <p id="heroIntro" style="max-width: 600px; margin: 2rem auto;"></p>
-            </div>
-        </section>
-
-        <!-- NUMEROLOGY SECTION -->
-        <section class="section alt-bg">
-            <div class="container section-text">
-                <h2>Your Complete Numerological Identity</h2>
-                <div class="card-grid">
-                    <div class="card">
-                        <div class="card-icon">①</div>
-                        <h3>Life Path</h3>
-                        <p id="lpDescription"></p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">②</div>
-                        <h3>Destiny Number</h3>
-                        <p id="destinyDesc"></p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">③</div>
-                        <h3>Soul Urge</h3>
-                        <p id="soulUrgeDesc"></p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">④</div>
-                        <h3>Personality</h3>
-                        <p id="personalityDesc"></p>
-                    </div>
-                </div>
-                <p id="fullLPDescription" style="margin-top: 3rem;"></p>
-            </div>
-        </section>
-
-        <!-- THREE REVELATIONS -->
-        <section class="section">
-            <div class="container section-text">
-                <h2>3 Things Your Blueprint Revealed About You</h2>
-                
-                <div class="revelation-card">
-                    <h3 id="rev1Headline">☀️ You've Always Felt Different</h3>
-                    <p id="rev1Body"></p>
-                </div>
-
-                <div class="revelation-card">
-                    <h3 id="rev2Headline">🌙 Something Shifted Forever</h3>
-                    <p id="rev2Body"></p>
-                </div>
-
-                <div class="revelation-card">
-                    <h3 id="rev3Headline">⭐ Your Threshold Event</h3>
-                    <p id="rev3Body"></p>
-                </div>
-            </div>
-        </section>
-
-        <!-- LIFE AREA DEEP DIVE -->
-        <section class="section alt-bg">
-            <div class="container section-text">
-                <h2 id="lifeAreaHeading"></h2>
-                <p id="lifeAreaContent"></p>
-            </div>
-        </section>
-
-        <!-- 2026 FORECAST -->
-        <section class="section">
-            <div class="container section-text">
-                <h2>Your Complete 2026 Forecast</h2>
-                <p style="margin-bottom: 2rem; color: var(--text-muted); font-size: 0.95rem;">Click any month to expand the full forecast</p>
-                <div class="forecast-grid" id="forecastGrid"></div>
-            </div>
-        </section>
-
-        <!-- MORNING RITUAL -->
-        <section class="section alt-bg">
-            <div class="container section-text">
-                <h2>Your Personal Morning Ritual</h2>
-                <div class="card">
-                    <p style="font-style: italic; font-size: 1.125rem; margin-bottom: 2rem;" id="morningAffirmation"></p>
-                    <p id="morningRitual"></p>
-                </div>
-            </div>
-        </section>
-
-        <!-- OTO SECTION -->
-        <section class="section">
-            <div class="container">
-                <div class="oto-section" id="otoSection"></div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <div class="footer-logo">Star Signal</div>
-            <div class="footer-tagline">Illuminate your cosmic path.</div>
-            <div class="footer-links">
-                <a href="#privacy">Privacy Policy</a>
-                <a href="#terms">Terms of Service</a>
-                <a href="#contact">Contact</a>
-            </div>
+        <div class="hero-scroll-hint">
+          <span>12 sections below</span>
+          <div class="scroll-arrow"></div>
         </div>
-    </footer>
 
-    <script>
-        async function loadReading() {
-            const params = new URLSearchParams(window.location.search);
-            const uuid = params.get('uuid');
+      </div>
+    </div>
+  </section>
 
-            if (!uuid) {
-                showError();
-                return;
-            }
+  <!-- ==================== THE REVELATION ==================== -->
+  <section class="section">
+    <div class="container section-inner" id="revelation-inner">
+      <span class="section-tag">The Revelation</span>
+      <h2 class="section-heading">What We Found When We <span>Read Your Stars</span></h2>
+      <p class="section-sub">Three discoveries from deep within your natal blueprint that changed everything.</p>
 
-            try {
-                const response = await fetch(`/api/reading?uuid=${uuid}`);
-                if (!response.ok) throw new Error('Reading not found');
+      <div class="revelation-grid">
 
-                const data = await response.json();
+        <!-- Personality -->
+        <div class="glass-card rev-card" id="rev-personality">
+          <div class="rev-icon">🌟</div>
+          <div class="rev-tag">Your Nature</div>
+          <h3 class="rev-headline" id="rev-personality-headline">—</h3>
+          <p class="rev-body" id="rev-personality-body">—</p>
+        </div>
 
-                if (!data.ready) {
-                    setTimeout(loadReading, 2000);
-                    return;
-                }
+        <!-- Past Pattern -->
+        <div class="glass-card rev-card" id="rev-past">
+          <div class="rev-icon">🔮</div>
+          <div class="rev-tag">Past Pattern</div>
+          <h3 class="rev-headline" id="rev-past-headline">—</h3>
+          <p class="rev-body" id="rev-past-body">—</p>
+        </div>
 
-                renderReading(data);
-            } catch (error) {
-                console.error('Load error:', error);
-                showError();
-            }
+        <!-- Threshold Event -->
+        <div class="rev-card threshold" id="rev-threshold">
+          <div class="rev-icon">⚡</div>
+          <div class="rev-tag">Threshold Event</div>
+          <span class="threshold-month" id="rev-threshold-month">—</span>
+          <h3 class="rev-headline" id="rev-threshold-headline">—</h3>
+          <p class="rev-body" id="rev-threshold-body">—</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider container"><span class="divider-gem">✦ ✦ ✦</span></div>
+
+  <!-- ==================== NUMEROLOGICAL IDENTITY ==================== -->
+  <section class="section section-alt">
+    <div class="container section-inner" id="numerology-inner">
+      <span class="section-tag">Your Numbers</span>
+      <h2 class="section-heading">Your <span>Numerological</span> Identity</h2>
+
+      <div class="stats-row">
+        <div class="stat-pill"><strong id="stat-lp">LP —</strong> Life Path</div>
+        <div class="stat-pill"><strong id="stat-py">PY —</strong> Personal Year</div>
+        <div class="stat-pill"><strong id="stat-sun">☀️ —</strong></div>
+      </div>
+
+      <p class="life-path-text" id="life-path-desc">—</p>
+
+      <div class="numerology-grid">
+        <div class="num-card">
+          <div class="num-label">Destiny Number</div>
+          <div class="num-big" id="num-destiny">—</div>
+          <p class="num-meaning" id="num-destiny-meaning">—</p>
+        </div>
+        <div class="num-card">
+          <div class="num-label">Soul Urge</div>
+          <div class="num-big" id="num-soul">—</div>
+          <p class="num-meaning" id="num-soul-meaning">—</p>
+        </div>
+        <div class="num-card">
+          <div class="num-label">Personality</div>
+          <div class="num-big" id="num-personality">—</div>
+          <p class="num-meaning" id="num-personality-meaning">—</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider container"><span class="divider-gem">✦ ✦ ✦</span></div>
+
+  <!-- ==================== LIFE AREA BLUEPRINT ==================== -->
+  <section class="section">
+    <div class="container section-inner" id="blueprint-inner">
+      <span class="section-tag">Your Blueprint</span>
+      <h2 class="section-heading" id="blueprint-title">Your <span>Blueprint</span></h2>
+      <div class="blueprint-text" id="blueprint-text">—</div>
+    </div>
+  </section>
+
+  <div class="divider container"><span class="divider-gem">✦ ✦ ✦</span></div>
+
+  <!-- ==================== 2026 FORECAST ==================== -->
+  <section class="section section-alt">
+    <div class="container section-inner" id="forecast-inner">
+      <span class="section-tag">2026 Forecast</span>
+      <h2 class="section-heading">Your <span>2026</span> Month-by-Month</h2>
+      <p class="section-sub">Each month carries a distinct cosmic energy. Expand any card to see your full forecast, power days, and affirmation.</p>
+
+      <div class="forecast-grid" id="forecast-grid">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <div class="divider container"><span class="divider-gem">✦ ✦ ✦</span></div>
+
+  <!-- ==================== MORNING RITUAL ==================== -->
+  <section class="section">
+    <div class="container section-inner" id="ritual-inner">
+      <span class="section-tag">Daily Practice</span>
+      <h2 class="section-heading">Your Personal <span>Morning Ritual</span></h2>
+      <p class="section-sub">An 8-minute practice aligned to your specific energy signature.</p>
+
+      <div class="ritual-grid">
+        <div class="ritual-card">
+          <div class="ritual-icon">💎</div>
+          <div class="ritual-title">Crystal Alignment</div>
+          <p class="ritual-text" id="ritual-crystal">—</p>
+        </div>
+        <div class="ritual-card">
+          <div class="ritual-icon">🌬️</div>
+          <div class="ritual-title">Breathwork</div>
+          <p class="ritual-text" id="ritual-breathwork">—</p>
+        </div>
+        <div class="ritual-card">
+          <div class="ritual-icon">🌿</div>
+          <div class="ritual-title">Intention Setting</div>
+          <p class="ritual-text" id="ritual-intention">—</p>
+        </div>
+      </div>
+
+      <p class="ritual-full" id="ritual-full">—</p>
+
+      <blockquote class="ritual-affirmation" id="ritual-affirmation">—</blockquote>
+    </div>
+  </section>
+
+  <div class="divider container"><span class="divider-gem">✦ ✦ ✦</span></div>
+
+  <!-- ==================== OTO / DEEP BLUEPRINT ==================== -->
+  <section class="section section-alt" id="oto-section">
+    <div class="container section-inner" id="oto-inner">
+      <!-- Content injected by JS based on otoUnlocked status -->
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="reading-footer">
+    <div class="container">
+      <div class="footer-logo">✦ Star Signal</div>
+      <p class="footer-note">Your reading is private and encrypted. For support: <a href="mailto:support@starsignal.app">support@starsignal.app</a></p>
+    </div>
+  </footer>
+
+</div><!-- /#reading-content -->
+
+<!-- ============================================
+     JAVASCRIPT
+============================================ -->
+<script>
+(function () {
+  'use strict';
+
+  /* =============================================
+     UTILITY HELPERS
+  ============================================= */
+  function qs(sel, ctx) { return (ctx || document).querySelector(sel); }
+  function setText(id, val) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = (val === null || val === undefined) ? '—' : val;
+  }
+  function setHTML(id, val) {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = val || '';
+  }
+
+  function escHtml(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  /* Converts plain multiline text → <p> tags */
+  function textToParas(str) {
+    if (!str) return '<p>—</p>';
+    return str
+      .split(/\n{2,}/)
+      .map(p => `<p>${escHtml(p.trim())}</p>`)
+      .join('');
+  }
+
+  /* =============================================
+     UUID EXTRACTION
+  ============================================= */
+  function getUUID() {
+    // Support /r/abc123 path and ?uuid=abc123
+    const parts = window.location.pathname.split('/').filter(Boolean);
+    const rIdx = parts.indexOf('r');
+    if (rIdx !== -1 && parts[rIdx + 1]) return parts[rIdx + 1];
+    const params = new URLSearchParams(window.location.search);
+    const fromParam = params.get('uuid');
+    if (fromParam) return fromParam;
+    // Fallback: last non-empty path segment
+    return parts[parts.length - 1] || null;
+  }
+
+  /* =============================================
+     PROGRESS BAR
+  ============================================= */
+  const progressBar = document.getElementById('progress-bar');
+  window.addEventListener('scroll', () => {
+    const scrollTop  = window.scrollY || document.documentElement.scrollTop;
+    const docHeight  = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = Math.min(100, pct) + '%';
+  }, { passive: true });
+
+  /* =============================================
+     STAR PARTICLES (LOADING)
+  ============================================= */
+  (function generateLoadingStars() {
+    const container = document.getElementById('loading-stars-container');
+    if (!container) return;
+    for (let i = 0; i < 60; i++) {
+      const s = document.createElement('span');
+      s.style.cssText = [
+        'left:' + (Math.random() * 100) + '%',
+        'top:'  + (Math.random() * 100) + '%',
+        '--dur:' + (2 + Math.random() * 4) + 's',
+        '--delay:' + (Math.random() * 3) + 's',
+        'width:' + (1 + Math.random() * 2) + 'px',
+        'height:' + (1 + Math.random() * 2) + 'px',
+      ].join(';');
+      container.appendChild(s);
+    }
+  })();
+
+  /* =============================================
+     INTERSECTION OBSERVER — SECTION REVEAL
+  ============================================= */
+  function initReveal() {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
         }
+      });
+    }, { threshold: 0.12 });
 
-        function showError() {
-            document.getElementById('loadingState').classList.add('hidden');
-            document.getElementById('errorState').classList.remove('hidden');
+    document.querySelectorAll('.section-inner').forEach(el => obs.observe(el));
+  }
+
+  /* =============================================
+     SHOW / HIDE STATES
+  ============================================= */
+  function showLoading() {
+    document.getElementById('loading-state').style.display = 'flex';
+    document.getElementById('error-state').style.display   = 'none';
+    document.getElementById('reading-content').style.display = 'none';
+  }
+
+  function showError(msg) {
+    document.getElementById('loading-state').style.display  = 'none';
+    document.getElementById('error-state').style.display    = 'flex';
+    document.getElementById('reading-content').style.display = 'none';
+    if (msg) setText('error-msg', msg);
+  }
+
+  function showReading() {
+    document.getElementById('loading-state').style.display  = 'none';
+    document.getElementById('error-state').style.display    = 'none';
+    document.getElementById('reading-content').style.display = 'block';
+    initReveal();
+    // Trigger hero immediately
+    setTimeout(() => {
+      const heroInner = document.getElementById('hero-inner');
+      if (heroInner) heroInner.classList.add('visible');
+    }, 100);
+  }
+
+  /* =============================================
+     LIFE AREA LABELS
+  ============================================= */
+  const LIFE_AREA_LABELS = {
+    love:      'Love & Relationships',
+    money:     'Wealth & Abundance',
+    purpose:   'Life Purpose & Career',
+    spiritual: 'Spiritual Growth',
+  };
+
+  /* =============================================
+     RENDER READING
+  ============================================= */
+  function renderReading(data) {
+    const rc  = data.readingContent || {};
+    const la  = (data.lifeArea || 'love').toLowerCase();
+
+    /* --- HERO --- */
+    setText('hero-first-name', data.firstName || 'Your');
+    setText('hero-lp',         data.lifePathNumber || rc.life_path_number || '—');
+    setText('hero-archetype',  rc.life_path_name   || 'The Seeker');
+    setText('hero-sun-sign',   '☀️ ' + (data.sunSign || rc.sun_sign || '—'));
+    setText('hero-birth-city', data.birthCity || '—');
+    setText('hero-opening',    rc.opening_revelation || '');
+
+    /* --- REVELATION --- */
+    const pr = rc.personality_revelation || {};
+    const pp = rc.past_pattern_revelation || {};
+    const te = rc.threshold_event || {};
+
+    setText('rev-personality-headline', pr.headline || '—');
+    setText('rev-personality-body',     pr.body || '—');
+    setText('rev-past-headline',        pp.headline || '—');
+    setText('rev-past-body',            pp.body || '—');
+    setText('rev-threshold-month',      te.month || rc.threshold_month || '—');
+    setText('rev-threshold-headline',   te.headline || '—');
+    setText('rev-threshold-body',       te.body || '—');
+
+    /* --- NUMEROLOGY --- */
+    const nd = rc.numerology_deep_dive || {};
+    setText('stat-lp',  'LP ' + (data.lifePathNumber || rc.life_path_number || '—'));
+    setText('stat-py',  'PY ' + (data.personalYear2026 || rc.personal_year_2026 || '—'));
+    setText('stat-sun', '☀️ ' + (data.sunSign || rc.sun_sign || '—'));
+    setHTML('life-path-desc', textToParas(rc.life_path_description || ''));
+    setText('num-destiny',         nd.destiny_number  || '—');
+    setText('num-destiny-meaning', nd.destiny_meaning || '—');
+    setText('num-soul',            nd.soul_urge_number || '—');
+    setText('num-soul-meaning',    nd.soul_urge_meaning || '—');
+    setText('num-personality',     nd.personality_number || '—');
+    setText('num-personality-meaning', nd.personality_meaning || '—');
+
+    /* --- BLUEPRINT --- */
+    const areaLabel = LIFE_AREA_LABELS[la] || 'Your Path';
+    const blueprintEl = document.getElementById('blueprint-title');
+    if (blueprintEl) blueprintEl.innerHTML = `Your <span>${escHtml(areaLabel)}</span> Blueprint`;
+
+    const deepDive = rc.life_area_deep_dive || {};
+    const diveText = deepDive[la] || deepDive[Object.keys(deepDive)[0]] || '';
+    setHTML('blueprint-text', textToParas(diveText));
+
+    /* --- FORECAST --- */
+    const forecasts = rc.monthly_forecasts || [];
+    renderForecast(forecasts);
+
+    /* --- RITUAL --- */
+    const ritual = rc.morning_ritual || {};
+    setText('ritual-crystal',     ritual.crystal || '—');
+    setText('ritual-breathwork',  ritual.breathwork || '—');
+    setText('ritual-intention',   ritual.intention_setting || '—');
+    setHTML('ritual-full',        textToParas(ritual.full_ritual || ''));
+    setText('ritual-affirmation', ritual.affirmation || '—');
+
+    /* --- OTO --- */
+    renderOTO(data, rc, la);
+  }
+
+  /* =============================================
+     RENDER FORECAST
+  ============================================= */
+  function renderForecast(forecasts) {
+    const grid = document.getElementById('forecast-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+
+    forecasts.forEach((m, i) => {
+      const energy = (m.energy_type || 'Growth').trim();
+      const card = document.createElement('div');
+      card.className = 'month-card';
+      card.setAttribute('data-energy', energy);
+      card.setAttribute('data-index', i);
+
+      const powerDays   = (m.power_days   || []).map(d => `<span class="day-chip power">${escHtml(String(d))}</span>`).join('');
+      const cautionDays = (m.caution_days || []).map(d => `<span class="day-chip caution">${escHtml(String(d))}</span>`).join('');
+
+      card.innerHTML = `
+        <div class="month-header">
+          <span class="month-name">${escHtml(m.month || 'Month ' + (i+1))}</span>
+          <span class="energy-badge ${escHtml(energy)}">${escHtml(energy)}</span>
+        </div>
+        <p class="month-theme">${escHtml(m.theme || '')}</p>
+        <button class="month-expand-btn" aria-expanded="false" aria-label="Expand ${escHtml(m.month || '')}">
+          View Full Forecast <span class="expand-chevron">▾</span>
+        </button>
+        <div class="month-detail" role="region">
+          <div class="month-detail-inner">
+            <p class="month-detail-text">${escHtml(m.detailed_forecast || '')}</p>
+            ${powerDays ? `<div><p class="day-label">⚡ Power Days</p><div class="day-row">${powerDays}</div></div>` : ''}
+            ${cautionDays ? `<div><p class="day-label">⚠ Caution Days</p><div class="day-row">${cautionDays}</div></div>` : ''}
+            ${m.affirmation ? `<p class="month-affirmation">${escHtml(m.affirmation)}</p>` : ''}
+          </div>
+        </div>
+      `;
+
+      const btn = card.querySelector('.month-expand-btn');
+      btn.addEventListener('click', () => {
+        const isOpen = card.classList.toggle('open');
+        btn.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      grid.appendChild(card);
+    });
+  }
+
+  /* =============================================
+     OTO TEASERS PER LIFE AREA
+  ============================================= */
+  const OTO_TEASERS = {
+    love: [
+      'The initial of your soulmate — revealed from your Venus signature',
+      'The exact month they are cosmically scheduled to enter your life',
+      'The 3 false-match patterns you\'ve been unconsciously attracting',
+      'A cosmic block clearing ritual to make space for true love',
+    ],
+    money: [
+      'Your wealth archetype — the energetic blueprint behind your earning potential',
+      'The precise 3-month abundance window unique to your chart',
+      'The inherited family money block that has been limiting your income',
+      'Your ideal income path aligned with your soul\'s purpose',
+    ],
+    purpose: [
+      'Your personal life mission statement, drawn from your natal blueprint',
+      'The 3 signs you are living in misalignment with your true purpose',
+      'Step-by-step alignment actions specific to your energy signature',
+      'Purpose affirmations coded to your exact numerology',
+    ],
+    spiritual: [
+      'Your 3 dominant spiritual gifts and how to consciously activate them',
+      'Acceleration practices that fast-track your spiritual evolution',
+      'Your past-life signature — the soul contract influencing this lifetime',
+      'The chakra focal point that unlocks your highest frequency',
+    ],
+  };
+
+  /* =============================================
+     RENDER OTO SECTION
+  ============================================= */
+  function renderOTO(data, rc, la) {
+    const otoInner = document.getElementById('oto-inner');
+    if (!otoInner) return;
+
+    const otoContent = (rc.oto_content || {})[la] || {};
+
+    if (data.otoUnlocked) {
+      otoInner.innerHTML = buildOTOUnlocked(la, otoContent, data);
+    } else {
+      otoInner.innerHTML = buildOTOLocked(la, otoContent, rc, data);
+      const btn = document.getElementById('oto-purchase-btn');
+      if (btn) btn.addEventListener('click', () => handleOtoPurchase(data, rc, la));
+    }
+  }
+
+  function buildOTOLocked(la, otoContent, rc, data) {
+    const headline = otoContent.headline || 'One Layer Deeper';
+    const teasers  = OTO_TEASERS[la] || OTO_TEASERS.love;
+    const areaLabel = LIFE_AREA_LABELS[la] || 'Your Path';
+
+    // Blurred preview text — first 220 chars of oto content
+    const previewText = otoContent.headline
+      ? (otoContent.headline + '. ' + (otoContent.wealth_archetype || otoContent.mission_statement || otoContent.spiritual_gifts?.[0] || otoContent.soulmate_initial || '') + '...')
+      : 'Your deep blueprint contains layers that most readings never reach. What lies beneath the surface of your chart is a precise cosmic signature...';
+
+    const teaserItems = teasers.map(t => `<li>${escHtml(t)}</li>`).join('');
+
+    return `
+      <div class="oto-locked-wrapper">
+        <span class="section-tag">One Layer Deeper</span>
+        <h2 class="oto-life-headline">${escHtml(headline)}</h2>
+        <p class="oto-life-sub">What we found deeper in your ${escHtml(areaLabel)} blueprint</p>
+
+        <ul class="oto-teaser-list">${teaserItems}</ul>
+
+        <div class="oto-blur-preview">${escHtml(previewText)}</div>
+
+        <div class="oto-price-tag">$67</div>
+        <p class="oto-price-label">One-time · Instant access · No subscription</p>
+
+        <button class="oto-cta-btn" id="oto-purchase-btn">
+          <div class="btn-spinner"></div>
+          <span class="btn-text">🔮 Unlock Your Deep Blueprint — $67</span>
+        </button>
+        <p class="oto-sub-label">⚡ One-click purchase — same card you used today</p>
+
+        <div class="oto-error-msg" id="oto-error-msg">
+          Something went wrong. Please try again or email <a href="mailto:support@starsignal.app">support@starsignal.app</a>
+        </div>
+      </div>
+    `;
+  }
+
+  function buildOTOUnlocked(la, oto, data) {
+    const areaLabel = LIFE_AREA_LABELS[la] || 'Your Path';
+    let html = `
+      <span class="section-tag">Deep Blueprint — Unlocked</span>
+      <h2 class="section-heading">Your Deep <span>${escHtml(areaLabel)} Blueprint</span></h2>
+      <p class="section-sub" style="margin-bottom:2rem;">Everything hidden beneath your surface reading — now revealed.</p>
+      <div class="oto-unlocked-content">
+    `;
+
+    if (la === 'love') {
+      html += `
+        <div class="oto-reveal-card">
+          <p class="oto-reveal-label">Your Soulmate Initial</p>
+          <p class="oto-reveal-value">The letter <span>${escHtml(oto.soulmate_initial || '—')}</span></p>
+        </div>
+        <div class="glass-card">
+          <p class="oto-reveal-label">Their Arrival Window</p>
+          <p class="oto-reveal-value" style="font-size:clamp(1.2rem,3vw,1.8rem);">${escHtml(oto.arrival_month || '—')}</p>
+        </div>
+        ${buildCardsSection('The 3 False Match Patterns', oto.false_matches || [], 'false-matches')}
+        ${buildTextSection('The Cosmic Block', oto.cosmic_block || '')}
+        ${buildTextSection('Your Clearing Ritual', oto.clearing_ritual || '')}
+      `;
+    } else if (la === 'money') {
+      html += `
+        <div class="oto-reveal-card">
+          <p class="oto-reveal-label">Your Wealth Archetype</p>
+          <p class="oto-reveal-value">${escHtml(oto.wealth_archetype || '—')}</p>
+        </div>
+        ${buildTextSection('Your 3-Month Abundance Window', oto.abundance_window || '')}
+        ${buildTextSection('The Family Money Block', oto.family_money_block || '')}
+        ${buildTextSection('Your Ideal Income Path', oto.ideal_income_path || '')}
+        ${buildTextSection('Your Activation Ritual', oto.activation_ritual || '')}
+      `;
+    } else if (la === 'purpose') {
+      html += `
+        <div style="margin-bottom:1.5rem;">
+          <p class="oto-reveal-label" style="margin-bottom:0.5rem;">Your Life Mission Statement</p>
+          <blockquote class="oto-quote">${escHtml(oto.mission_statement || '—')}</blockquote>
+        </div>
+        ${buildCardsSection('The 3 Misalignment Signs', oto.misalignment_signs || [], 'misalignment')}
+        ${buildTextSection('Alignment Steps', oto.alignment_steps || '')}
+        ${buildTextSection('Purpose Affirmations', oto.purpose_affirmations || '')}
+      `;
+    } else if (la === 'spiritual') {
+      html += `
+        ${buildCardsSection('Your 3 Spiritual Gifts', oto.spiritual_gifts || [], 'spiritual-gifts')}
+        ${buildTextSection('Acceleration Practices', oto.acceleration_practices || '')}
+        <div class="oto-reveal-card">
+          <p class="oto-reveal-label">Your Past-Life Signature</p>
+          <p class="oto-text mt-1">${escHtml(oto.past_life_signature || '—')}</p>
+        </div>
+        ${buildTextSection('Chakra Focus', oto.chakra_focus || '')}
+      `;
+    }
+
+    html += '</div>';
+    return html;
+  }
+
+  function buildCardsSection(title, items, prefix) {
+    if (!items || items.length === 0) return '';
+    const cards = items.map((item, i) => `
+      <div class="oto-mini-card">
+        <div class="oto-mini-card-num">${i + 1}</div>
+        <p class="oto-mini-card-text">${escHtml(typeof item === 'string' ? item : JSON.stringify(item))}</p>
+      </div>
+    `).join('');
+    return `
+      <div>
+        <p class="oto-reveal-label" style="margin-bottom:0.75rem;">${escHtml(title)}</p>
+        <div class="oto-cards-grid">${cards}</div>
+      </div>
+    `;
+  }
+
+  function buildTextSection(title, text) {
+    if (!text) return '';
+    return `
+      <div class="glass-card">
+        <p class="oto-reveal-label" style="margin-bottom:0.5rem;">${escHtml(title)}</p>
+        <div class="oto-text">${textToParas(text)}</div>
+      </div>
+    `;
+  }
+
+  /* =============================================
+     HANDLE OTO PURCHASE
+  ============================================= */
+  async function handleOtoPurchase(data, rc, la) {
+    const btn      = document.getElementById('oto-purchase-btn');
+    const errEl    = document.getElementById('oto-error-msg');
+    if (!btn) return;
+
+    const paymentId = localStorage.getItem('ss_payment_id');
+    if (!paymentId) {
+      if (errEl) {
+        errEl.style.display = 'block';
+        errEl.innerHTML = 'No payment method found. Please email <a href="mailto:support@starsignal.app">support@starsignal.app</a> for assistance.';
+      }
+      return;
+    }
+
+    btn.disabled = true;
+    btn.classList.add('loading');
+    if (errEl) errEl.style.display = 'none';
+
+    try {
+      const res = await fetch('/api/process-upsell', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          payment_id:  paymentId,
+          reading_id:  data.uuid,
+          amount:      67,
+          plan_id:     'plan_5L36GQLeQ9w7c',
+          life_area:   la,
+        }),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok || result.error) {
+        throw new Error(result.error || result.message || 'Purchase failed');
+      }
+
+      // Success — re-render OTO section with unlocked content
+      data.otoUnlocked = true;
+      const otoInner = document.getElementById('oto-inner');
+      if (otoInner) {
+        otoInner.innerHTML = buildOTOUnlocked(la, (rc.oto_content || {})[la] || {}, data);
+        // Animate in
+        otoInner.style.opacity = '0';
+        otoInner.style.transform = 'translateY(20px)';
+        otoInner.offsetHeight; // force reflow
+        otoInner.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        otoInner.style.opacity = '1';
+        otoInner.style.transform = 'translateY(0)';
+      }
+
+      // Store unlock so refreshes still show unlocked
+      try { localStorage.setItem('ss_oto_unlocked_' + data.uuid, '1'); } catch(e) {}
+
+    } catch (err) {
+      if (errEl) {
+        errEl.style.display = 'block';
+        errEl.innerHTML = 'Something went wrong: ' + escHtml(err.message) +
+          '. Please try again or email <a href="mailto:support@starsignal.app">support@starsignal.app</a>.';
+      }
+      btn.disabled = false;
+      btn.classList.remove('loading');
+    }
+  }
+
+  /* =============================================
+     LOAD READING (FETCH + POLL)
+  ============================================= */
+  let pollAttempts = 0;
+  const MAX_POLLS  = 60;
+  let pollTimer    = null;
+
+  async function loadReading() {
+    const uuid = getUUID();
+    if (!uuid) {
+      showError('No reading ID found in the URL. Please check the link you received and try again.');
+      return;
+    }
+
+    // Check if we have a cached reading in localStorage to skip spinner
+    const cacheKey = 'ss_reading_cache_' + uuid;
+    const cached = (() => {
+      try { return JSON.parse(localStorage.getItem(cacheKey)); } catch { return null; }
+    })();
+
+    if (cached && cached.ready) {
+      // Apply localStorage OTO override if purchase completed client-side
+      try {
+        if (localStorage.getItem('ss_oto_unlocked_' + uuid)) cached.otoUnlocked = true;
+      } catch(e) {}
+      renderReading(cached);
+      showReading();
+      return;
+    }
+
+    showLoading();
+    await fetchReading(uuid);
+  }
+
+  async function fetchReading(uuid) {
+    try {
+      const res = await fetch('/api/reading?uuid=' + encodeURIComponent(uuid));
+
+      if (!res.ok) {
+        if (res.status === 404) {
+          showError('Your reading could not be found. The link may have expired or been entered incorrectly.');
+        } else {
+          showError('The cosmos are temporarily unreachable (error ' + res.status + '). Please try refreshing.');
         }
+        return;
+      }
 
-        function renderReading(data) {
-            const { readingContent, firstName, birthDate, birthCity, lifePathNumber, sunSign, lifeArea, relationshipStatus, otoUnlocked } = data;
+      const data = await res.json();
 
-            // Show social proof
-            document.getElementById('socialProofBar').style.display = 'block';
-            document.getElementById('socialProofName').textContent = firstName;
-
-            // Hero section
-            document.getElementById('heroHeading').textContent = `${firstName}, Your Blueprint Is Ready`;
-            document.getElementById('heroBorn').textContent = `Born ${new Date(birthDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} in ${birthCity}`;
-            document.getElementById('lifePathNumber').textContent = lifePathNumber;
-            document.getElementById('lifePathName').textContent = readingContent.life_path_name;
-            document.getElementById('heroIntro').textContent = readingContent.opening_revelation;
-
-            // Numerology
-            document.getElementById('lpDescription').textContent = readingContent.life_path_description.substring(0, 150) + '...';
-            document.getElementById('fullLPDescription').textContent = readingContent.life_path_description;
-            
-            const numerology = readingContent.numerology_deep_dive;
-            document.getElementById('destinyDesc').textContent = numerology.destiny_meaning.substring(0, 100) + '...';
-            document.getElementById('soulUrgeDesc').textContent = numerology.soul_urge_meaning.substring(0, 100) + '...';
-            document.getElementById('personalityDesc').textContent = numerology.personality_meaning.substring(0, 100) + '...';
-
-            // Revelations
-            document.getElementById('rev1Headline').textContent = '☀️ ' + readingContent.personality_revelation.headline;
-            document.getElementById('rev1Body').textContent = readingContent.personality_revelation.body;
-            document.getElementById('rev2Headline').textContent = '🌙 ' + readingContent.past_pattern_revelation.headline;
-            document.getElementById('rev2Body').textContent = readingContent.past_pattern_revelation.body;
-            document.getElementById('rev3Headline').textContent = '⭐ ' + readingContent.threshold_event.headline;
-            document.getElementById('rev3Body').textContent = readingContent.threshold_event.body;
-
-            // Life Area
-            const areaNames = { love: 'Love & Relationships', money: 'Wealth & Abundance', purpose: 'Life Purpose', spiritual: 'Spiritual Awakening' };
-            document.getElementById('lifeAreaHeading').textContent = `Your ${areaNames[lifeArea]} Blueprint`;
-            document.getElementById('lifeAreaContent').textContent = readingContent.life_area_deep_dive[lifeArea] || 'Loading...';
-
-            // Monthly forecasts
-            renderForecasts(readingContent.monthly_forecasts);
-
-            // Morning ritual
-            document.getElementById('morningAffirmation').textContent = readingContent.morning_ritual.affirmation;
-            document.getElementById('morningRitual').textContent = readingContent.morning_ritual.full_ritual;
-
-            // OTO section
-            renderOTO(readingContent, lifeArea, otoUnlocked);
-
-            // Show reading, hide loading
-            document.getElementById('loadingState').classList.add('hidden');
-            document.getElementById('readingContent').classList.remove('hidden');
-
-            // Setup scroll progress
-            setupScrollProgress();
+      if (!data.ready) {
+        pollAttempts++;
+        if (pollAttempts >= MAX_POLLS) {
+          showError('Your reading is taking longer than expected to generate. Please refresh the page in a moment.');
+          return;
         }
+        pollTimer = setTimeout(() => fetchReading(uuid), 2000);
+        return;
+      }
 
-        function renderForecasts(forecasts) {
-            const grid = document.getElementById('forecastGrid');
-            grid.innerHTML = '';
+      // Apply localStorage OTO override
+      try {
+        if (localStorage.getItem('ss_oto_unlocked_' + uuid)) data.otoUnlocked = true;
+      } catch(e) {}
 
-            forecasts.forEach((forecast, idx) => {
-                const card = document.createElement('div');
-                card.className = 'forecast-card';
-                card.innerHTML = `
-                    <div class="forecast-header">
-                        <div class="forecast-month">${forecast.month}</div>
-                        <span class="energy-badge ${forecast.energy_type.toLowerCase()}">${forecast.energy_type}</span>
-                    </div>
-                    <div class="forecast-theme">${forecast.theme}</div>
-                    <div class="forecast-expanded" id="expanded-${idx}">
-                        <p style="margin-top: 1rem; font-size: 0.9375rem;">${forecast.detailed_forecast}</p>
-                        <div style="margin-top: 1rem; font-size: 0.85rem; color: var(--accent-gold-dark);">
-                            <strong>Power Days:</strong> ${forecast.power_days.join(', ')}<br>
-                            <strong>Caution Days:</strong> ${forecast.caution_days.join(', ')}<br>
-                            <strong>Affirmation:</strong> "${forecast.affirmation}"
-                        </div>
-                    </div>
-                `;
+      // Cache for instant re-visits
+      try { localStorage.setItem('ss_reading_cache_' + uuid, JSON.stringify(data)); } catch(e) {}
 
-                card.onclick = () => {
-                    const expanded = document.getElementById(`expanded-${idx}`);
-                    const isOpen = expanded.classList.contains('show');
-                    
-                    // Close all others
-                    document.querySelectorAll('.forecast-expanded.show').forEach(el => {
-                        el.classList.remove('show');
-                        el.parentElement.classList.remove('expanded');
-                    });
+      renderReading(data);
+      showReading();
 
-                    if (!isOpen) {
-                        expanded.classList.add('show');
-                        card.classList.add('expanded');
-                    }
-                };
+    } catch (err) {
+      showError('Unable to connect to the Star Signal servers. Please check your internet connection and try refreshing.');
+    }
+  }
 
-                grid.appendChild(card);
-            });
-        }
+  /* =============================================
+     INIT
+  ============================================= */
+  document.addEventListener('DOMContentLoaded', loadReading);
 
-        function renderOTO(readingContent, lifeArea, otoUnlocked) {
-            const section = document.getElementById('otoSection');
-            const otoData = readingContent.oto_content[lifeArea];
+})();
+</script>
 
-            if (!otoData) {
-                section.style.display = 'none';
-                return;
-            }
-
-            if (otoUnlocked) {
-                // Show full content
-                section.innerHTML = `
-                    <div class="container section-text">
-                        <h2>${otoData.headline}</h2>
-                        <div class="oto-unlocked-content">
-                            <p>${otoData[Object.keys(otoData)[1]] || 'Content loading...'}</p>
-                        </div>
-                    </div>
-                `;
-            } else {
-                // Show locked teaser
-                const teaser = Object.values(otoData)[1];
-                const preview = typeof teaser === 'string' ? teaser.substring(0, 150) : '';
-                
-                section.innerHTML = `
-                    <div class="oto-locked">
-                        <h2 style="color: var(--white);">${otoData.headline}</h2>
-                        <div class="oto-blur">
-                            <p style="color: rgba(255,255,255,0.8);">${preview}...</p>
-                        </div>
-                        <div class="oto-overlay">
-                            <div class="lock-icon">🔮</div>
-                            <button class="oto-unlock-button" onclick="window.location.href='#checkout'">
-                                🔮 Unlock For $67 — Complete Your Blueprint →
-                            </button>
-                        </div>
-                    </div>
-                `;
-            }
-        }
-
-        function setupScrollProgress() {
-            window.addEventListener('scroll', () => {
-                const scrollTop = window.scrollY;
-                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                const scrollPercent = (scrollTop / docHeight) * 100;
-                document.getElementById('progressBar').style.width = scrollPercent + '%';
-            });
-        }
-
-        // Load on page load
-        document.addEventListener('DOMContentLoaded', loadReading);
-    </script>
 </body>
 </html>

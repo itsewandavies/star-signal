@@ -342,6 +342,14 @@
         .ampm-select:focus { border-color: var(--accent-gold); }
         .time-field-wrap { width: 100%; margin-bottom: 0.75rem; transition: var(--transition); }
         .time-field-wrap.hidden { opacity: 0; pointer-events: none; max-height: 0; overflow: hidden; margin: 0; }
+
+        @media (max-width: 480px) {
+            .date-selectors { flex-direction: column; gap: 0.5rem; }
+            .date-select { width: 100%; flex: none; }
+            .date-select-month { width: 100%; flex: none; }
+            .time-row { flex-wrap: wrap; }
+            .time-input { flex: 1; min-width: 60px; }
+        }
         .dont-know-row {
             display: flex; align-items: center; gap: 0.5rem;
             margin-top: 0.5rem; cursor: pointer;
@@ -1075,7 +1083,8 @@
                 lifeArea: answers.lifeArea || 'love',
                 relationshipStatus: answers.relationshipStatus || '',
                 cosmicSigns: answers.cosmicSigns.join(','),
-                email: answers.email || ''
+                email: answers.email || '',
+                gender: answers.gender || ''
             });
             window.location.href = 'results.html?' + params.toString();
         }, 5000);

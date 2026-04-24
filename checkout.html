@@ -796,9 +796,8 @@
                 const fbc           = localStorage.getItem('ss_fbc') || getCookie('_fbc') || '';
                 const fbp           = localStorage.getItem('ss_fbp') || getCookie('_fbp') || '';
 
-                // Also pass quiz answers as metadata for the webhook to use
-                const quizAnswers = JSON.parse(localStorage.getItem('ss_quiz_answers') || '{}');
-                const urlParams   = new URLSearchParams(window.location.search);
+                // Read quiz answers directly from URL params (passed by results.html)
+                const urlParams = new URLSearchParams(window.location.search);
 
                 const response = await fetch('/api/create-checkout-session', {
                     method: 'POST',
@@ -812,13 +811,13 @@
                         ref:            affiliateCode,
                         metadata: {
                             firstName:          urlParams.get('firstName') || '',
-                            birthDate:          quizAnswers[2] || '',
-                            birthTime:          quizAnswers[3] || '',
-                            birthCity:          quizAnswers[4] || '',
-                            gender:             quizAnswers[1] || '',
-                            lifeArea:           quizAnswers[5] || 'love',
-                            relationshipStatus: quizAnswers[6] || '',
-                            cosmicSigns:        quizAnswers[7] || []
+                            birthDate:          urlParams.get('birthDate') || '',
+                            birthTime:          urlParams.get('birthTime') || '',
+                            birthCity:          urlParams.get('birthCity') || '',
+                            gender:             urlParams.get('gender') || '',
+                            lifeArea:           urlParams.get('lifeArea') || 'love',
+                            relationshipStatus: urlParams.get('relationshipStatus') || '',
+                            cosmicSigns:        (urlParams.get('cosmicSigns') || '').split(',').filter(Boolean)
                         }
                     })
                 });
