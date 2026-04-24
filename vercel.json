@@ -1,10 +1,6 @@
 {
   "buildCommand": "npm install",
   "outputDirectory": ".",
-  "env": {
-    "SUPABASE_URL": "@SUPABASE_URL",
-    "SUPABASE_SERVICE_ROLE_KEY": "@SUPABASE_SERVICE_ROLE_KEY"
-  },
   "functions": {
     "api/**/*.js": {
       "memory": 1024,
