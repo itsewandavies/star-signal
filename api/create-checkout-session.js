@@ -1,77 +1,61 @@
 /**
  * create-checkout-session.js — Whop V2
- *
- * Creates a Whop checkout session for Star Signal.
- * Called by checkout.html on page load (twice — once for FE-only, once for FE+bump bundle).
- *
- * Returns: { purchase_url, success }
- * The frontend embeds: <iframe src="{purchase_url}">
- *
- * Quiz answers + tracking data are passed as metadata so the
- * payment_succeeded webhook can use them to generate the personalized reading.
+ * Star Signal checkout session creator
  */
 
 const WHOP_KEY = process['env']['WHOP_API_KEY_STAR'] || process['env']['WHOP_API_KEY'];
 
-const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS'
-};
-
 module.exports = async (req, res) => {
+    // CORS headers
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+
     if (req.method === 'OPTIONS') {
-        return res.status(200).set(corsHeaders).end();
+        return res.status(200).end();
     }
     if (req.method !== 'POST') {
-        return res.status(405).set(corsHeaders).json({ error: 'Method not allowed' });
+        return res.status(405).json({ error: 'Method not allowed' });
     }
 
     try {
         const body = req.body || {};
-        const {
-            plan_id,
-            affiliate_code,
-            tid,
-            fbc,
-            fbp,
-            ref,
-            metadata: quizMetadata
-        } = body;
+        const plan_id        = body.plan_id;
+        const affiliate_code = body.affiliate_code || '';
+        const tid            = body.tid || '';
+        const fbc            = body.fbc || '';
+        const fbp            = body.fbp || '';
+        const ref            = body.ref || '';
+        const quizMetadata   = body.metadata || {};
 
         if (!plan_id) {
-            return res.status(400).set(corsHeaders).json({ error: 'plan_id is required' });
+            return res.status(400).json({ error: 'plan_id is required' });
         }
 
-        // Build metadata — passed to webhook so it can generate the personalized reading
-        const checkout_metadata = {};
+        // Build metadata for the webhook
+        const meta = {};
+        if (tid)            meta.tid           = tid;
+        if (fbc)            meta.fbc           = fbc;
+        if (fbp)            meta.fbp           = fbp;
+        if (ref)            meta.ref           = ref;
+        if (affiliate_code) meta.earnhive_ref  = affiliate_code;
 
-        // Tracking
-        if (tid)            checkout_metadata.tid           = tid;
-        if (fbc)            checkout_metadata.fbc           = fbc;
-        if (fbp)            checkout_metadata.fbp           = fbp;
-        if (ref)            checkout_metadata.ref           = ref;
-        if (affiliate_code) checkout_metadata.earnhive_ref  = affiliate_code;
-
-        // Quiz data
-        if (quizMetadata) {
-            if (quizMetadata.firstName)          checkout_metadata.firstName          = quizMetadata.firstName;
-            if (quizMetadata.birthDate)          checkout_metadata.birthDate          = quizMetadata.birthDate;
-            if (quizMetadata.birthTime)          checkout_metadata.birthTime          = quizMetadata.birthTime;
-            if (quizMetadata.birthCity)          checkout_metadata.birthCity          = quizMetadata.birthCity;
-            if (quizMetadata.gender)             checkout_metadata.gender             = quizMetadata.gender;
-            if (quizMetadata.lifeArea)           checkout_metadata.lifeArea           = quizMetadata.lifeArea;
-            if (quizMetadata.relationshipStatus) checkout_metadata.relationshipStatus = quizMetadata.relationshipStatus;
-            if (quizMetadata.cosmicSigns)        checkout_metadata.cosmicSigns        = JSON.stringify(quizMetadata.cosmicSigns);
-        }
+        if (quizMetadata.firstName)          meta.firstName          = quizMetadata.firstName;
+        if (quizMetadata.birthDate)          meta.birthDate          = quizMetadata.birthDate;
+        if (quizMetadata.birthTime)          meta.birthTime          = quizMetadata.birthTime;
+        if (quizMetadata.birthCity)          meta.birthCity          = quizMetadata.birthCity;
+        if (quizMetadata.gender)             meta.gender             = quizMetadata.gender;
+        if (quizMetadata.lifeArea)           meta.lifeArea           = quizMetadata.lifeArea;
+        if (quizMetadata.relationshipStatus) meta.relationshipStatus = quizMetadata.relationshipStatus;
+        if (quizMetadata.cosmicSigns)        meta.cosmicSigns        = JSON.stringify(quizMetadata.cosmicSigns);
 
         const requestBody = {
             plan_id:      plan_id,
-            metadata:     checkout_metadata,
+            metadata:     meta,
             redirect_url: 'https://starsignal.co/thank-you'
         };
 
-        if (quizMetadata && quizMetadata.email) {
+        if (quizMetadata.email) {
             requestBody.customer_email = quizMetadata.email;
         }
 
@@ -87,8 +71,8 @@ module.exports = async (req, res) => {
         const result = await response.json();
 
         if (!response.ok) {
-            console.error('[CHECKOUT] Whop API error:', JSON.stringify(result));
-            return res.status(response.status).set(corsHeaders).json({
+            console.error('[CHECKOUT] Whop error:', JSON.stringify(result));
+            return res.status(response.status).json({
                 error: 'Failed to create checkout session',
                 details: result
             });
@@ -97,23 +81,20 @@ module.exports = async (req, res) => {
         const purchaseUrl = result.purchase_url || result.url || result.checkout_url;
 
         if (!purchaseUrl) {
-            console.error('[CHECKOUT] No purchase_url in response:', JSON.stringify(result));
-            return res.status(500).set(corsHeaders).json({
-                error: 'Whop returned no checkout URL',
-                raw: result
-            });
+            console.error('[CHECKOUT] No URL in response:', JSON.stringify(result));
+            return res.status(500).json({ error: 'No checkout URL returned' });
         }
 
-        console.log('[CHECKOUT] Created for plan:', plan_id, 'URL:', purchaseUrl.substring(0, 60));
+        console.log('[CHECKOUT] Created for plan:', plan_id);
 
-        return res.status(200).set(corsHeaders).json({
+        return res.status(200).json({
             purchase_url: purchaseUrl,
             session_id:   result.id || null,
             success:      true
         });
 
-    } catch (error) {
-        console.error('[CHECKOUT] Error:', error.message);
-        return res.status(500).set(corsHeaders).json({ error: error.message });
+    } catch (err) {
+        console.error('[CHECKOUT] Crash:', err.message, err.stack);
+        return res.status(500).json({ error: err.message || 'Internal server error' });
     }
 };
