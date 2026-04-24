@@ -11,7 +11,7 @@
  * payment_succeeded webhook can use them to generate the personalized reading.
  */
 
-const WHOP_API_KEY = process.env.WHOP_API_KEY_2; // Acct 2: biz_s27RTb1bp6HdK2
+const WHOP_API_KEY = process.env.WHOP_API_KEY; // Acct 2: biz_s27RTb1bp6HdK2
 
 const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
