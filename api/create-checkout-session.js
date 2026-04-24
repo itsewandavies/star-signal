@@ -69,9 +69,9 @@ module.exports = async (req, res) => {
 
         // ── Create V5 checkout session ──────────────────────────────────
         const requestBody = {
-            plan_id:           plan_id,
-            checkout_metadata: checkout_metadata,
-            redirect_url:      'https://starsignal.co/thank-you.html'
+            plan_id:      plan_id,
+            metadata:     checkout_metadata,
+            redirect_url: 'https://starsignal.co/thank-you'
         };
 
         // Pass affiliate/customer email if available (helps with attribution in Whop)
@@ -79,7 +79,7 @@ module.exports = async (req, res) => {
             requestBody.customer_email = quizMetadata.email;
         }
 
-        const response = await fetch('https://api.whop.com/v5/checkout_sessions', {
+        const response = await fetch('https://api.whop.com/api/v2/checkout_sessions', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${WHOP_API_KEY}`,
