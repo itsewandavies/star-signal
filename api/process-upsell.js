@@ -21,7 +21,7 @@ const supabase = createClient(
     process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-const WHOP_API_KEY = process.env.WHOP_API_KEY; // Acct 2: biz_s27RTb1bp6HdK2
+const WHOP_API_KEY = process.env.WHOP_API_KEY_STAR || process.env.WHOP_API_KEY; // Acct 2: biz_s27RTb1bp6HdK2
 const COMPANY_ID     = 'biz_s27RTb1bp6HdK2';
 const FUNNEL_ID      = 'star-signal';
 const FUNNEL_DOMAIN  = 'https://starsignal.co';
