@@ -10,7 +10,7 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-export const config = { maxDuration: 10 };
+// maxDuration config (CJS compatible — no ES module exports in this file)
 
 async function unlockRecord(uuid, email) {
   let query = supabase.from("star_signal_readings");
@@ -30,7 +30,7 @@ async function unlockRecord(uuid, email) {
   }
 }
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");

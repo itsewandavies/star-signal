@@ -712,18 +712,20 @@
 
             <!-- FE-ONLY embed (shown when bump unchecked) -->
             <div id="checkout-fe-only" style="border: 1px solid rgba(212,175,55,0.3); border-radius: 16px; overflow: hidden; background: white; min-height: 480px;">
-                <div id="loading-fe-only" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 480px; gap: 1rem;">
-                    <div class="checkout-spinner"></div>
-                    <p style="font-size: 0.9375rem; color: #9CA3AF; font-style: italic;">Loading secure checkout...</p>
-                </div>
+                <div class="whop-checkout-embed"
+                    data-whop-checkout-plan-id="plan_WrudbHcLudmhj"
+                    data-whop-checkout-theme="light"
+                    data-whop-checkout-hide-price="false"
+                ></div>
             </div>
 
             <!-- FE+BUMP bundle embed (hidden until bump checked) -->
             <div id="checkout-fe-bump" style="display: none; border: 1px solid rgba(212,175,55,0.3); border-radius: 16px; overflow: hidden; background: white; min-height: 480px;">
-                <div id="loading-fe-bump" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 480px; gap: 1rem;">
-                    <div class="checkout-spinner"></div>
-                    <p style="font-size: 0.9375rem; color: #9CA3AF; font-style: italic;">Loading secure checkout...</p>
-                </div>
+                <div class="whop-checkout-embed"
+                    data-whop-checkout-plan-id="plan_VcKKBavba0EAG"
+                    data-whop-checkout-theme="light"
+                    data-whop-checkout-hide-price="false"
+                ></div>
             </div>
         </div>
 
@@ -779,96 +781,19 @@
         // ============================================================
         // PLAN IDs — confirmed live Whop products
         // ============================================================
-        const PLAN_FE_ONLY = 'plan_WrudbHcLudmhj';     // $19 — Cosmic Blueprint only
-        const PLAN_FE_BUMP = 'plan_VcKKBavba0EAG'; // $46 — Blueprint + Love Prophecy bundle
+        const PLAN_FE_ONLY = 'plan_WrudbHcLudmhj';  // $19 — Cosmic Blueprint only
+        const PLAN_FE_BUMP = 'plan_VcKKBavba0EAG';  // $46 — Blueprint + Love Prophecy bundle
 
         // ============================================================
-        // SESSIONS — pre-load both on page load so switching is instant
+        // HELPERS
         // ============================================================
-        let sessionFeOnly = null;
-        let sessionFeBump = null;
-
-        async function createCheckoutSession(planId, containerId, loadingId) {
-            try {
-                // Get tracking/affiliate data from localStorage
-                const affiliateCode = localStorage.getItem('ss_ref') || '';
-                const trackingId    = localStorage.getItem('ss_tid') || '';
-                const fbc           = localStorage.getItem('ss_fbc') || getCookie('_fbc') || '';
-                const fbp           = localStorage.getItem('ss_fbp') || getCookie('_fbp') || '';
-
-                // Read quiz answers directly from URL params (passed by results.html)
-                const urlParams = new URLSearchParams(window.location.search);
-
-                const response = await fetch('/api/create-checkout-session', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        plan_id:        planId,
-                        affiliate_code: affiliateCode,
-                        tid:            trackingId,
-                        fbc:            fbc,
-                        fbp:            fbp,
-                        ref:            affiliateCode,
-                        metadata: {
-                            firstName:          urlParams.get('firstName') || '',
-                            birthDate:          urlParams.get('birthDate') || '',
-                            birthTime:          urlParams.get('birthTime') || '',
-                            birthCity:          urlParams.get('birthCity') || '',
-                            gender:             urlParams.get('gender') || '',
-                            lifeArea:           urlParams.get('lifeArea') || 'love',
-                            relationshipStatus: urlParams.get('relationshipStatus') || '',
-                            cosmicSigns:        (urlParams.get('cosmicSigns') || '').split(',').filter(Boolean)
-                        }
-                    })
-                });
-
-                const data = await response.json();
-
-                // V5 returns purchase_url; V2 returns session_id
-                const checkoutUrl = data.purchase_url ||
-                    (data.session_id ? `https://whop.com/checkout/${data.session_id}/` : null);
-
-                if (!checkoutUrl) throw new Error('No checkout URL returned');
-
-                // Load Whop embed into container
-                const container = document.getElementById(containerId);
-                const loading   = document.getElementById(loadingId);
-
-                const iframe = document.createElement('iframe');
-                iframe.src    = checkoutUrl;
-                iframe.style  = 'width: 100%; min-height: 480px; border: none; display: block;';
-                iframe.title  = 'Secure Checkout';
-                iframe.allow  = 'payment';
-
-                iframe.onload = () => {
-                    if (loading) loading.style.display = 'none';
-                };
-
-                // Replace loading spinner with iframe
-                container.innerHTML = '';
-                container.appendChild(iframe);
-
-                return data.session_id;
-
-            } catch (err) {
-                console.error(`Checkout session error for ${planId}:`, err);
-                const loading = document.getElementById(loadingId);
-                if (loading) {
-                    loading.innerHTML = `<p style="color: #c0392b; font-size: 0.875rem; padding: 1rem;">
-                        Failed to load checkout. Please refresh the page.
-                    </p>`;
-                }
-                return null;
-            }
-        }
-
         function getCookie(name) {
             const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
             return match ? match[2] : '';
         }
 
         // ============================================================
-        // TOGGLE BUMP — switches visible checkout
+        // TOGGLE BUMP — switches visible checkout embed
         // ============================================================
         function updateTotal() {
             const bump = document.getElementById('bumpCheckbox').checked;
@@ -880,6 +805,92 @@
             // Switch visible checkout embed
             document.getElementById('checkout-fe-only').style.display = bump ? 'none' : 'block';
             document.getElementById('checkout-fe-bump').style.display = bump ? 'block' : 'none';
+        }
+
+        // ============================================================
+        // LOAD WHOP SCRIPT — same pattern as Rewind Text / Ice Vault
+        // ============================================================
+        function loadWhopScript() {
+            const script = document.createElement('script');
+            script.src = 'https://js.whop.com/static/checkout/loader.js';
+            script.async = true;
+            script.onload = function() {
+                console.log('[StarSignal] Whop checkout SDK loaded');
+            };
+            document.head.appendChild(script);
+        }
+
+        // ============================================================
+        // CREATE SESSION WITH METADATA (for quiz data + affiliate attribution)
+        // Called after Whop SDK loads. Attaches session to both embeds.
+        // ============================================================
+        async function initCheckoutWithMetadata() {
+            const urlParams      = new URLSearchParams(window.location.search);
+            const affiliateCode  = localStorage.getItem('ss_ref') || urlParams.get('ref') || '';
+            const trackingId     = localStorage.getItem('ss_tid') || urlParams.get('tid') || '';
+            const fbc            = localStorage.getItem('ss_fbc') || getCookie('_fbc') || '';
+            const fbp            = localStorage.getItem('ss_fbp') || getCookie('_fbp') || '';
+
+            const quizMeta = {
+                firstName:          urlParams.get('firstName') || '',
+                birthDate:          urlParams.get('birthDate') || '',
+                birthTime:          urlParams.get('birthTime') || '',
+                birthCity:          urlParams.get('birthCity') || '',
+                gender:             urlParams.get('gender') || '',
+                lifeArea:           urlParams.get('lifeArea') || 'love',
+                relationshipStatus: urlParams.get('relationshipStatus') || '',
+                cosmicSigns:        (urlParams.get('cosmicSigns') || '').split(',').filter(Boolean)
+            };
+
+            // Create sessions for both plans in parallel
+            const [feOnlySession, feBumpSession] = await Promise.all([
+                createSessionForPlan(PLAN_FE_ONLY, affiliateCode, trackingId, fbc, fbp, quizMeta),
+                createSessionForPlan(PLAN_FE_BUMP, affiliateCode, trackingId, fbc, fbp, quizMeta)
+            ]);
+
+            // Attach session IDs to the embed divs (Whop SDK will pick them up)
+            if (feOnlySession) {
+                const el = document.querySelector('#checkout-fe-only .whop-checkout-embed');
+                if (el) el.setAttribute('data-whop-checkout-session', feOnlySession);
+            }
+            if (feBumpSession) {
+                const el = document.querySelector('#checkout-fe-bump .whop-checkout-embed');
+                if (el) el.setAttribute('data-whop-checkout-session', feBumpSession);
+            }
+            // Set affiliate code on all embeds
+            if (affiliateCode) {
+                document.querySelectorAll('.whop-checkout-embed').forEach(el => {
+                    el.setAttribute('data-whop-checkout-affiliate-code', affiliateCode);
+                });
+            }
+        }
+
+        async function createSessionForPlan(planId, affiliateCode, tid, fbc, fbp, quizMeta) {
+            try {
+                const response = await fetch('/api/create-checkout-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        plan_id:        planId,
+                        affiliate_code: affiliateCode,
+                        tid:            tid,
+                        fbc:            fbc,
+                        fbp:            fbp,
+                        ref:            affiliateCode,
+                        metadata:       quizMeta
+                    })
+                });
+                const data = await response.json();
+                if (data.success && data.session_id) {
+                    console.log('[StarSignal] Session created for', planId, '→', data.session_id);
+                    return data.session_id;
+                }
+                console.warn('[StarSignal] No session_id for', planId, data);
+                return null;
+            } catch (err) {
+                console.error('[StarSignal] Session creation failed for', planId, err.message);
+                return null;
+            }
         }
 
         // ============================================================
@@ -905,17 +916,14 @@
                 }
             }
 
-            // Store tracking/quiz data in localStorage for OTO + webhook
+            // Store for OTO page
             sessionStorage.setItem('starSignalData', params.toString());
 
-            // Pre-load BOTH checkout sessions simultaneously (instant switch on bump toggle)
-            const [feOnlySession, feBumpSession] = await Promise.all([
-                createCheckoutSession(PLAN_FE_ONLY, 'checkout-fe-only', 'loading-fe-only'),
-                createCheckoutSession(PLAN_FE_BUMP, 'checkout-fe-bump', 'loading-fe-bump')
-            ]);
+            // 1. Create sessions with quiz metadata, attach to embed divs
+            await initCheckoutWithMetadata();
 
-            sessionFeOnly = feOnlySession;
-            sessionFeBump = feBumpSession;
+            // 2. Load Whop SDK — it will find the .whop-checkout-embed divs and render them
+            loadWhopScript();
         });
     </script>
 </body>

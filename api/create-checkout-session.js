@@ -78,19 +78,20 @@ module.exports = async (req, res) => {
             });
         }
 
-        const purchaseUrl = result.purchase_url || result.url || result.checkout_url;
+        // Whop v2 checkout_sessions returns { id: "ses_...", ... }
+        // session_id is used by the Whop embed SDK via data-whop-checkout-session attribute
+        const sessionId = result.id || result.session_id;
 
-        if (!purchaseUrl) {
-            console.error('[CHECKOUT] No URL in response:', JSON.stringify(result));
-            return res.status(500).json({ error: 'No checkout URL returned' });
+        if (!sessionId) {
+            console.error('[CHECKOUT] No session_id in response:', JSON.stringify(result));
+            return res.status(500).json({ error: 'No session_id returned', details: result });
         }
 
-        console.log('[CHECKOUT] Created for plan:', plan_id);
+        console.log('[CHECKOUT] Created session for plan:', plan_id, '→', sessionId);
 
         return res.status(200).json({
-            purchase_url: purchaseUrl,
-            session_id:   result.id || null,
-            success:      true
+            session_id: sessionId,
+            success:    true
         });
 
     } catch (err) {
