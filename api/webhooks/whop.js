@@ -232,7 +232,7 @@ async function sendReadingEmail(email, firstName, readingUrl, lifePathNumber) {
                     'Authorization': `Bearer ${process.env.RESEND_API_KEY}`
                 },
                 body: JSON.stringify({
-                    from:    'Star Signal <noreply@starsignal.co>',
+                    from:    'Star Signal <noreply@send.starsignal.co>',
                     to:      [email],
                     subject: `✦ ${name}, your Cosmic Blueprint is ready`,
                     html:    html
