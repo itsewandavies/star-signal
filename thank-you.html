@@ -304,11 +304,11 @@
             <h1>Your Blueprint Is Being Prepared</h1>
             <p class="status-text">
                 Your reading is being generated and will be ready shortly. We've sent a link to your email inbox.<br><br>
-                <strong>Check your email</strong> for your personalized cosmic blueprint.<br>
+                <strong>Check your email</strong> for your personalised Cosmic Blueprint.<br>
                 <em>Usually arrives within a few minutes.</em>
             </p>
             <div class="social-proof">
-                If you don't see it, check your spam folder or contact support at hello@starsignal.co
+                Check your spam folder if you don't see it within 5 minutes.
             </div>
         </div>
     </div>
@@ -380,34 +380,23 @@
             currentProgress = 100;
             document.getElementById('progressFill').style.width = '100%';
 
-            // Store reading ID for OTO page
+            // Store reading ID
             localStorage.setItem('ss_reading_id', uuid);
-
-            // Store payment_id for OTO one-click charge
-            const urlParams = new URLSearchParams(window.location.search);
-            const paymentId = urlParams.get('payment_id') || urlParams.get('pay') || urlParams.get('receipt_id') || '';
-            if (paymentId) localStorage.setItem('ss_payment_id', paymentId);
 
             // Show success state
             document.getElementById('loadingState').classList.add('hidden');
             document.getElementById('fallbackState').classList.add('hidden');
             document.getElementById('successState').classList.remove('hidden');
 
-            // Set email and button
+            // Set email display and button — go directly to the reading
             document.getElementById('emailDisplay').textContent = email;
             document.getElementById('openButton').onclick = () => {
-                // Redirect to OTO page (before showing reading)
-                const otoUrl = `/oto.html?payment_id=${encodeURIComponent(paymentId)}&reading_id=${encodeURIComponent(uuid)}`;
-                window.location.href = otoUrl;
+                window.location.href = `/r/${uuid}`;
             };
 
-            // Auto-redirect after 3 seconds if user doesn't click
+            // Auto-redirect after 3 seconds
             setTimeout(() => {
-                if (paymentId) {
-                    window.location.href = `/oto.html?payment_id=${encodeURIComponent(paymentId)}&reading_id=${encodeURIComponent(uuid)}`;
-                } else {
-                    window.location.href = `/r/${uuid}`;
-                }
+                window.location.href = `/r/${uuid}`;
             }, 3000);
         }
 
