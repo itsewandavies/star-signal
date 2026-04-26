@@ -716,6 +716,7 @@
                     data-whop-checkout-plan-id="plan_WrudbHcLudmhj"
                     data-whop-checkout-theme="light"
                     data-whop-checkout-hide-price="false"
+                    id="embed-fe-only"
                 ></div>
             </div>
 
@@ -725,6 +726,7 @@
                     data-whop-checkout-plan-id="plan_VcKKBavba0EAG"
                     data-whop-checkout-theme="light"
                     data-whop-checkout-hide-price="false"
+                    id="embed-fe-bump"
                 ></div>
             </div>
         </div>
@@ -856,6 +858,13 @@
             if (feBumpSession) {
                 const el = document.querySelector('#checkout-fe-bump .whop-checkout-embed');
                 if (el) el.setAttribute('data-whop-checkout-session', feBumpSession);
+            }
+            // Prefill email on both embeds so the user doesn't have to type it
+            const email = urlParams.get('email') || '';
+            if (email) {
+                document.querySelectorAll('.whop-checkout-embed').forEach(el => {
+                    el.setAttribute('data-whop-checkout-prefill-email', email);
+                });
             }
             // Set affiliate code on all embeds
             if (affiliateCode) {
