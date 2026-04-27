@@ -328,6 +328,12 @@
             return params.get('email') || sessionStorage.getItem('customerEmail') || 'your email';
         }
 
+        // Get payment ID from URL (Whop appends receipt_id=pay_xxx after redirect)
+        function getPaymentId() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('receipt_id') || params.get('payment_id') || params.get('pay') || null;
+        }
+
         // Cycling progress messages
         const messages = [
             'Calculating your natal chart...',
@@ -383,6 +389,10 @@
             // Store reading ID
             localStorage.setItem('ss_reading_id', uuid);
 
+            // Build reading URL — include payment ID so reading page can enable OTO
+            const paymentId = getPaymentId();
+            const readingUrl = paymentId ? `/r/${uuid}?pay=${paymentId}` : `/r/${uuid}`;
+
             // Show success state
             document.getElementById('loadingState').classList.add('hidden');
             document.getElementById('fallbackState').classList.add('hidden');
@@ -391,12 +401,12 @@
             // Set email display and button — go directly to the reading
             document.getElementById('emailDisplay').textContent = email;
             document.getElementById('openButton').onclick = () => {
-                window.location.href = `/r/${uuid}`;
+                window.location.href = readingUrl;
             };
 
             // Auto-redirect after 3 seconds
             setTimeout(() => {
-                window.location.href = `/r/${uuid}`;
+                window.location.href = readingUrl;
             }, 3000);
         }
 

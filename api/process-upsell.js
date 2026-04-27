@@ -7,7 +7,7 @@
  * Flow (confirmed from EarnHive start-coaching.ts pattern):
  *   1. Receive payment_id from original $19 purchase (passed via URL after redirect)
  *   2. Fetch original payment from Whop → extract membership_id
- *   3. Fetch saved payment method by member_id via V1 API
+ *   3. Fetch saved payment method by user_id via V2 API
  *   4. Charge via V1 POST /api/v1/payments (company_id + member_id + pm_id + plan_id)
  *   5. Poll for payment confirmation (up to 5 × 2s)
  *   6. Record affiliate commission in Supabase
@@ -106,11 +106,14 @@ module.exports = async (req, res) => {
             return res.status(400).json({ error: 'No membership found for this payment', success: false });
         }
 
-        // ── STEP 2: Get saved payment method by member_id (V1 pattern) ──
+        // Extract user_id for payment methods lookup (V2 API requires user_id)
+        const userId = paymentData.user_id || paymentData.user?.id || paymentData.user;
+
+        // ── STEP 2: Get saved payment method by user_id (V2 API) ──
         let paymentMethodId;
 
         try {
-            const pmData = await whopGet(`/api/v1/payment_methods?member_id=${membershipId}&first=1`);
+            const pmData = await whopGet(`/api/v2/payment_methods?user_id=${userId}&first=1`);
             paymentMethodId = pmData.data?.[0]?.id;
         } catch (err) {
             console.error('[OTO] Payment methods lookup failed:', err.message);

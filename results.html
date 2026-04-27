@@ -1006,7 +1006,7 @@
     
     <!-- 1. Social proof bar -->
     <div class="social-proof-bar">
-        <span>★★★★★</span> 2,847,391 readings completed
+        <span>★★★★★</span> <span id="socialProofText">2,847,391 readings completed</span>
     </div>
     
     <!-- 2. Header -->
@@ -1035,6 +1035,9 @@
                 <p class="life-path-archetype" id="lifePathArchetype">The Humanitarian</p>
                 <p class="life-path-intro" id="lifePathIntro">You are called to serve the world and bring healing wherever you go.</p>
             </div>
+
+            <!-- Reading teaser: dynamically injected after life path circle -->
+            <div id="readingTeaser" style="margin-top: 1.75rem; font-size: 1.05rem; color: var(--text-muted); font-style: italic; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.6;"></div>
         </div>
     </section>
     
@@ -1063,6 +1066,7 @@
                     </div>
                     <h3>You've Always Felt 'Different' — And Here's Why</h3>
                     <p>Your blueprint shows you carry what astrologers call a "double-activated intuitive channel." This means you often sense things before they happen — and other people rarely understand you at the deepest level. You've likely felt misunderstood most of your life. You may have been called "too sensitive" or "too much" by people who couldn't see what you see. This is not a flaw — it's a gift that most people don't have.</p>
+                    <p id="card1BirthCity" style="margin-top: 0.75rem; font-style: italic; color: var(--accent-gold-dark);"></p>
                 </div>
                 
                 <!-- Card 2: Moon SVG -->
@@ -1076,6 +1080,7 @@
                     </div>
                     <h3>Something In The Last 18 Months Has Shifted You Forever</h3>
                     <p>Your natal chart shows that you've recently entered a "Saturn Activation Window" — a powerful period of transformation that is directly shaping what 2026 holds for you. Something significant in the last 18 months changed how you see yourself. Your blueprint sees it — all of it. The clarity, growth, and opportunity that's coming is a direct result of what you've been through.</p>
+                    <p id="card2HoldingBack" style="margin-top: 0.75rem; font-style: italic; color: var(--accent-gold-dark);"></p>
                 </div>
                 
                 <!-- Card 3: Star SVG -->
@@ -1087,6 +1092,7 @@
                     </div>
                     <h3 id="thresholdHeading">A Major Life Shift Is Coming In June — You Need To Be Ready</h3>
                     <p>Based on your planetary transits, a window is opening when what astrologers call a 'Threshold Event' enters your life — a critical opportunity, person, or realisation. What this event is depends entirely on whether you've decoded the rest of your blueprint. Those who recognise their Threshold Event in time describe it as the turning point of their entire life. Those who don't, often look back and wish they had been ready.</p>
+                    <p id="card3LifeArea" style="margin-top: 0.75rem; font-style: italic; color: var(--accent-gold-dark);"></p>
                 </div>
                 
                 <!-- Card 4: Diamond SVG (segmented) -->
@@ -1455,6 +1461,7 @@
             <div class="final-card">
                 <h2>Your Blueprint Is Waiting</h2>
                 <p id="finalCopy">You came to this page because something inside you said yes. A quiet knowing. A pull toward understanding yourself at a deeper level. That instinct is correct. Your Blueprint is real. It's personalised. And it's ready for you right now.</p>
+                <p id="finalTransformation" style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.7; margin-bottom: 2rem; margin-top: -1rem;"></p>
                 <button class="cta-primary">🔮 YES — Send Me My Full Blueprint For $19</button>
                 <div class="final-trust">
                     <p>🔒 One-time payment · 60-day guarantee · Instant delivery</p>
@@ -1609,6 +1616,95 @@
             }
         };
         
+        // ── SUN SIGN CALCULATION ──
+        function getSunSign(dateStr) {
+            const [year, month, day] = dateStr.split('-').map(Number);
+            const m = month, d = day;
+            if ((m === 3 && d >= 21) || (m === 4 && d <= 19)) return 'Aries';
+            if ((m === 4 && d >= 20) || (m === 5 && d <= 20)) return 'Taurus';
+            if ((m === 5 && d >= 21) || (m === 6 && d <= 20)) return 'Gemini';
+            if ((m === 6 && d >= 21) || (m === 7 && d <= 22)) return 'Cancer';
+            if ((m === 7 && d >= 23) || (m === 8 && d <= 22)) return 'Leo';
+            if ((m === 8 && d >= 23) || (m === 9 && d <= 22)) return 'Virgo';
+            if ((m === 9 && d >= 23) || (m === 10 && d <= 22)) return 'Libra';
+            if ((m === 10 && d >= 23) || (m === 11 && d <= 21)) return 'Scorpio';
+            if ((m === 11 && d >= 22) || (m === 12 && d <= 21)) return 'Sagittarius';
+            if ((m === 12 && d >= 22) || (m === 1 && d <= 19)) return 'Capricorn';
+            if ((m === 1 && d >= 20) || (m === 2 && d <= 18)) return 'Aquarius';
+            return 'Pisces';
+        }
+
+        // ── LIFE AREA LABELS ──
+        const lifeAreaLabels = {
+            love: 'Love',
+            money: 'Money',
+            purpose: 'Purpose',
+            spiritual: 'Spiritual'
+        };
+
+        // ── HOLDING BACK MAPPINGS ──
+        const holdingBackMessages = {
+            // Love area
+            fear_of_hurt:      'The pattern of attracting unavailable people \u2014 and the fear of being hurt again \u2014 is written clearly in your chart.',
+            past_heartbreak:   'The weight of past heartbreak has been quietly shaping every connection since. Your chart sees exactly where this began \u2014 and where it ends.',
+            not_good_enough:   'The quiet belief that you\'re not enough \u2014 that someone will leave once they truly know you \u2014 is a pattern your chart can help you finally dissolve.',
+            wrong_people:      'The cycle of choosing people who can\u2019t meet you where you are is encoded in your Venus placement \u2014 and your chart shows precisely how to break it.',
+            timing:            'You\u2019ve been waiting for the right moment. Your chart shows that moment is not as far away as it feels.',
+            // Money area
+            fear_of_failure:   'The fear that trying means risking everything \u2014 and losing \u2014 is a Saturn pattern your chart is ready to help you move through.',
+            self_sabotage:     'The pattern of stepping back just as things begin to accelerate is visible in your abundance cycle. Your chart shows the exact window to break it.',
+            scarcity_mindset:  'The deep-seated belief that there\u2019s never quite enough is a inherited pattern your chart is signalling the time to release in 2026.',
+            lack_of_direction: 'The feeling of working hard without momentum \u2014 of not knowing which path leads forward \u2014 is something your Wealth Timeline addresses directly.',
+            fear_of_success:   'The anxiety that arrives when things start going well \u2014 the urge to shrink back \u2014 is a pattern your blueprint names and gives you a way through.',
+            // Purpose area
+            imposter_syndrome: 'The voice that says others are more qualified, more ready, more worthy of the stage \u2014 your chart shows exactly when that voice loses its grip.',
+            perfectionism:     'The pattern of waiting until everything is perfect before beginning \u2014 your blueprint identifies the exact moment in 2026 when that block dissolves.',
+            fear_of_judgment:  'The fear of being seen, misunderstood, or criticised for the real work you feel called to do is written into your chart \u2014 along with how to move past it.',
+            no_clarity:        'The aching uncertainty about what you\u2019re actually here to do is one of the first things your Purpose Blueprint addresses with precision.',
+            stuck_in_routine:  'The feeling of going through the motions \u2014 competent but uninspired \u2014 is something your 2026 forecast addresses with a specific breakthrough window.',
+            // Spiritual area
+            disconnected:      'The sense of feeling disconnected from something deeper \u2014 going through the motions without meaning \u2014 is exactly the pattern your awakening cycle is breaking.',
+            overthinking:      'The mind that analyses every sign until the message disappears \u2014 your chart shows you\u2019re entering a period of direct knowing that bypasses the noise.',
+            isolation:         'The experience of walking this path largely alone \u2014 surrounded by people who don\u2019t quite understand \u2014 is something your 2026 cycle is designed to shift.',
+            trust:             'The struggle to trust your own intuition \u2014 to believe what you feel without needing confirmation \u2014 is a threshold your chart shows you crossing in 2026.',
+            // Fallback
+            unsure:            'Whatever has been holding you back \u2014 your chart has already accounted for it. What\u2019s written next is the beginning of the other side.'
+        };
+
+        // ── THRESHOLD EVENT BODY BY LIFE AREA ──
+        const card3LifeAreaMessages = {
+            love:      'A significant romantic encounter or reconnection is written into your 2026 chart.',
+            money:     'A financial turning point \u2014 an opportunity that could change your income trajectory \u2014 is written into your 2026 chart.',
+            purpose:   'A career or mission-defining moment is written into your 2026 chart.',
+            spiritual: 'An awakening event \u2014 possibly a meeting, a sign, or an inner shift \u2014 is written into your 2026 chart.'
+        };
+
+        // ── TRANSFORMATION MEANING MAPPINGS ──
+        const transformationMeaningPhrases = {
+            // Love
+            find_love:          'finding a love that finally feels like home',
+            deepen_connection:  'deepening the connection you already have into something unbreakable',
+            heal_heart:         'healing the part of you that stopped believing love was meant for you',
+            attract_soulmate:   'calling in the relationship you\u2019ve been quietly preparing yourself for',
+            // Money
+            financial_freedom:  'breaking free from the financial ceiling that\u2019s followed you for years',
+            new_income:         'unlocking a new income stream that aligns with who you actually are',
+            abundance_mindset:  'finally making peace with money and letting abundance in',
+            wealth_building:    'building the kind of lasting wealth that creates real freedom',
+            // Purpose
+            find_purpose:       'discovering what you were genuinely put here to do',
+            career_shift:       'making the career move that\u2019s been quietly calling to you',
+            share_gifts:        'sharing your gifts with the world in a way that actually reaches people',
+            legacy:             'building something that outlasts the ordinary and becomes your legacy',
+            // Spiritual
+            deeper_knowing:     'accessing the deeper layer of knowing that\u2019s been just out of reach',
+            inner_peace:        'arriving at the inner peace that doesn\u2019t depend on circumstances',
+            spiritual_path:     'stepping fully onto the path you\u2019ve been circling for years',
+            awaken:             'waking up to the version of yourself that\u2019s been waiting to emerge',
+            // Fallback
+            clarity:            'gaining the clarity that changes everything about how you move forward'
+        };
+
         // ── PAGE LOAD HANDLER ──
         document.addEventListener('DOMContentLoaded', function() {
             // Generate stars
@@ -1622,6 +1718,8 @@
             const cityValidParam = params.get('cityValid');
             const lifeArea = params.get('lifeArea') || 'love';
             const email = params.get('email') || '';
+            const holdingBack = params.get('holdingBack') || '';
+            const transformationMeaning = params.get('transformationMeaning') || '';
 
             // FIX 1: City validation — omit city if under 4 characters
             const showCity = (cityValidParam === 'true') && (birthCity.length >= 4);
@@ -1632,6 +1730,7 @@
             const archetypeIntro = archetypeIntros[lifePath] || 'You carry a unique cosmic signature.';
             const thresholdMonth = getThresholdMonth();
             const formattedBirth = formatDateForDisplay(birthDate);
+            const sunSign = getSunSign(birthDate);
             
             // Inject dynamic content
             document.getElementById('heroGreeting').textContent = `Welcome, ${firstName}`;
@@ -1663,6 +1762,51 @@
             const psEl = document.getElementById('psSection');
             if (psEl) {
                 psEl.innerHTML = `<strong>P.S.</strong> — ${firstName}, you came to this page because something inside you said yes. A quiet knowing. A pull toward understanding yourself at a deeper level. That instinct is correct. Your Blueprint is real. It's personalised. And it's ready for you right now. The only question is whether you'll open it.`;
+            }
+
+            // ── NEW INJECTIONS ──
+
+            // 1. Social proof bar — include life area label
+            const areaLabel = lifeAreaLabels[lifeArea] || 'Cosmic';
+            const socialProofEl = document.getElementById('socialProofText');
+            if (socialProofEl) {
+                socialProofEl.textContent = `2,847,391 readings completed \u00b7 Your ${areaLabel} Blueprint is ready`;
+            }
+
+            // 2. Reading teaser (after life path circle) — sunSign + lifePath
+            const teaserEl = document.getElementById('readingTeaser');
+            if (teaserEl) {
+                teaserEl.textContent = `As a Life Path ${lifePath} ${sunSign}, your chart contains something specific we need to show you.`;
+            }
+
+            // 3. Revelation Card 1 — birthCity / sunSign
+            const card1El = document.getElementById('card1BirthCity');
+            if (card1El) {
+                if (showCity) {
+                    card1El.textContent = `The moment you were born in ${birthCity}, your cosmic coordinates were set. Every experience of feeling different, every moment of inexplicable knowing — all of it traces back to that exact time and place.`;
+                } else {
+                    card1El.textContent = `The moment of your birth set your cosmic coordinates in motion. Your ${sunSign} sun sign combined with your Life Path ${lifePath} creates a pattern that very few people share.`;
+                }
+            }
+
+            // 4. Revelation Card 2 — holdingBack mirror
+            const card2El = document.getElementById('card2HoldingBack');
+            if (card2El && holdingBack) {
+                const hbMessage = holdingBackMessages[holdingBack] || holdingBackMessages['unsure'];
+                card2El.textContent = hbMessage;
+            }
+
+            // 5. Revelation Card 3 — threshold event body by life area
+            const card3El = document.getElementById('card3LifeArea');
+            if (card3El) {
+                card3El.textContent = card3LifeAreaMessages[lifeArea] || card3LifeAreaMessages['love'];
+            }
+
+            // 6. Final copy — enhance with transformationMeaning
+            const finalTransEl = document.getElementById('finalTransformation');
+            if (finalTransEl && transformationMeaning) {
+                const tmPhrase = transformationMeaningPhrases[transformationMeaning] || transformationMeaningPhrases['clarity'];
+                finalTransEl.textContent = `If ${tmPhrase} \u2014 that is what $19 can unlock today.`;
             }
             
             // Setup FAQ accordion

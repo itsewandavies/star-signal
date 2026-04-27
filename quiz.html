@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Your Cosmic Blueprint | Star Signal</title>
-    <meta name="description" content="Answer 9 questions to reveal your free personalised cosmic blueprint.">
+    <meta name="description" content="Answer 11 questions to reveal your free personalised cosmic blueprint.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -562,7 +562,7 @@
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"/></svg>
         Star Signal
     </a>
-    <span class="q-counter" id="q-counter">Question 1 of 9</span>
+    <span class="q-counter" id="q-counter">Question 1 of 11</span>
 </header>
 
 <!-- Loading Screen -->
@@ -751,7 +751,27 @@
                 <span class="area-sub">Expand your gifts &amp; awareness</span>
             </div>
         </div>
-        <button class="cta-btn" id="q6-btn" onclick="goTo('q7')" disabled style="opacity:0.45;pointer-events:none;">Continue →</button>
+        <button class="cta-btn" id="q6-btn" onclick="goToQ6A()" disabled style="opacity:0.45;pointer-events:none;">Continue →</button>
+        <button class="back-link" onclick="goBack()">← Back</button>
+    </div>
+
+    <!-- ══ Q6A: What's Held You Back (NEGATIVE — dynamic by life area) ══ -->
+    <div class="q-screen" id="q6a">
+        <span class="pre-headline">Let's go a little deeper...</span>
+        <h2 class="q-headline" id="q6a-headline">What's held you back most?</h2>
+        <div class="options-stack" style="margin-top:1.25rem;" id="q6a-options">
+            <!-- Populated dynamically by renderQ6A() -->
+        </div>
+        <button class="back-link" onclick="goBack()">← Back</button>
+    </div>
+
+    <!-- ══ Q6B: Pressure-Release — transformation meaning (dynamic by life area) ══ -->
+    <div class="q-screen" id="q6b">
+        <span class="pre-headline">Now imagine this...</span>
+        <h2 class="q-headline" id="q6b-headline">If everything changed in the next 12 months...</h2>
+        <div class="options-stack" style="margin-top:1.25rem;" id="q6b-options">
+            <!-- Populated dynamically by renderQ6B() -->
+        </div>
         <button class="back-link" onclick="goBack()">← Back</button>
     </div>
 
@@ -760,23 +780,23 @@
         <span class="pre-headline">Your Venus placement depends on this...</span>
         <h2 class="q-headline">What best describes your relationship status right now?</h2>
         <div class="options-stack" style="margin-top:1.25rem;">
-            <button class="stack-btn" onclick="selectAndAdvance('relationshipStatus','single',this,'q8')">
+            <button class="stack-btn" onclick="selectAndAdvance('relationshipStatus','single',this,'q6b')">
                 <span style="font-size:1.2rem;">💫</span>
                 <span>Single and searching for 'the one'</span>
             </button>
-            <button class="stack-btn" onclick="selectAndAdvance('relationshipStatus','unsure',this,'q8')">
+            <button class="stack-btn" onclick="selectAndAdvance('relationshipStatus','unsure',this,'q6b')">
                 <span style="font-size:1.2rem;">💑</span>
                 <span>In a relationship but unsure</span>
             </button>
-            <button class="stack-btn" onclick="selectAndAdvance('relationshipStatus','committed',this,'q8')">
+            <button class="stack-btn" onclick="selectAndAdvance('relationshipStatus','committed',this,'q6b')">
                 <span style="font-size:1.2rem;">💚</span>
                 <span>Happily committed</span>
             </button>
-            <button class="stack-btn" onclick="selectAndAdvance('relationshipStatus','heartbreak',this,'q8')">
+            <button class="stack-btn" onclick="selectAndAdvance('relationshipStatus','heartbreak',this,'q6b')">
                 <span style="font-size:1.2rem;">💔</span>
                 <span>Recovering from heartbreak</span>
             </button>
-            <button class="stack-btn" onclick="selectAndAdvance('relationshipStatus','complicated',this,'q8')">
+            <button class="stack-btn" onclick="selectAndAdvance('relationshipStatus','complicated',this,'q6b')">
                 <span style="font-size:1.2rem;">🌀</span>
                 <span>Complicated — it's hard to explain</span>
             </button>
@@ -861,12 +881,13 @@
     const answers = {
         q1: null, gender: null, birthDate: null, birthTime: null,
         birthCity: null, cityIsValid: false, lifeArea: null,
+        holdingBack: null, transformationMeaning: null,
         relationshipStatus: null, cosmicSigns: [], firstName: null, email: null
     };
     const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
     let currentQ = 1;
-    const totalQ = 9;
-    const qOrder = ['q1','q2','q3','q4','q5','q6','q7','q8','q9'];
+    const totalQ = 11;
+    const qOrder = ['q1','q2','q3','q4','q5','q6','q6a','q7','q6b','q8','q9'];
     const cosmicState = [false,false,false,false,false];
 
     // ── PROGRESS ──
@@ -877,6 +898,7 @@
     }
 
     function goTo(qId) {
+        if (qId === 'q6b') renderQ6B();
         const curr = document.querySelector('.q-screen.active');
         if (curr) curr.classList.remove('active');
         const next = document.getElementById(qId);
@@ -912,6 +934,129 @@
             btn.style.opacity = '1';
             btn.style.pointerEvents = 'auto';
         }, 300);
+    }
+
+    // ── Q6A: Navigate and render holding-back question ──
+    function goToQ6A() {
+        renderQ6A();
+        goTo('q6a');
+    }
+
+    const Q6A_DATA = {
+        love: {
+            headline: 'What\'s held you back most from the relationship you truly want?',
+            options: [
+                { value: 'fear_of_hurt',   label: 'Fear of being hurt again — I\'ve been burned before' },
+                { value: 'wrong_people',   label: 'Attracting the wrong people — I can\'t seem to break the pattern' },
+                { value: 'timing',         label: 'Terrible timing — connection was there but it never quite lined up' },
+                { value: 'not_worthy',     label: 'A deep feeling that I\'m not truly ready — or not enough' }
+            ]
+        },
+        money: {
+            headline: 'What\'s held you back most when it comes to money?',
+            options: [
+                { value: 'mindset',         label: 'A scarcity mindset I can\'t seem to shake no matter what I try' },
+                { value: 'inconsistency',   label: 'Inconsistency — good months followed by terrible ones' },
+                { value: 'family_patterns', label: 'Money patterns from my upbringing I haven\'t been able to break free from' },
+                { value: 'wrong_direction', label: 'Working hard in the wrong direction — busy but not truly building' }
+            ]
+        },
+        purpose: {
+            headline: 'What\'s held you back most when it comes to your purpose?',
+            options: [
+                { value: 'clarity',         label: 'Lack of clarity — I don\'t truly know what I\'m meant to be doing' },
+                { value: 'fear_of_failure', label: 'Fear of failure — or fear of being judged for trying something different' },
+                { value: 'too_comfortable', label: 'Being too comfortable where I am — even though something deeper is calling' },
+                { value: 'other_priorities',label: 'Putting other people\'s needs and timelines ahead of my own' }
+            ]
+        },
+        spiritual: {
+            headline: 'What\'s held you back most on your spiritual path?',
+            options: [
+                { value: 'doubt',             label: 'Self-doubt — questioning whether my intuitions and gifts are even real' },
+                { value: 'no_framework',      label: 'Not having a clear framework or practice to develop what I feel inside' },
+                { value: 'life_circumstances',label: 'Life circumstances that keep pulling me away from this side of myself' },
+                { value: 'disconnection',     label: 'A feeling of disconnection — like I\'ve drifted from something I once knew' }
+            ]
+        }
+    };
+
+    function renderQ6A() {
+        const area = answers.lifeArea || 'love';
+        const data = Q6A_DATA[area];
+        document.getElementById('q6a-headline').textContent = data.headline;
+        const container = document.getElementById('q6a-options');
+        container.innerHTML = data.options.map(opt =>
+            `<button class="stack-btn" onclick="selectHoldingBack('${opt.value}',this)">
+                <span>${opt.label}</span>
+            </button>`
+        ).join('');
+    }
+
+    function selectHoldingBack(value, el) {
+        answers.holdingBack = value;
+        el.closest('.options-stack').querySelectorAll('.stack-btn').forEach(c => c.classList.remove('selected'));
+        el.classList.add('selected');
+        setTimeout(() => goTo('q7'), 280);
+    }
+
+    // ── Q6B: Navigate and render transformation-meaning question ──
+    const Q6B_DATA = {
+        love: {
+            headline: 'If your love life transformed completely in the next 12 months...',
+            options: [
+                { value: 'freedom',   label: 'I\'d finally feel free — no longer carrying this weight alone' },
+                { value: 'fullness',  label: 'My whole life would feel more complete — everything else would feel lighter' },
+                { value: 'future',    label: 'I could start building the future I\'ve always imagined with the right person' },
+                { value: 'identity',  label: 'I\'d finally feel like the version of myself I know I\'m supposed to be' }
+            ]
+        },
+        money: {
+            headline: 'If your financial life transformed completely in the next 12 months...',
+            options: [
+                { value: 'security', label: 'I\'d finally feel secure — and stop the constant background hum of financial stress' },
+                { value: 'freedom',  label: 'I\'d have real freedom — to work on what I want, live how I want, help who I want' },
+                { value: 'proof',    label: 'I\'d finally prove to myself that I can do this — that I was right to believe' },
+                { value: 'impact',   label: 'I could make a real impact — fund the things and people that matter most to me' }
+            ]
+        },
+        purpose: {
+            headline: 'If your sense of purpose transformed completely in the next 12 months...',
+            options: [
+                { value: 'aliveness',   label: 'I\'d wake up actually excited — not just going through the motions' },
+                { value: 'alignment',   label: 'Everything would feel aligned — like I\'m finally living my actual life' },
+                { value: 'legacy',      label: 'I\'d know I\'m building something that will outlast me — something that matters' },
+                { value: 'confidence',  label: 'I\'d stop second-guessing every decision and finally trust my own path' }
+            ]
+        },
+        spiritual: {
+            headline: 'If your spiritual life transformed completely in the next 12 months...',
+            options: [
+                { value: 'peace',      label: 'I\'d have a deep inner peace I haven\'t felt in years — or maybe ever' },
+                { value: 'connection', label: 'I\'d feel truly connected again — to myself, to others, to something greater' },
+                { value: 'purpose',    label: 'I\'d feel like my experiences finally make sense — that there was always a reason' },
+                { value: 'gifts',      label: 'I\'d finally be living from my gifts rather than suppressing them' }
+            ]
+        }
+    };
+
+    function renderQ6B() {
+        const area = answers.lifeArea || 'love';
+        const data = Q6B_DATA[area];
+        document.getElementById('q6b-headline').textContent = data.headline;
+        const container = document.getElementById('q6b-options');
+        container.innerHTML = data.options.map(opt =>
+            `<button class="stack-btn" onclick="selectTransformationMeaning('${opt.value}',this)">
+                <span>${opt.label}</span>
+            </button>`
+        ).join('');
+    }
+
+    function selectTransformationMeaning(value, el) {
+        answers.transformationMeaning = value;
+        el.closest('.options-stack').querySelectorAll('.stack-btn').forEach(c => c.classList.remove('selected'));
+        el.classList.add('selected');
+        setTimeout(() => goTo('q8'), 280);
     }
 
     // ── Q3 DATE DROPDOWNS ──
@@ -1081,6 +1226,8 @@
                 birthCity: answers.birthCity || '',
                 cityValid: answers.cityIsValid ? 'true' : 'false',
                 lifeArea: answers.lifeArea || 'love',
+                holdingBack: answers.holdingBack || '',
+                transformationMeaning: answers.transformationMeaning || '',
                 relationshipStatus: answers.relationshipStatus || '',
                 cosmicSigns: answers.cosmicSigns.join(','),
                 email: answers.email || '',

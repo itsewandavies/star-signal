@@ -663,23 +663,19 @@
                 </div>
 
                 <!-- ORDER BUMP -->
-<div class="order-bump">
+<div class="order-bump" id="orderBumpSection">
     <div class="bump-header">
         <span class="bump-arrow">➡</span>
         <label class="bump-checkbox-label">
             <input type="checkbox" id="bumpCheckbox" onchange="updateTotal()">
-            <span class="bump-cta-text">YES! Add The Love Prophecy Report (+$27)</span>
+            <span class="bump-cta-text" id="bumpCtaText">YES! Add The Deep Revelation Layer (+$27)</span>
         </label>
     </div>
     <div class="bump-body">
-        <h4>The Love Prophecy Report — $27</h4>
-        <p>Your Blueprint identifies the letter of your soulmate's name. The Love Prophecy Report reveals everything else — the timeline, the cosmic block keeping the connection from activating, and the exact ritual to clear it.</p>
-        <ul class="bump-features">
-            <li>The exact month your soulmate enters (or re-enters) your life in 2026</li>
-            <li>The "false match" pattern your chart shows you've been repeating</li>
-            <li>The cosmic block currently preventing the real connection</li>
-            <li>A 7-minute ritual to energetically clear the block</li>
-            <li>Normal price: $47 · Today only: $27 added to your order</li>
+        <h4 id="bumpTitle">The Deep Revelation Layer — $27</h4>
+        <p id="bumpDesc">Your Blueprint reveals the surface. This layer goes underneath it.</p>
+        <ul class="bump-features" id="bumpFeatures">
+            <li>Unlocked instantly with your reading</li>
         </ul>
     </div>
 </div>
@@ -692,7 +688,7 @@
                         <span>$19</span>
                     </div>
                     <div class="total-line bump-line" id="bumpTotalRow" style="display: none;">
-                        <span>Partner Blueprint Comparison</span>
+                        <span id="bumpLineLabel">Deep Revelation Layer</span>
                         <span>+$27</span>
                     </div>
                     <div class="total-divider"></div>
@@ -716,6 +712,7 @@
                     data-whop-checkout-plan-id="plan_WrudbHcLudmhj"
                     data-whop-checkout-theme="light"
                     data-whop-checkout-hide-price="false"
+                    data-whop-checkout-setup-future-usage="off_session"
                     id="embed-fe-only"
                 ></div>
             </div>
@@ -726,6 +723,7 @@
                     data-whop-checkout-plan-id="plan_VcKKBavba0EAG"
                     data-whop-checkout-theme="light"
                     data-whop-checkout-hide-price="false"
+                    data-whop-checkout-setup-future-usage="off_session"
                     id="embed-fe-bump"
                 ></div>
             </div>
@@ -830,6 +828,76 @@
             const urlParams      = new URLSearchParams(window.location.search);
             const affiliateCode  = localStorage.getItem('ss_ref') || urlParams.get('ref') || '';
             const trackingId     = localStorage.getItem('ss_tid') || urlParams.get('tid') || '';
+
+            // ── Dynamic order bump copy by life area ──────────────────────
+            ;(function injectBumpCopy() {
+                const la = urlParams.get('lifeArea') || 'love';
+                const bumps = {
+                    love: {
+                        cta:   'YES! Add The Soulmate Activation Layer (+$27)',
+                        title: 'The Soulmate Activation Layer — $27',
+                        desc:  'Your Blueprint already reveals the initial of your soulmate and the month they\'re scheduled to arrive. This layer shows you exactly WHY you haven\'t connected yet — and gives you the specific clearing ritual to remove the only block standing between you.',
+                        features: [
+                            'The exact cosmic block currently keeping your soulmate connection from activating',
+                            'The "false match" pattern written in your chart — the type of person you keep attracting instead of the right one',
+                            'A life-path-specific 7-minute clearing ritual to energetically remove the block',
+                            'The precise relationship dynamic your chart says you\'re ready for now',
+                            'Normal price: $47 · Added to your order today for just $27'
+                        ],
+                        label: 'Soulmate Activation Layer'
+                    },
+                    money: {
+                        cta:   'YES! Add The Wealth Code Activation (+$27)',
+                        title: 'The Wealth Code Activation — $27',
+                        desc:  'Your Blueprint reveals your abundance window and your wealth archetype. This layer breaks down the inherited money pattern that has been silently capping your income — and gives you the specific activation steps to finally move past it.',
+                        features: [
+                            'Your personal "wealth ceiling" — the inherited money belief capping your income right now',
+                            'The exact 3-month abundance window in your 2026 chart where income can accelerate fastest',
+                            'Your ideal income path aligned with Life Path energy — not someone else\'s blueprint',
+                            'A specific money activation ritual for your personal year number',
+                            'Normal price: $47 · Added to your order today for just $27'
+                        ],
+                        label: 'Wealth Code Activation'
+                    },
+                    purpose: {
+                        cta:   'YES! Add The Life Mission Decoder (+$27)',
+                        title: 'The Life Mission Decoder — $27',
+                        desc:  'Your Blueprint shows your Life Path energy and your 2026 purpose window. This layer gives you the exact one-sentence mission statement drawn from your natal blueprint — and the 3 specific signs your chart shows you\'ve been living out of alignment.',
+                        features: [
+                            'Your exact Life Mission statement — one sentence, drawn directly from your birth data',
+                            'The 3 misalignment signs your chart shows are active right now',
+                            'The specific year and quarter your Purpose Portal opens — and how to prepare',
+                            'Step-by-step alignment actions calibrated to your Life Path number',
+                            'Normal price: $47 · Added to your order today for just $27'
+                        ],
+                        label: 'Life Mission Decoder'
+                    },
+                    spiritual: {
+                        cta:   'YES! Add The Awakening Accelerator (+$27)',
+                        title: 'The Awakening Accelerator — $27',
+                        desc:  'Your Blueprint reveals your dominant spiritual gifts and your awakening timeline. This layer identifies the past-life signature written into your chart — the experiences you brought into this life — and the specific practices that will accelerate your growth fastest.',
+                        features: [
+                            'Your 3 dominant spiritual gifts and how to consciously develop each one',
+                            'Your past-life signature — what you carried into this life and how it\'s still shaping you',
+                            'The specific chakra imbalance your chart shows is slowing your spiritual progress',
+                            'Daily practices aligned to your Life Path for accelerated awakening in 2026',
+                            'Normal price: $47 · Added to your order today for just $27'
+                        ],
+                        label: 'Awakening Accelerator'
+                    }
+                };
+                const b = bumps[la] || bumps.love;
+                const ctaEl   = document.getElementById('bumpCtaText');
+                const titleEl = document.getElementById('bumpTitle');
+                const descEl  = document.getElementById('bumpDesc');
+                const featEl  = document.getElementById('bumpFeatures');
+                const labelEl = document.getElementById('bumpLineLabel');
+                if (ctaEl)   ctaEl.textContent   = b.cta;
+                if (titleEl) titleEl.textContent  = b.title;
+                if (descEl)  descEl.textContent   = b.desc;
+                if (featEl)  featEl.innerHTML     = b.features.map(f => `<li>${f}</li>`).join('');
+                if (labelEl) labelEl.textContent  = b.label;
+            })();
             const fbc            = localStorage.getItem('ss_fbc') || getCookie('_fbc') || '';
             const fbp            = localStorage.getItem('ss_fbp') || getCookie('_fbp') || '';
 

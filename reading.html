@@ -1503,7 +1503,7 @@
     setText('hero-archetype',  rc.life_path_name   || 'The Seeker');
     setText('hero-sun-sign',   '☀️ ' + (data.sunSign || rc.sun_sign || '—'));
     setText('hero-birth-city', data.birthCity || '—');
-    setText('hero-opening',    rc.opening_revelation || '');
+    setHTML('hero-opening',    textToParas(rc.opening_revelation || ''));
 
     /* --- REVELATION --- */
     const pr = rc.personality_revelation || {};
@@ -1511,12 +1511,12 @@
     const te = rc.threshold_event || {};
 
     setText('rev-personality-headline', pr.headline || '—');
-    setText('rev-personality-body',     pr.body || '—');
+    setHTML('rev-personality-body',     textToParas(pr.body || ''));
     setText('rev-past-headline',        pp.headline || '—');
-    setText('rev-past-body',            pp.body || '—');
+    setHTML('rev-past-body',            textToParas(pp.body || ''));
     setText('rev-threshold-month',      te.month || rc.threshold_month || '—');
     setText('rev-threshold-headline',   te.headline || '—');
-    setText('rev-threshold-body',       te.body || '—');
+    setHTML('rev-threshold-body',       textToParas(te.body || ''));
 
     /* --- NUMEROLOGY --- */
     const nd = rc.numerology_deep_dive || {};
@@ -1525,11 +1525,11 @@
     setText('stat-sun', '☀️ ' + (data.sunSign || rc.sun_sign || '—'));
     setHTML('life-path-desc', textToParas(rc.life_path_description || ''));
     setText('num-destiny',         nd.destiny_number  || '—');
-    setText('num-destiny-meaning', nd.destiny_meaning || '—');
+    setHTML('num-destiny-meaning', textToParas(nd.destiny_meaning || ''));
     setText('num-soul',            nd.soul_urge_number || '—');
-    setText('num-soul-meaning',    nd.soul_urge_meaning || '—');
+    setHTML('num-soul-meaning',    textToParas(nd.soul_urge_meaning || ''));
     setText('num-personality',     nd.personality_number || '—');
-    setText('num-personality-meaning', nd.personality_meaning || '—');
+    setHTML('num-personality-meaning', textToParas(nd.personality_meaning || ''));
 
     /* --- BLUEPRINT --- */
     const areaLabel = LIFE_AREA_LABELS[la] || 'Your Path';
@@ -1547,8 +1547,8 @@
     /* --- RITUAL --- */
     const ritual = rc.morning_ritual || {};
     setText('ritual-crystal',     ritual.crystal || '—');
-    setText('ritual-breathwork',  ritual.breathwork || '—');
-    setText('ritual-intention',   ritual.intention_setting || '—');
+    setHTML('ritual-breathwork',  textToParas(ritual.breathwork || ''));
+    setHTML('ritual-intention',   textToParas(ritual.intention_setting || ''));
     setHTML('ritual-full',        textToParas(ritual.full_ritual || ''));
     setText('ritual-affirmation', ritual.affirmation || '—');
 
@@ -1919,9 +1919,27 @@
   }
 
   /* =============================================
+     PAYMENT ID CAPTURE
+  ============================================= */
+  function captureAndStorePaymentId() {
+    const params = new URLSearchParams(window.location.search);
+    const paymentId = params.get('pay') || params.get('receipt_id') || params.get('payment_id');
+    if (paymentId) {
+      try { localStorage.setItem('ss_payment_id', paymentId); } catch(e) {}
+      console.log('[StarSignal] Payment ID captured from URL:', paymentId.slice(0, 8) + '...');
+    } else {
+      const stored = localStorage.getItem('ss_payment_id');
+      console.log('[StarSignal] Payment ID from storage:', stored ? stored.slice(0, 8) + '...' : 'none');
+    }
+  }
+
+  /* =============================================
      INIT
   ============================================= */
-  document.addEventListener('DOMContentLoaded', loadReading);
+  document.addEventListener('DOMContentLoaded', function() {
+    captureAndStorePaymentId();
+    loadReading();
+  });
 
 })();
 </script>

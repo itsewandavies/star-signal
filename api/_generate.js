@@ -183,6 +183,8 @@ CRITICAL INSTRUCTIONS:
 4. For the monthly forecasts, Personal Year ${personalYear2026} means: ${getPersonalYearMeaning(personalYear2026)}
 5. The soulmate initial is ${soulmateInitial} — this is deterministic and correct.
 6. All content must be written in a warm, mystical tone that respects their intelligence.
+7. PARAGRAPH FORMATTING: Every text field that contains more than one paragraph MUST separate paragraphs with two newlines (\\n\\n). Never use single newlines between paragraphs. The frontend splits on double newlines to create proper paragraph spacing. Fields that need double-newline paragraph breaks: life_path_description, opening_revelation, personality_revelation.body, past_pattern_revelation.body, threshold_event.body, life_area_deep_dive text, monthly_forecasts.detailed_forecast, morning_ritual.breathwork, morning_ritual.full_ritual, numerology_deep_dive fields, oto_content fields.
+8. HYPER-PERSONALISATION: You MUST reference specific personal details in EVERY section. Do not write generic astrology copy. Mandatory references: use ${birthCity} at least 3 times across the full reading, use ${sunSign} in every major section, reference the specific life area (${lifeArea}) in relation to Life Path ${lifePathNumber} in every section that isn't purely numerological. For ${lifeArea} === 'love': every section should subtly reference romance/connection even if the main topic is different. For 'money': reference abundance and financial energy. For 'purpose': reference mission and calling. For 'spiritual': reference awakening and gifts. The reader should feel like this was written ONLY for them — not a generic Life Path 3 reading.
 
 Generate and return ONLY valid JSON (no markdown, no extra text) with this exact structure:
 {
@@ -362,7 +364,7 @@ Generate and return ONLY valid JSON (no markdown, no extra text) with this exact
 
   try {
     const response = await client.messages.create({
-      model: "claude-sonnet-4-5",
+      model: "claude-opus-4-6",
       max_tokens: 8000,
       temperature: 0.7,
       messages: [

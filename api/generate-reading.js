@@ -193,7 +193,10 @@ module.exports = async function handler(req, res) {
         console.log(`[GENERATE] ✅ Saved for ${reading.email}`);
 
         // Send email notification
-        const readingUrl = `https://starsignal.co/r/${readingId}`;
+        const paymentRef = reading.whop_order_id || '';
+        const readingUrl = paymentRef
+            ? `https://starsignal.co/r/${readingId}?pay=${paymentRef}`
+            : `https://starsignal.co/r/${readingId}`;
         await sendReadingEmail(reading.email, reading.first_name, readingUrl, readingContent.lifePathNumber);
 
         return res.status(200).json({ success: true, readingId, elapsed });
