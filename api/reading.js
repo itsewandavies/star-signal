@@ -91,7 +91,7 @@ module.exports = async function handler(req, res) {
       readingContent: data.reading_content,
     });
   } catch (error) {
-    console.error("[READING] Error:", error.message);
-    return res.status(500).json({ error: "Internal server error" });
+    console.error("[READING] Error:", error.message, error.code, JSON.stringify(error));
+    return res.status(500).json({ error: "Internal server error", detail: error.message });
   }
 }
