@@ -58,8 +58,10 @@ module.exports = async function handler(req, res) {
       .eq("id", data.id)
       .catch((err) => console.warn("[READING] Failed to update accessed_at:", err));
 
-    // If still generating, don't include full content yet
-    if (data.generation_status !== "complete") {
+    // If still generating or pending, don't include full content yet
+    const isComplete = data.generation_status === 'complete' ||
+                       data.generation_status === 'completed';
+    if (!isComplete) {
       return res.status(200).json({
         uuid: data.id,
         email: data.email,

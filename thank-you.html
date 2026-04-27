@@ -314,9 +314,9 @@
     </div>
 
     <script>
-        const POLL_INTERVAL = 3000; // 3 seconds
-        const POLL_TIMEOUT = 60000; // 60 seconds
-        const PROGRESS_INCREMENT = 5; // % per interval
+        const POLL_INTERVAL = 4000; // 4 seconds
+        const POLL_TIMEOUT = 360000; // 6 minutes — Claude generation takes ~3 minutes
+        const PROGRESS_INCREMENT = 1; // % per interval — smooth over 6 minutes
 
         let pollStartTime = Date.now();
         let currentProgress = 0;
