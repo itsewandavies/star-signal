@@ -47,22 +47,23 @@ module.exports = async function handler(req, res) {
     const body = req.body;
 
     // Check if this is a Whop webhook
-    if (body.action === "payment_succeeded" && body.data?.metadata?.readingUuid) {
-      // Whop OTO payment webhook
-      const { readingUuid, email } = body.data.metadata;
+    if (body.action === 'payment_succeeded' && body.data) {
+      const meta = body.data.metadata || body.data.checkout_metadata || {};
+      const readingUuid = meta.readingUuid || meta.reading_id;
+      const email = body.data.user_email || body.data.email || meta.email;
 
-      try {
-        await unlockRecord(readingUuid, email);
-        console.log(`[UNLOCK] OTO unlocked for ${email} (UUID: ${readingUuid})`);
-        return res.status(200).json({ success: true });
-      } catch (error) {
-        console.error("[UNLOCK] Error unlocking:", error.message);
-        // Still return 200 so Whop doesn't retry
-        return res.status(200).json({
-          success: false,
-          error: error.message,
-        });
+      if (readingUuid || email) {
+        try {
+          await unlockRecord(readingUuid, email);
+          console.log(`[UNLOCK] OTO unlocked for ${email} (UUID: ${readingUuid})`);
+          return res.status(200).json({ success: true });
+        } catch (error) {
+          console.error('[UNLOCK] Error unlocking:', error.message);
+          return res.status(200).json({ success: false, error: error.message });
+        }
       }
+      // Whop webhook but no reading identifier — return 200 to prevent retries
+      return res.status(200).json({ success: false, reason: 'no_reading_id' });
     }
 
     // Direct API call: { uuid, email }

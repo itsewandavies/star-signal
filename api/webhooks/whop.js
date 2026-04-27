@@ -101,11 +101,12 @@ function extractPayload(body) {
     const payment = data.payment || data;
 
     let email, whopOrderId, firstName, birthDate, birthTime,
-        birthCity, gender, lifeArea, relationshipStatus, cosmicSigns;
+        birthCity, gender, lifeArea, relationshipStatus, cosmicSigns, planId;
 
     if (apiVersion === 'v5') {
         email       = payment.user_email || data.user_email;
         whopOrderId = payment.id         || data.id;
+        planId      = payment.plan_id    || data.plan_id || payment.plan?.id || data.plan?.id || '';
         const meta  = payment.checkout_metadata || data.checkout_metadata || {};
 
         firstName          = meta.firstName          || 'Cosmic Traveler';
@@ -125,6 +126,7 @@ function extractPayload(body) {
     } else {
         email       = data.email || data.user?.email;
         whopOrderId = data.order_id || data.id;
+        planId      = data.plan_id || data.plan?.id || '';
         const meta  = data.metadata || {};
 
         firstName          = meta.firstName          || 'Cosmic Traveler';
@@ -142,9 +144,13 @@ function extractPayload(body) {
         } catch { cosmicSigns = []; }
     }
 
-    return { email, whopOrderId, firstName, birthDate, birthTime,
+    return { email, whopOrderId, planId, firstName, birthDate, birthTime,
              birthCity, gender, lifeArea, relationshipStatus, cosmicSigns };
 }
+
+// Plan IDs — Account 2 (biz_s27RTb1bp6HdK2)
+const PLAN_FE_ONLY   = 'plan_WrudbHcLudmhj'; // $19 reading only
+const PLAN_FE_BUNDLE = 'plan_VcKKBavba0EAG'; // $46 reading + deep blueprint unlock
 
 // ============================================================
 // MAIN HANDLER
@@ -172,9 +178,12 @@ module.exports = async function handler(req, res) {
             return res.status(200).json({ error: 'Missing required fields', payload });
         }
 
-        const { email, whopOrderId, ...quizData } = payload;
+        const { email, whopOrderId, planId, ...quizData } = payload;
 
-        console.log(`[WEBHOOK] Received for ${email} (order: ${whopOrderId})`);
+        // Bundle purchase = $46 FE+bump — includes deep blueprint unlock
+        const isBundlePurchase = planId === PLAN_FE_BUNDLE;
+
+        console.log(`[WEBHOOK] Received for ${email} (order: ${whopOrderId}, plan: ${planId || 'unknown'}, bundle: ${isBundlePurchase})`);
 
         // ── Check for existing reading ───────────────────────
         const { data: existing } = await supabase
@@ -219,6 +228,9 @@ module.exports = async function handler(req, res) {
                     relationship_status: quizData.relationshipStatus,
                     cosmic_signs:        quizData.cosmicSigns,
                     generation_status:   'pending',
+                    // Bundle purchase includes deep blueprint unlock
+                    oto_unlocked:        isBundlePurchase,
+                    oto_unlocked_at:     isBundlePurchase ? new Date().toISOString() : null,
                 }])
                 .select('id')
                 .single();
@@ -228,13 +240,19 @@ module.exports = async function handler(req, res) {
             console.log(`[WEBHOOK] Created reading record: ${readingId}`);
         } else {
             // Reset a failed/stalled record
+            const resetUpdate = {
+                generation_status: 'pending',
+                whop_order_id:     whopOrderId,
+                updated_at:        new Date().toISOString()
+            };
+            // If this is a bundle purchase, mark oto_unlocked (don't downgrade if already true)
+            if (isBundlePurchase) {
+                resetUpdate.oto_unlocked    = true;
+                resetUpdate.oto_unlocked_at = new Date().toISOString();
+            }
             await supabase
                 .from('star_signal_readings')
-                .update({
-                    generation_status: 'pending',
-                    whop_order_id:     whopOrderId,
-                    updated_at:        new Date().toISOString()
-                })
+                .update(resetUpdate)
                 .eq('id', existing.id);
             console.log(`[WEBHOOK] Reset stalled record to pending: ${readingId}`);
         }

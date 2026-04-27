@@ -21,7 +21,7 @@ const supabase = createClient(
     process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-const WHOP_API_KEY = process.env.WHOP_API_KEY_STAR || process.env.WHOP_API_KEY; // Acct 2: biz_s27RTb1bp6HdK2
+const WHOP_API_KEY = (process.env.WHOP_API_KEY_STAR || process.env.WHOP_API_KEY || '').trim();
 const COMPANY_ID     = 'biz_s27RTb1bp6HdK2';
 const FUNNEL_ID      = 'star-signal';
 const FUNNEL_DOMAIN  = 'https://starsignal.co';
@@ -63,7 +63,8 @@ async function whopPost(path, body) {
 // ── Main handler ──────────────────────────────────────────────
 module.exports = async (req, res) => {
     if (req.method === 'OPTIONS') {
-        return res.status(200).set(corsHeaders).end();
+        Object.entries(corsHeaders).forEach(([k,v]) => res.setHeader(k, v));
+        return res.status(200).end();
     }
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
@@ -238,15 +239,15 @@ module.exports = async (req, res) => {
             });
         }
 
-        // ── STEP 6: Update reading unlock record ─────────────────
+        // ── STEP 6: Mark reading as OTO unlocked ─────────────────
         if (readingId) {
-            await supabase.from('star_signal_unlocks').upsert({
-                reading_id:       readingId,
-                has_oto:          true,
-                oto_area:         lifeArea,
-                oto_payment_id:   confirmedPaymentId || 'processing',
-                oto_purchased_at: new Date().toISOString()
-            }, { onConflict: 'reading_id' });
+            await supabase
+                .from('star_signal_readings')
+                .update({
+                    oto_unlocked:    true,
+                    oto_unlocked_at: new Date().toISOString()
+                })
+                .eq('id', readingId);
         }
 
         // ── STEP 7: Return success ────────────────────────────────
