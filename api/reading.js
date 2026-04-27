@@ -51,11 +51,12 @@ module.exports = async function handler(req, res) {
       throw error;
     }
 
-    // Update accessed_at (fire and forget, don't await)
+    // Update accessed_at (fire and forget)
     supabase
       .from("star_signal_readings")
       .update({ accessed_at: new Date().toISOString() })
       .eq("id", data.id)
+      .then(() => {})
       .catch((err) => console.warn("[READING] Failed to update accessed_at:", err));
 
     // If still generating or pending, don't include full content yet
@@ -91,7 +92,7 @@ module.exports = async function handler(req, res) {
       readingContent: data.reading_content,
     });
   } catch (error) {
-    console.error("[READING] Error:", error.message, error.code, JSON.stringify(error));
-    return res.status(500).json({ error: "Internal server error", detail: error.message });
+    console.error("[READING] Error:", error.message);
+    return res.status(500).json({ error: "Internal server error" });
   }
 }
