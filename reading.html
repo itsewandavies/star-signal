@@ -176,20 +176,22 @@
 
     .container-narrow {
       max-width: 780px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
     }
 
     /* =============================================
-       SECTION WRAPPER
+       SECTION WRAPPER + REVEAL ANIMATION
     ============================================= */
     .section {
-      padding: clamp(3rem, 8vw, 5.5rem) 0;
+      padding: clamp(3.5rem, 9vw, 6rem) 0;
       position: relative;
     }
 
     .section-inner {
       opacity: 0;
-      transform: translateY(32px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      transform: translateY(36px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
     }
 
     .section-inner.visible {
@@ -204,7 +206,10 @@
       display: flex;
       align-items: center;
       gap: 1rem;
-      margin: clamp(2rem, 5vw, 3.5rem) 0;
+      margin: 0;
+      padding: 0 1.25rem;
+      max-width: 1100px;
+      margin: 0 auto;
     }
 
     .divider::before, .divider::after {
@@ -216,41 +221,56 @@
 
     .divider-gem {
       color: var(--gold);
-      font-size: 1rem;
+      font-size: 0.9rem;
       letter-spacing: 0.3em;
+      opacity: 0.7;
     }
 
-    /* section heading */
+    /* =============================================
+       SECTION LABELS + HEADINGS
+    ============================================= */
     .section-tag {
       display: inline-block;
       font-family: var(--font-body);
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 600;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--gold);
       border: 1px solid var(--gold-dim);
-      padding: 0.3rem 0.8rem;
+      padding: 0.3rem 0.9rem;
       border-radius: var(--radius-full);
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-opener {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--cream);
+      line-height: 1.15;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
     }
 
     .section-heading {
       font-family: var(--font-heading);
-      font-size: clamp(1.8rem, 5vw, 3rem);
+      font-size: clamp(1.5rem, 3.5vw, 2.25rem);
       font-weight: 600;
       color: var(--cream);
       line-height: 1.2;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.6rem;
     }
 
     .section-heading span { color: var(--gold); }
 
     .section-sub {
-      font-size: clamp(0.9rem, 2vw, 1rem);
+      font-size: clamp(0.88rem, 2vw, 0.98rem);
       color: var(--purple-muted);
       max-width: 560px;
       margin-bottom: 2.5rem;
+      line-height: 1.7;
     }
 
     /* =============================================
@@ -262,7 +282,7 @@
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-radius: var(--radius-md);
-      padding: clamp(1.25rem, 3vw, 2rem);
+      padding: clamp(1.5rem, 3vw, 2.25rem);
       box-shadow: var(--shadow-card);
     }
 
@@ -270,6 +290,21 @@
       border-color: var(--gold-dim);
       background: var(--bg-card-gold);
       box-shadow: var(--shadow-gold), var(--shadow-card);
+    }
+
+    /* =============================================
+       PULL QUOTE — universal
+    ============================================= */
+    .pull-quote {
+      font-family: var(--font-heading);
+      font-size: clamp(1.15rem, 2.8vw, 1.5rem);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--cream);
+      border-left: 3px solid var(--gold);
+      padding-left: 1.25rem;
+      line-height: 1.65;
+      margin: 1.5rem 0;
     }
 
     /* =============================================
@@ -281,15 +316,15 @@
       display: flex;
       align-items: center;
       overflow: hidden;
-      padding: 5rem 0 4rem;
+      padding: 5rem 0 5rem;
     }
 
     /* Cosmic bg */
     .hero-bg {
       position: absolute; inset: 0;
       background:
-        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(100,60,180,0.4) 0%, transparent 65%),
-        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(212,175,55,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(100,60,180,0.45) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(212,175,55,0.1) 0%, transparent 60%),
         radial-gradient(ellipse 60% 80% at 10% 60%, rgba(40,20,90,0.5) 0%, transparent 70%),
         var(--bg-deep);
       z-index: 0;
@@ -356,220 +391,461 @@
       text-align: center;
     }
 
-    /* Life path circle */
+    /* Hero brand mark */
+    .hero-brand {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.65;
+      margin-bottom: 2rem;
+    }
+
+    .hero-name {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 6.5vw, 4.25rem);
+      font-weight: 600;
+      color: var(--cream);
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+    }
+
+    .hero-name span { color: var(--gold); }
+
+    /* Life path circle — larger */
     .lp-orbit {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: clamp(90px, 15vw, 120px);
-      height: clamp(90px, 15vw, 120px);
+      width: clamp(100px, 16vw, 130px);
+      height: clamp(100px, 16vw, 130px);
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(212,175,55,0.15), rgba(212,175,55,0.03));
+      background: radial-gradient(circle, rgba(212,175,55,0.18), rgba(212,175,55,0.03));
       border: 2px solid var(--gold);
-      box-shadow: 0 0 40px rgba(212,175,55,0.25), inset 0 0 30px rgba(212,175,55,0.05);
-      margin: 1.75rem auto 0.75rem;
+      box-shadow: 0 0 50px rgba(212,175,55,0.3), inset 0 0 30px rgba(212,175,55,0.06);
+      margin: 2rem auto 0.75rem;
       flex-direction: column;
-      gap: 0;
+      gap: 2px;
       animation: pulse-orbit 4s ease-in-out infinite;
     }
 
     @keyframes pulse-orbit {
-      0%, 100% { box-shadow: 0 0 40px rgba(212,175,55,0.25), inset 0 0 30px rgba(212,175,55,0.05); }
-      50%       { box-shadow: 0 0 60px rgba(212,175,55,0.45), inset 0 0 40px rgba(212,175,55,0.12); }
+      0%, 100% { box-shadow: 0 0 50px rgba(212,175,55,0.3), inset 0 0 30px rgba(212,175,55,0.06); }
+      50%       { box-shadow: 0 0 80px rgba(212,175,55,0.55), inset 0 0 50px rgba(212,175,55,0.14); }
     }
 
     .lp-label {
       font-family: var(--font-body);
-      font-size: 0.6rem;
-      letter-spacing: 0.18em;
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--gold);
-      opacity: 0.8;
+      opacity: 0.75;
     }
 
     .lp-number {
       font-family: var(--font-heading);
-      font-size: clamp(2.5rem, 6vw, 3.5rem);
+      font-size: clamp(3rem, 7vw, 5rem);
       font-weight: 700;
       color: var(--gold);
       line-height: 1;
     }
 
-    .hero-name {
-      font-family: var(--font-heading);
-      font-size: clamp(2.2rem, 7vw, 4.5rem);
-      font-weight: 600;
-      color: var(--cream);
-      letter-spacing: -0.01em;
-    }
-
-    .hero-name span { color: var(--gold); }
-
     .hero-archetype {
       font-family: var(--font-heading);
-      font-size: clamp(1.1rem, 3vw, 1.6rem);
+      font-size: clamp(1.1rem, 3vw, 1.65rem);
       font-style: italic;
       color: var(--purple-muted);
-      margin-top: 0.25rem;
+      margin-top: 0.4rem;
+      letter-spacing: 0.01em;
     }
 
+    /* Hero pills */
     .hero-meta {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.75rem;
+      gap: 0.6rem;
+      flex-wrap: wrap;
       margin-top: 1.25rem;
-      font-size: 0.85rem;
-      color: var(--purple-muted);
+    }
+
+    .hero-meta-dot {
+      color: var(--gold);
+      opacity: 0.4;
+      font-size: 0.5rem;
+    }
+
+    .hero-pill {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
       font-weight: 500;
+      color: var(--gold);
+      background: rgba(212,175,55,0.1);
+      border: 1px solid var(--gold-dim);
+      border-radius: var(--radius-full);
+      padding: 0.3rem 0.9rem;
       letter-spacing: 0.04em;
     }
 
-    .hero-meta-dot { color: var(--gold); opacity: 0.5; }
-
+    /* Opening revelation */
     .hero-opening {
       max-width: 680px;
-      margin: 2rem auto 0;
+      margin: 2.5rem auto 0;
+      text-align: left;
+    }
+
+    .hero-opening p {
       font-family: var(--font-heading);
       font-size: clamp(1.05rem, 2.5vw, 1.3rem);
       font-style: italic;
       color: var(--cream-dim);
       line-height: 1.85;
+      margin-bottom: 1.5rem;
     }
 
-    .hero-scroll-hint {
-      margin-top: 2.5rem;
+    .hero-opening p:first-child {
+      font-size: clamp(1.2rem, 3vw, 1.55rem);
+      color: var(--cream);
+      font-weight: 500;
+    }
+
+    /* Hero base divider */
+    .hero-divider {
+      max-width: 680px;
+      margin: 2.5rem auto 0;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.4rem;
-      font-size: 0.75rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--gold);
-      opacity: 0.7;
+      gap: 1rem;
     }
 
-    .scroll-arrow {
-      width: 20px; height: 20px;
-      border-right: 1.5px solid var(--gold);
-      border-bottom: 1.5px solid var(--gold);
-      transform: rotate(45deg);
-      animation: bounce-arrow 2s ease-in-out infinite;
-      margin-top: 0.25rem;
+    .hero-divider-line {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
     }
 
-    @keyframes bounce-arrow {
-      0%, 100% { transform: rotate(45deg) translateY(0); }
-      50%       { transform: rotate(45deg) translateY(5px); }
-    }
-
-    /* =============================================
-       REVELATION SECTION
-    ============================================= */
-    .revelation-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-      margin-top: 2rem;
-    }
-
-    @media (max-width: 780px) {
-      .revelation-grid { grid-template-columns: 1fr 1fr; }
-    }
-
-    @media (max-width: 560px) {
-      .revelation-grid { grid-template-columns: 1fr; }
-    }
-
-    .rev-card {
-      padding: clamp(1.25rem, 3vw, 1.75rem);
-      border-radius: var(--radius-md);
-      background: var(--bg-card);
-      border: 1px solid rgba(255,255,255,0.07);
-      backdrop-filter: blur(10px);
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .rev-card.threshold {
-      background: var(--bg-card-gold);
-      border-color: var(--gold-dim);
-      box-shadow: var(--shadow-gold);
-    }
-
-    .rev-icon {
-      font-size: 1.5rem;
-      line-height: 1;
-    }
-
-    .rev-tag {
-      font-size: 0.65rem;
-      font-weight: 600;
+    .hero-section-count {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 500;
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--purple-muted);
     }
 
-    .rev-card.threshold .rev-tag { color: var(--gold); }
-
-    .rev-headline {
-      font-family: var(--font-heading);
-      font-size: clamp(1.15rem, 2.5vw, 1.4rem);
-      font-weight: 600;
-      color: var(--cream);
-      line-height: 1.3;
-    }
-
-    .rev-body {
-      font-size: 0.875rem;
-      color: var(--cream-dim);
-      line-height: 1.75;
-    }
-
-    .threshold-month {
-      display: inline-block;
-      font-family: var(--font-heading);
-      font-size: clamp(1.6rem, 4vw, 2.2rem);
-      font-weight: 700;
+    .hero-scroll-hint {
+      margin-top: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
       color: var(--gold);
-      letter-spacing: 0.02em;
+      opacity: 0.65;
+    }
+
+    .scroll-arrow {
+      width: 18px; height: 18px;
+      border-right: 1.5px solid var(--gold);
+      border-bottom: 1.5px solid var(--gold);
+      transform: rotate(45deg);
+      animation: bounce-arrow 2s ease-in-out infinite;
+      margin-top: 0.2rem;
+    }
+
+    @keyframes bounce-arrow {
+      0%, 100% { transform: rotate(45deg) translateY(0); }
+      50%       { transform: rotate(45deg) translateY(6px); }
     }
 
     /* =============================================
-       NUMEROLOGY SECTION
+       REVELATION SECTION
+    ============================================= */
+    .revelation-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-top: 2.5rem;
+    }
+
+    .rev-card-v2 {
+      position: relative;
+      padding: clamp(2rem, 4vw, 3rem);
+      border-radius: var(--radius-lg);
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.07);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      overflow: hidden;
+      max-width: 860px;
+    }
+
+    /* Faded large numeral overlay */
+    .rev-card-v2::before {
+      content: attr(data-num);
+      position: absolute;
+      top: -0.15em;
+      right: 0.1em;
+      font-family: var(--font-heading);
+      font-size: clamp(6rem, 14vw, 9rem);
+      font-weight: 700;
+      color: var(--gold);
+      opacity: 0.06;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .rev-card-top {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .rev-icon-v2 {
+      font-size: 1.4rem;
+      line-height: 1;
+    }
+
+    .rev-tag-v2 {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--purple-muted);
+    }
+
+    .rev-headline-v2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.35rem, 3vw, 1.8rem);
+      font-weight: 600;
+      color: var(--cream);
+      line-height: 1.25;
+      margin-bottom: 1.25rem;
+    }
+
+    /* Body text with pull quote on first p */
+    .rev-body-v2 p {
+      font-size: clamp(0.9rem, 2vw, 0.98rem);
+      color: var(--cream-dim);
+      line-height: 1.85;
+      margin-bottom: 1.1rem;
+    }
+
+    .rev-body-v2 p:first-child {
+      font-family: var(--font-heading);
+      font-size: clamp(1.05rem, 2.5vw, 1.3rem);
+      font-style: italic;
+      color: var(--cream);
+      border-left: 3px solid var(--gold);
+      padding-left: 1.25rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    /* =============================================
+       THRESHOLD FULL-WIDTH SECTION
+    ============================================= */
+    .threshold-section {
+      position: relative;
+      padding: clamp(4rem, 10vw, 7rem) 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 50%, rgba(212,175,55,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 100% 100% at 50% 0%, rgba(100,60,180,0.2) 0%, transparent 60%),
+        #0A0915;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .threshold-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    }
+
+    .threshold-section::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    }
+
+    .threshold-tag {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold-dim);
+      padding: 0.3rem 0.9rem;
+      border-radius: var(--radius-full);
+      margin-bottom: 2.5rem;
+    }
+
+    /* Pulsing circle around month */
+    .threshold-month-display {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 2rem;
+      padding: 2.5rem 3.5rem;
+    }
+
+    .threshold-pulse-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1.5px solid var(--gold-dim);
+      animation: threshold-pulse 3s ease-in-out infinite;
+    }
+
+    .threshold-pulse-ring::before {
+      content: '';
+      position: absolute;
+      inset: -12px;
+      border-radius: 50%;
+      border: 1px solid rgba(212,175,55,0.15);
+      animation: threshold-pulse 3s ease-in-out infinite 0.5s;
+    }
+
+    .threshold-pulse-ring::after {
+      content: '';
+      position: absolute;
+      inset: -24px;
+      border-radius: 50%;
+      border: 1px solid rgba(212,175,55,0.07);
+      animation: threshold-pulse 3s ease-in-out infinite 1s;
+    }
+
+    @keyframes threshold-pulse {
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50%       { opacity: 1; transform: scale(1.04); }
+    }
+
+    .threshold-month-big {
+      font-family: var(--font-heading);
+      font-size: clamp(3rem, 9vw, 5.5rem);
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+      line-height: 1;
+      text-shadow: 0 0 60px rgba(212,175,55,0.4);
+      position: relative; z-index: 1;
+      display: block;
+    }
+
+    .threshold-headline {
+      font-family: var(--font-heading);
+      font-size: clamp(1.3rem, 3vw, 1.9rem);
+      font-weight: 600;
+      color: var(--cream);
+      max-width: 680px;
+      margin: 0 auto 1.5rem;
+      line-height: 1.3;
+    }
+
+    .threshold-body {
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .threshold-body p {
+      font-size: clamp(0.9rem, 2vw, 1.02rem);
+      color: var(--cream-dim);
+      line-height: 1.9;
+      margin-bottom: 1.25rem;
+    }
+
+    .threshold-body p:first-child {
+      font-family: var(--font-heading);
+      font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+      font-style: italic;
+      color: var(--cream);
+      border-left: 3px solid var(--gold);
+      padding-left: 1.25rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .threshold-callout {
+      max-width: 580px;
+      margin: 2.5rem auto 0;
+      padding: 1.5rem 2rem;
+      background: rgba(212,175,55,0.07);
+      border: 1px solid var(--gold-dim);
+      border-radius: var(--radius-md);
+      font-family: var(--font-heading);
+      font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+      font-style: italic;
+      color: var(--gold);
+      line-height: 1.65;
+      text-align: center;
+    }
+
+    /* =============================================
+       STAT PILLS (numerology)
     ============================================= */
     .stats-row {
       display: flex;
-      gap: 1rem;
+      gap: 0.75rem;
       flex-wrap: wrap;
-      margin: 1.5rem 0 2rem;
+      margin: 0 0 2.5rem;
     }
 
     .stat-pill {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.5rem;
       background: var(--bg-card);
       border: 1px solid var(--gold-dim);
       border-radius: var(--radius-full);
-      padding: 0.5rem 1rem;
-      font-size: 0.85rem;
+      padding: 0.45rem 1rem;
+      font-size: 0.82rem;
       font-weight: 500;
-      color: var(--cream);
+      color: var(--cream-dim);
+      letter-spacing: 0.02em;
     }
 
     .stat-pill strong {
       color: var(--gold);
-      font-size: 1rem;
+      font-size: 0.92rem;
       font-family: var(--font-heading);
+      font-weight: 700;
     }
 
-    .life-path-text {
+    /* =============================================
+       LIFE PATH DESCRIPTION + NUMEROLOGY CARDS
+    ============================================= */
+    #life-path-desc p {
       font-size: clamp(0.9rem, 2vw, 1rem);
       color: var(--cream-dim);
-      line-height: 1.85;
+      line-height: 1.9;
+      margin-bottom: 1.25rem;
+    }
+
+    #life-path-desc p:first-child {
+      font-family: var(--font-heading);
+      font-size: clamp(1.1rem, 2.8vw, 1.45rem);
+      font-style: italic;
+      color: var(--cream);
+      border-left: 3px solid var(--gold);
+      padding-left: 1.25rem;
+      line-height: 1.7;
       margin-bottom: 2rem;
     }
 
@@ -577,7 +853,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1.25rem;
-      margin-top: 1.5rem;
+      margin-top: 2rem;
     }
 
     @media (max-width: 620px) {
@@ -588,113 +864,144 @@
       background: var(--bg-card);
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: var(--radius-md);
-      padding: 1.5rem;
-      text-align: center;
+      padding: 1.75rem 1.5rem;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
       backdrop-filter: blur(8px);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .num-card:hover {
+      border-color: var(--gold-dim);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .num-label {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--purple-muted);
+      margin-bottom: 0.25rem;
     }
 
     .num-big {
       font-family: var(--font-heading);
-      font-size: clamp(2.5rem, 6vw, 3.5rem);
+      font-size: clamp(3rem, 7vw, 4.5rem);
       font-weight: 700;
       color: var(--gold);
       line-height: 1;
+      margin-bottom: 0.5rem;
     }
 
-    .num-label {
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--purple-muted);
-    }
-
-    .num-meaning {
-      font-size: 0.82rem;
+    .num-meaning p {
+      font-size: 0.855rem;
       color: var(--cream-dim);
-      line-height: 1.6;
-      text-align: center;
-      margin-top: 0.25rem;
+      line-height: 1.7;
+      margin-bottom: 0.75rem;
+      text-align: left;
+    }
+
+    .num-meaning p:first-child {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--cream);
     }
 
     /* =============================================
        LIFE AREA BLUEPRINT SECTION
     ============================================= */
-    .blueprint-text {
-      font-size: clamp(0.9rem, 2vw, 1.0625rem);
+    .blueprint-text p {
+      font-size: clamp(0.92rem, 2vw, 1.05rem);
       color: var(--cream-dim);
-      line-height: 1.9;
+      line-height: 1.95;
+      margin-bottom: 1.4rem;
     }
 
-    .blueprint-text p + p {
-      margin-top: 1.25em;
+    .blueprint-text p:first-child {
+      font-family: var(--font-heading);
+      font-size: clamp(1.1rem, 2.8vw, 1.45rem);
+      font-style: italic;
+      color: var(--cream);
+      border-left: 3px solid var(--gold);
+      padding-left: 1.25rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
     }
 
     /* =============================================
-       FORECAST SECTION
+       FORECAST SECTION — NO ACCORDION, FULL CARDS
     ============================================= */
     .forecast-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-      margin-top: 2rem;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 2rem;
+      margin-top: 2.5rem;
     }
 
-    @media (max-width: 780px) {
-      .forecast-grid { grid-template-columns: repeat(2, 1fr); }
+    /* Force accordion open */
+    .month-detail {
+      max-height: none !important;
+      overflow: visible !important;
     }
 
-    @media (max-width: 480px) {
-      .forecast-grid { grid-template-columns: 1fr; }
+    .month-expand-btn {
+      display: none !important;
     }
 
     .month-card {
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(255,255,255,0.08);
-      overflow: hidden;
-      cursor: pointer;
-      transition: var(--transition);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255,255,255,0.09);
+      overflow: visible;
+      cursor: default;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     .month-card:hover {
-      border-color: var(--gold-dim);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-gold);
+      border-color: rgba(212,175,55,0.25);
+      box-shadow: 0 0 30px rgba(212,175,55,0.08), var(--shadow-card);
+      transform: none;
     }
 
-    .month-card[data-energy="Portal"]       { background: rgba(100,60,180,0.15); }
-    .month-card[data-energy="Growth"]       { background: rgba(60,180,120,0.1); }
-    .month-card[data-energy="Release"]      { background: rgba(180,60,100,0.1); }
-    .month-card[data-energy="Acceleration"] { background: rgba(212,175,55,0.1); }
-    .month-card[data-energy="Pause"]        { background: rgba(60,100,180,0.1); }
+    /* September (threshold month) special styling */
+    .month-card[data-month="september"] {
+      border-color: var(--gold-dim) !important;
+      box-shadow: 0 0 50px rgba(212,175,55,0.18), var(--shadow-card) !important;
+    }
+
+    .month-card[data-energy="Portal"]       { background: rgba(100,60,180,0.14); }
+    .month-card[data-energy="Growth"]       { background: rgba(60,180,120,0.09); }
+    .month-card[data-energy="Release"]      { background: rgba(180,60,100,0.09); }
+    .month-card[data-energy="Acceleration"] { background: rgba(212,175,55,0.09); }
+    .month-card[data-energy="Pause"]        { background: rgba(60,100,180,0.09); }
 
     .month-header {
-      padding: 1rem 1.25rem 0.75rem;
+      padding: 2rem 2rem 0.5rem;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
-      gap: 0.5rem;
+      gap: 1rem;
     }
 
     .month-name {
       font-family: var(--font-heading);
-      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
-      font-weight: 600;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 700;
       color: var(--cream);
+      letter-spacing: -0.01em;
     }
 
     .energy-badge {
       font-size: 0.6rem;
       font-weight: 700;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      padding: 0.25rem 0.6rem;
+      padding: 0.3rem 0.75rem;
       border-radius: var(--radius-full);
       white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .energy-badge.Portal       { background: rgba(100,60,180,0.4); color: #C9AEFF; border: 1px solid rgba(180,120,255,0.3); }
@@ -704,159 +1011,173 @@
     .energy-badge.Pause        { background: rgba(60,100,180,0.3); color: #9BBEFF; border: 1px solid rgba(60,100,180,0.3); }
 
     .month-theme {
-      padding: 0 1.25rem 1rem;
-      font-size: 0.8rem;
+      padding: 0 2rem 1.25rem;
+      font-family: var(--font-heading);
+      font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+      font-style: italic;
       color: var(--purple-muted);
       line-height: 1.5;
     }
 
-    .month-expand-btn {
-      width: 100%;
-      padding: 0.6rem 1.25rem;
-      background: rgba(255,255,255,0.04);
-      border: none;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      color: var(--gold);
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-      transition: background 0.2s;
-      min-height: 44px;
-    }
-
-    .month-expand-btn:hover { background: rgba(212,175,55,0.08); }
-
-    .expand-chevron {
-      display: inline-block;
-      transition: transform 0.3s ease;
-    }
-
-    .month-card.open .expand-chevron { transform: rotate(180deg); }
-
-    .month-detail {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.45s cubic-bezier(0.16,1,0.3,1);
-    }
-
-    .month-card.open .month-detail { max-height: 600px; }
-
     .month-detail-inner {
-      padding: 1rem 1.25rem 1.25rem;
+      padding: 1.25rem 2rem 2rem;
       border-top: 1px solid rgba(255,255,255,0.06);
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 1rem;
     }
 
     .month-detail-text {
-      font-size: 0.82rem;
+      font-size: clamp(0.88rem, 2vw, 0.97rem);
       color: var(--cream-dim);
-      line-height: 1.75;
+      line-height: 1.85;
+    }
+
+    /* Split forecast paragraphs visually */
+    .month-detail-text p + p {
+      margin-top: 0.9em;
     }
 
     .day-row {
       display: flex;
-      gap: 0.6rem;
+      gap: 0.5rem;
       flex-wrap: wrap;
+      align-items: center;
     }
 
     .day-chip {
-      font-size: 0.7rem;
-      font-weight: 600;
-      padding: 0.2rem 0.55rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
       border-radius: var(--radius-full);
     }
 
-    .day-chip.power { background: rgba(212,175,55,0.2); color: var(--gold); border: 1px solid var(--gold-dim); }
+    .day-chip.power   { background: rgba(212,175,55,0.2); color: var(--gold); border: 1px solid var(--gold-dim); }
     .day-chip.caution { background: rgba(180,60,100,0.2); color: #FF9BBF; border: 1px solid rgba(180,60,100,0.3); }
 
     .day-label {
       font-size: 0.65rem;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       color: var(--purple-muted);
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.4rem;
     }
 
     .month-affirmation {
       font-family: var(--font-heading);
       font-style: italic;
-      font-size: clamp(0.9rem, 2vw, 1.05rem);
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
       color: var(--gold);
-      border-left: 2px solid var(--gold-dim);
-      padding-left: 0.75rem;
-      line-height: 1.55;
+      border-left: 3px solid var(--gold-dim);
+      padding-left: 1rem;
+      line-height: 1.6;
+      margin-top: 0.5rem;
     }
 
     /* =============================================
        MORNING RITUAL SECTION
     ============================================= */
-    .ritual-grid {
+    .ritual-grid-2x2 {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 1.25rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1.25rem;
     }
 
-    @media (max-width: 620px) {
-      .ritual-grid { grid-template-columns: 1fr; }
+    @media (max-width: 560px) {
+      .ritual-grid-2x2 { grid-template-columns: 1fr; }
     }
 
-    .ritual-card {
+    .ritual-card-v2 {
       background: var(--bg-card);
       border: 1px solid rgba(255,255,255,0.07);
       border-radius: var(--radius-md);
-      padding: 1.5rem;
+      padding: 1.75rem;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.6rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .ritual-icon { font-size: 1.75rem; }
+    .ritual-card-v2:hover {
+      border-color: var(--gold-dim);
+      box-shadow: var(--shadow-gold);
+    }
 
-    .ritual-title {
+    .ritual-card-v2.affirmation-card {
+      background: var(--bg-card-gold);
+      border-color: var(--gold-dim);
+    }
+
+    .ritual-icon-v2 { font-size: 1.75rem; line-height: 1; }
+
+    .ritual-title-v2 {
       font-family: var(--font-heading);
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       font-weight: 600;
       color: var(--cream);
     }
 
-    .ritual-text {
-      font-size: 0.82rem;
+    .ritual-text-v2 {
+      font-size: 0.875rem;
       color: var(--cream-dim);
-      line-height: 1.7;
+      line-height: 1.75;
     }
 
-    .ritual-full {
+    .ritual-text-v2 p {
+      font-size: 0.875rem;
+      color: var(--cream-dim);
+      line-height: 1.75;
+      margin-bottom: 0.6rem;
+    }
+
+    /* Affirmation inside the card */
+    .ritual-affirmation-card-text {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: var(--gold);
+      line-height: 1.55;
+    }
+
+    /* Full ritual card — spans full width */
+    .ritual-full-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .ritual-full-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      font-weight: 600;
+      color: var(--cream);
+    }
+
+    .ritual-full-text {
       font-size: clamp(0.88rem, 2vw, 0.98rem);
       color: var(--cream-dim);
       line-height: 1.9;
-      margin-bottom: 1.75rem;
     }
 
-    .ritual-affirmation {
-      font-family: var(--font-heading);
-      font-style: italic;
-      font-size: clamp(1.3rem, 3.5vw, 1.9rem);
-      color: var(--gold);
-      text-align: center;
-      line-height: 1.5;
-      padding: 2rem;
-      border: 1px solid var(--gold-dim);
-      border-radius: var(--radius-md);
-      background: var(--bg-card-gold);
-      box-shadow: var(--shadow-gold);
+    .ritual-full-text p {
+      font-size: clamp(0.88rem, 2vw, 0.98rem);
+      color: var(--cream-dim);
+      line-height: 1.9;
+      margin-bottom: 0.9rem;
+    }
+
+    /* Hidden legacy affirmation — rendered by JS but displayed via card above */
+    .ritual-affirmation-hidden {
+      display: none;
     }
 
     /* =============================================
-       OTO SECTION
+       OTO SECTION — DRAMATIC LOCKED STATE
     ============================================= */
     #oto-section {
       position: relative;
@@ -864,29 +1185,50 @@
 
     .oto-locked-wrapper {
       text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .oto-veil {
+      position: relative;
+      margin-bottom: 3rem;
+    }
+
+    .oto-veil-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+      animation: veil-float 4s ease-in-out infinite;
+    }
+
+    @keyframes veil-float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-8px); }
     }
 
     .oto-life-headline {
       font-family: var(--font-heading);
-      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-size: clamp(1.8rem, 5vw, 3rem);
       font-weight: 600;
       color: var(--cream);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
     }
 
     .oto-life-sub {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       color: var(--purple-muted);
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
+      line-height: 1.65;
     }
 
     .oto-teaser-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 2rem;
+      align-items: flex-start;
+      gap: 0.9rem;
+      margin-bottom: 2.5rem;
       max-width: 520px;
       margin-left: auto;
       margin-right: auto;
@@ -895,31 +1237,32 @@
     .oto-teaser-list li {
       display: flex;
       align-items: flex-start;
-      gap: 0.7rem;
-      font-size: 0.92rem;
+      gap: 0.75rem;
+      font-size: 0.95rem;
       color: var(--cream-dim);
       text-align: left;
       width: 100%;
+      line-height: 1.65;
     }
 
     .oto-teaser-list li::before {
       content: '✦';
       color: var(--gold);
       flex-shrink: 0;
-      margin-top: 0.1em;
-      font-size: 0.75rem;
+      margin-top: 0.15em;
+      font-size: 0.7rem;
     }
 
     .oto-blur-preview {
       max-width: 600px;
-      margin: 0 auto 2rem;
-      padding: 1.5rem;
+      margin: 0 auto 3rem;
+      padding: 2rem;
       background: var(--bg-card);
       border: 1px solid rgba(255,255,255,0.06);
       border-radius: var(--radius-md);
       font-family: var(--font-heading);
       font-style: italic;
-      font-size: clamp(0.95rem, 2vw, 1.15rem);
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
       color: var(--cream-dim);
       line-height: 1.7;
       filter: blur(5px);
@@ -927,18 +1270,23 @@
       pointer-events: none;
     }
 
+    .oto-price-block {
+      margin-bottom: 1.75rem;
+    }
+
     .oto-price-tag {
       font-family: var(--font-heading);
-      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      font-size: clamp(2.2rem, 6vw, 3.5rem);
       font-weight: 700;
       color: var(--gold);
-      margin-bottom: 0.25rem;
+      line-height: 1;
+      margin-bottom: 0.4rem;
     }
 
     .oto-price-label {
       font-size: 0.8rem;
       color: var(--purple-muted);
-      margin-bottom: 1.5rem;
+      letter-spacing: 0.04em;
     }
 
     .oto-cta-btn {
@@ -951,19 +1299,19 @@
       font-family: var(--font-body);
       font-size: clamp(0.95rem, 2.5vw, 1.1rem);
       font-weight: 700;
-      padding: 1rem 2.5rem;
+      padding: 1.1rem 2.75rem;
       border: none;
       border-radius: var(--radius-full);
       cursor: pointer;
-      min-height: 56px;
+      min-height: 60px;
       transition: var(--transition);
-      box-shadow: 0 4px 24px rgba(212,175,55,0.4);
+      box-shadow: 0 4px 30px rgba(212,175,55,0.45);
       letter-spacing: 0.02em;
     }
 
     .oto-cta-btn:hover:not(:disabled) {
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 8px 36px rgba(212,175,55,0.55);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 10px 50px rgba(212,175,55,0.65);
     }
 
     .oto-cta-btn:disabled {
@@ -972,7 +1320,7 @@
     }
 
     .oto-sub-label {
-      margin-top: 0.75rem;
+      margin-top: 0.9rem;
       font-size: 0.78rem;
       color: var(--purple-muted);
     }
@@ -987,7 +1335,7 @@
     }
 
     .oto-cta-btn.loading .btn-spinner { display: block; }
-    .oto-cta-btn.loading .btn-text { display: none; }
+    .oto-cta-btn.loading .btn-text    { display: none; }
 
     .oto-error-msg {
       display: none;
@@ -1037,6 +1385,10 @@
       font-size: clamp(0.88rem, 2vw, 1rem);
       color: var(--cream-dim);
       line-height: 1.85;
+    }
+
+    .oto-text p {
+      margin-bottom: 1rem;
     }
 
     .oto-cards-grid {
@@ -1090,10 +1442,17 @@
     }
 
     /* =============================================
+       SECTION ALTERNATING BACKGROUND
+    ============================================= */
+    .section-alt {
+      background: rgba(255,255,255,0.018);
+    }
+
+    /* =============================================
        FOOTER
     ============================================= */
     .reading-footer {
-      padding: 3rem 0;
+      padding: 3.5rem 0;
       border-top: 1px solid rgba(255,255,255,0.06);
       text-align: center;
     }
@@ -1103,7 +1462,7 @@
       font-size: 1.4rem;
       color: var(--gold);
       letter-spacing: 0.08em;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.6rem;
     }
 
     .footer-note {
@@ -1121,18 +1480,25 @@
     .mt-2 { margin-top: 1rem; }
     .mt-3 { margin-top: 1.5rem; }
 
-    /* =============================================
-       DARK SECTION ALTERNATING
-    ============================================= */
-    .section-alt {
-      background: rgba(255,255,255,0.018);
-    }
-
     /* Scrollbar styling */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg-deep); }
     ::-webkit-scrollbar-thumb { background: var(--purple-dark); border-radius: 3px; }
 
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    @media (max-width: 780px) {
+      .hero { padding: 4rem 0 4rem; }
+      .threshold-month-display { padding: 1.75rem 2.5rem; }
+    }
+
+    @media (max-width: 480px) {
+      .month-header { padding: 1.5rem 1.25rem 0.5rem; flex-wrap: wrap; }
+      .month-theme  { padding: 0 1.25rem 1rem; }
+      .month-detail-inner { padding: 1rem 1.25rem 1.5rem; }
+      .ritual-full-card { padding: 1.5rem; }
+    }
   </style>
 </head>
 <body>
@@ -1174,25 +1540,34 @@
     <div class="container hero-content">
       <div class="section-inner" id="hero-inner">
 
+        <div class="hero-brand">✦ Star Signal ✦</div>
+
         <h1 class="hero-name"><span id="hero-first-name">Your</span>'s Cosmic Blueprint</h1>
 
         <div class="lp-orbit">
-          <span class="lp-label">LP</span>
+          <span class="lp-label">LIFE PATH</span>
           <span class="lp-number" id="hero-lp">—</span>
         </div>
 
         <p class="hero-archetype" id="hero-archetype">The Mystic</p>
 
         <div class="hero-meta">
-          <span id="hero-sun-sign">☀️ —</span>
+          <span class="hero-pill" id="hero-sun-sign">☀️ —</span>
           <span class="hero-meta-dot">·</span>
-          <span id="hero-birth-city">—</span>
+          <span class="hero-pill" id="hero-birth-city">—</span>
         </div>
 
-        <p class="hero-opening" id="hero-opening">Loading your cosmic message...</p>
+        <div class="hero-opening" id="hero-opening">
+          <p>Loading your cosmic message...</p>
+        </div>
+
+        <div class="hero-divider">
+          <div class="hero-divider-line"></div>
+          <div class="hero-section-count">Your reading contains 7 sections</div>
+        </div>
 
         <div class="hero-scroll-hint">
-          <span>12 sections below</span>
+          <span>Begin your reading</span>
           <div class="scroll-arrow"></div>
         </div>
 
@@ -1202,48 +1577,74 @@
 
   <!-- ==================== THE REVELATION ==================== -->
   <section class="section">
-    <div class="container section-inner" id="revelation-inner">
+    <div class="container-narrow section-inner" id="revelation-inner">
       <span class="section-tag">The Revelation</span>
-      <h2 class="section-heading">What We Found When We <span>Read Your Stars</span></h2>
-      <p class="section-sub">Three discoveries from deep within your natal blueprint that changed everything.</p>
+      <p class="section-opener">The stars remember everything.</p>
+      <h2 class="section-heading">What We Found When We <span>Read Your Chart</span></h2>
+      <p class="section-sub">Two discoveries from deep within your natal blueprint — and one that changes everything.</p>
 
-      <div class="revelation-grid">
+      <div class="revelation-stack">
 
-        <!-- Personality -->
-        <div class="glass-card rev-card" id="rev-personality">
-          <div class="rev-icon">🌟</div>
-          <div class="rev-tag">Your Nature</div>
-          <h3 class="rev-headline" id="rev-personality-headline">—</h3>
-          <p class="rev-body" id="rev-personality-body">—</p>
+        <!-- 01 Personality -->
+        <div class="rev-card-v2" id="rev-personality" data-num="01">
+          <div class="rev-card-top">
+            <span class="rev-icon-v2">🌟</span>
+            <span class="rev-tag-v2">Your Nature</span>
+          </div>
+          <h3 class="rev-headline-v2" id="rev-personality-headline">—</h3>
+          <div class="rev-body-v2" id="rev-personality-body"><p>—</p></div>
         </div>
 
-        <!-- Past Pattern -->
-        <div class="glass-card rev-card" id="rev-past">
-          <div class="rev-icon">🔮</div>
-          <div class="rev-tag">Past Pattern</div>
-          <h3 class="rev-headline" id="rev-past-headline">—</h3>
-          <p class="rev-body" id="rev-past-body">—</p>
-        </div>
-
-        <!-- Threshold Event -->
-        <div class="rev-card threshold" id="rev-threshold">
-          <div class="rev-icon">⚡</div>
-          <div class="rev-tag">Threshold Event</div>
-          <span class="threshold-month" id="rev-threshold-month">—</span>
-          <h3 class="rev-headline" id="rev-threshold-headline">—</h3>
-          <p class="rev-body" id="rev-threshold-body">—</p>
+        <!-- 02 Past Pattern -->
+        <div class="rev-card-v2" id="rev-past" data-num="02">
+          <div class="rev-card-top">
+            <span class="rev-icon-v2">🔮</span>
+            <span class="rev-tag-v2">Past Pattern</span>
+          </div>
+          <h3 class="rev-headline-v2" id="rev-past-headline">—</h3>
+          <div class="rev-body-v2" id="rev-past-body"><p>—</p></div>
         </div>
 
       </div>
     </div>
   </section>
 
-  <div class="divider container"><span class="divider-gem">✦ ✦ ✦</span></div>
+  <!-- ==================== THRESHOLD EVENT ==================== -->
+  <section class="threshold-section">
+    <div class="container">
+      <div class="section-inner" id="threshold-inner" style="text-align:center;">
+
+        <div class="threshold-tag">03 · Threshold Event</div>
+
+        <div class="threshold-month-display">
+          <div class="threshold-pulse-ring"></div>
+          <span class="threshold-month-big" id="rev-threshold-month">—</span>
+        </div>
+
+        <h3 class="threshold-headline" id="rev-threshold-headline">—</h3>
+
+        <div class="threshold-body" id="rev-threshold-body">
+          <p>—</p>
+        </div>
+
+        <div class="threshold-callout">
+          Mark this date in your calendar. The window that's coming cannot happen without what you do between now and then.
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Keep legacy rev-threshold wrapper for any CSS targets — hidden -->
+    <div id="rev-threshold" style="display:none;"></div>
+  </section>
+
+  <div class="divider"><span class="divider-gem">✦ ✦ ✦</span></div>
 
   <!-- ==================== NUMEROLOGICAL IDENTITY ==================== -->
   <section class="section section-alt">
-    <div class="container section-inner" id="numerology-inner">
+    <div class="container-narrow section-inner" id="numerology-inner">
       <span class="section-tag">Your Numbers</span>
+      <p class="section-opener">Your numbers tell a story.</p>
       <h2 class="section-heading">Your <span>Numerological</span> Identity</h2>
 
       <div class="stats-row">
@@ -1252,47 +1653,49 @@
         <div class="stat-pill"><strong id="stat-sun">☀️ —</strong></div>
       </div>
 
-      <p class="life-path-text" id="life-path-desc">—</p>
+      <div class="blueprint-text" id="life-path-desc" style="margin-bottom:2.5rem;">—</div>
 
       <div class="numerology-grid">
         <div class="num-card">
           <div class="num-label">Destiny Number</div>
           <div class="num-big" id="num-destiny">—</div>
-          <p class="num-meaning" id="num-destiny-meaning">—</p>
+          <div class="num-meaning" id="num-destiny-meaning"><p>—</p></div>
         </div>
         <div class="num-card">
           <div class="num-label">Soul Urge</div>
           <div class="num-big" id="num-soul">—</div>
-          <p class="num-meaning" id="num-soul-meaning">—</p>
+          <div class="num-meaning" id="num-soul-meaning"><p>—</p></div>
         </div>
         <div class="num-card">
           <div class="num-label">Personality</div>
           <div class="num-big" id="num-personality">—</div>
-          <p class="num-meaning" id="num-personality-meaning">—</p>
+          <div class="num-meaning" id="num-personality-meaning"><p>—</p></div>
         </div>
       </div>
     </div>
   </section>
 
-  <div class="divider container"><span class="divider-gem">✦ ✦ ✦</span></div>
+  <div class="divider"><span class="divider-gem">✦ ✦ ✦</span></div>
 
   <!-- ==================== LIFE AREA BLUEPRINT ==================== -->
   <section class="section">
-    <div class="container section-inner" id="blueprint-inner">
+    <div class="container-narrow section-inner" id="blueprint-inner">
       <span class="section-tag">Your Blueprint</span>
+      <p class="section-opener">This is who you came to be.</p>
       <h2 class="section-heading" id="blueprint-title">Your <span>Blueprint</span></h2>
-      <div class="blueprint-text" id="blueprint-text">—</div>
+      <div class="blueprint-text" id="blueprint-text"><p>—</p></div>
     </div>
   </section>
 
-  <div class="divider container"><span class="divider-gem">✦ ✦ ✦</span></div>
+  <div class="divider"><span class="divider-gem">✦ ✦ ✦</span></div>
 
   <!-- ==================== 2026 FORECAST ==================== -->
   <section class="section section-alt">
     <div class="container section-inner" id="forecast-inner">
       <span class="section-tag">2026 Forecast</span>
+      <p class="section-opener">The months ahead unfold.</p>
       <h2 class="section-heading">Your <span>2026</span> Month-by-Month</h2>
-      <p class="section-sub">Each month carries a distinct cosmic energy. Expand any card to see your full forecast, power days, and affirmation.</p>
+      <p class="section-sub">Each month carries a distinct cosmic energy. Your full forecast, power days, and affirmation await below.</p>
 
       <div class="forecast-grid" id="forecast-grid">
         <!-- Populated by JS -->
@@ -1300,40 +1703,56 @@
     </div>
   </section>
 
-  <div class="divider container"><span class="divider-gem">✦ ✦ ✦</span></div>
+  <div class="divider"><span class="divider-gem">✦ ✦ ✦</span></div>
 
   <!-- ==================== MORNING RITUAL ==================== -->
   <section class="section">
-    <div class="container section-inner" id="ritual-inner">
+    <div class="container-narrow section-inner" id="ritual-inner">
       <span class="section-tag">Daily Practice</span>
+      <p class="section-opener">Anchor yourself every morning.</p>
       <h2 class="section-heading">Your Personal <span>Morning Ritual</span></h2>
       <p class="section-sub">An 8-minute practice aligned to your specific energy signature.</p>
 
-      <div class="ritual-grid">
-        <div class="ritual-card">
-          <div class="ritual-icon">💎</div>
-          <div class="ritual-title">Crystal Alignment</div>
-          <p class="ritual-text" id="ritual-crystal">—</p>
+      <!-- 2x2 grid: crystal, breathwork, intention, affirmation -->
+      <div class="ritual-grid-2x2">
+
+        <div class="ritual-card-v2">
+          <div class="ritual-icon-v2">💎</div>
+          <div class="ritual-title-v2">Crystal Alignment</div>
+          <p class="ritual-text-v2" id="ritual-crystal">—</p>
         </div>
-        <div class="ritual-card">
-          <div class="ritual-icon">🌬️</div>
-          <div class="ritual-title">Breathwork</div>
-          <p class="ritual-text" id="ritual-breathwork">—</p>
+
+        <div class="ritual-card-v2">
+          <div class="ritual-icon-v2">🌬️</div>
+          <div class="ritual-title-v2">Your Breathwork</div>
+          <div class="ritual-text-v2" id="ritual-breathwork"><p>—</p></div>
         </div>
-        <div class="ritual-card">
-          <div class="ritual-icon">🌿</div>
-          <div class="ritual-title">Intention Setting</div>
-          <p class="ritual-text" id="ritual-intention">—</p>
+
+        <div class="ritual-card-v2">
+          <div class="ritual-icon-v2">⭐</div>
+          <div class="ritual-title-v2">Setting Your Intention</div>
+          <div class="ritual-text-v2" id="ritual-intention"><p>—</p></div>
         </div>
+
+        <div class="ritual-card-v2 affirmation-card">
+          <div class="ritual-icon-v2">✨</div>
+          <div class="ritual-title-v2">Your Affirmation</div>
+          <p class="ritual-affirmation-card-text" id="ritual-affirmation">—</p>
+        </div>
+
       </div>
 
-      <p class="ritual-full" id="ritual-full">—</p>
+      <!-- Full ritual — full-width card -->
+      <div class="ritual-full-card">
+        <div class="ritual-icon-v2">📜</div>
+        <div class="ritual-title-v2 ritual-full-title">Your Complete 8-Minute Ritual</div>
+        <div class="ritual-full-text" id="ritual-full"><p>—</p></div>
+      </div>
 
-      <blockquote class="ritual-affirmation" id="ritual-affirmation">—</blockquote>
     </div>
   </section>
 
-  <div class="divider container"><span class="divider-gem">✦ ✦ ✦</span></div>
+  <div class="divider"><span class="divider-gem">✦ ✦ ✦</span></div>
 
   <!-- ==================== OTO / DEEP BLUEPRINT ==================== -->
   <section class="section section-alt" id="oto-section">
@@ -1570,6 +1989,7 @@
       card.className = 'month-card';
       card.setAttribute('data-energy', energy);
       card.setAttribute('data-index', i);
+      card.setAttribute('data-month', (m.month || '').toLowerCase());
 
       const powerDays   = (m.power_days   || []).map(d => `<span class="day-chip power">${escHtml(String(d))}</span>`).join('');
       const cautionDays = (m.caution_days || []).map(d => `<span class="day-chip caution">${escHtml(String(d))}</span>`).join('');
@@ -1666,6 +2086,9 @@
     return `
       <div class="oto-locked-wrapper">
         <span class="section-tag">One Layer Deeper</span>
+        <div class="oto-veil">
+          <span class="oto-veil-icon">🔮</span>
+        </div>
         <h2 class="oto-life-headline">${escHtml(headline)}</h2>
         <p class="oto-life-sub">What we found deeper in your ${escHtml(areaLabel)} blueprint</p>
 
@@ -1673,8 +2096,10 @@
 
         <div class="oto-blur-preview">${escHtml(previewText)}</div>
 
-        <div class="oto-price-tag">$67</div>
-        <p class="oto-price-label">One-time · Instant access · No subscription</p>
+        <div class="oto-price-block">
+          <div class="oto-price-tag">$67</div>
+          <p class="oto-price-label">One-time · Instant access · No subscription</p>
+        </div>
 
         <button class="oto-cta-btn" id="oto-purchase-btn">
           <div class="btn-spinner"></div>
